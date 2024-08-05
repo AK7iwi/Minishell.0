@@ -13,6 +13,7 @@ int main(int ac, char **av, char **envp)
     printf("%s\n", line);
     free(line);
     free_env_list(&env);
-    return 0;
+    return (0);
+
 }
 
