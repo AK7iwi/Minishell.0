@@ -25,7 +25,7 @@ CYAN		= \033[0;96m
 WHITE		= \033[0;97m
 
 # Source
-FILES	=	main quote_utils env_utils token
+FILES	=	main
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
