@@ -1,12 +1,20 @@
-NAME	=	minishell
+NAME		:= minishell
 
-CC		=	cc
-FLAG	=	-Wall -Wextra -Werror -g3 -fsanitize=address -fsanitize=undefined  -fno-omit-frame-pointer -fstack-protector-strong  -fno-optimize-sibling-calls
+SRC_DIR		:= srcs
+OBJ_DIR		:= obj
 
-SRC_DIR	=	srcs/
-OBJ_DIR	=	obj/
-INCLUDE	=	-I ./include
-HEADER 	=	include/minishell.h
+SRCS		:= main.c \
+
+SRCS        := $(SRCS:%=$(SRC_DIR)/%)
+OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+CC			:= cc
+CFLAG		:= -Wall -Wextra -Werror
+CPPFLAGS    := -I includes
+FSANITIZE_FLAG := -fsanitize=address -fsanitize=undefined  -fno-omit-frame-pointer -fstack-protector-strong  -fno-optimize-sibling-calls -g3
+
+RM			:= rm -rf
+DIR_DUP		= mkdir -p $(@D)
 
 # Color
 DEF_COLOR	= \033[0;39m
@@ -15,39 +23,26 @@ GREEN 		= \033[0;92m
 YELLOW 		= \033[0;93m
 MAGENTA		= \033[0;95m
 
-# Source
-FILES	=	main parsing/token
-SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+all: $(NAME)
 
-OBJF	=	.cache_exits
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -o $(NAME)
 
-$(OBJF) :
-	@mkdir -p $(OBJ_DIR)
-
-# Add the path to the builtin folder to vpath
-vpath %.c $(SRC_DIR) $(SRC_DIR)builtin $(SRC_DIR)utils $(SRC_DIR)parsing $(SRC_DIR)exec
-
-all : $(NAME)
-
-$(NAME) : $(OBJS)
-	$(CC) $(FLAG) $(OBJS) -lreadline -o $(NAME)
-	@echo "$(GREEN)Minishell Compiled!$(DEF_COLOR)"
-
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER) Makefile | $(OBJF)
-	$(CC) $(FLAG) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(DIR_DUP)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(FSANITIZE_FLAG) -c -o $@ $<
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@rm -rf $(OBJF)
+	$(RM) $(OBJS)
 	@echo "$(MAGENTA)Minishell objects cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	@rm -rf $(NAME)
+	$(RM) $(NAME)
 	@echo "$(RED)Minishell cleaned!$(DEF_COLOR)"
 
-re: fclean all
+re: 
+	$(MAKE) fclean
+	$(MAKE) all
 	@echo "$(YELLOW)Cleaned and rebuilt!$(DEF_COLOR)"
 
-
-.PHONY : all clean fclean re
+.PHONY: all clean fclean re

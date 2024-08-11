@@ -3,7 +3,6 @@ git add .
 git commit -m ""
 git push
 
-
 Changer de branche:
 
 git checkout <branch>
