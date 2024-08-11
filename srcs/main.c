@@ -6,11 +6,12 @@ int main(int ac, char **av, char **envp)
     (void)av;
     (void)envp;
     char *input;
-    while(1)
+	
+    while (1)
     {
         input = readline("l'empereur du caca: Samucaca");
     }
-    return 0;
+    return (0);
 }
 
 

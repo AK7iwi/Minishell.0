@@ -1,0 +1,60 @@
+NAME = minishell: Defines the name of the final executable file.
+
+CC = cc: Specifies the compiler to use, in this case, the default C compiler (cc).
+
+FLAG = -Wall -Wextra -Werror -g3: Sets the compiler flags:
+-Wall: Enables all warnings.
+-Wextra: Enables extra warning flags.
+-Werror: Treats all warnings as errors.
+-g3: Includes debugging information with maximum detail.
+
+SRC_DIR = srcs/: Specifies the directory where the source files are located.
+OBJ_DIR = obj/: Specifies the directory where the object files (.o) will be placed.
+INCLUDE = -I ./include: Defines the directory for the header files.
+HEADER = include/minishell.h: Specifies the main header file for the project.
+
+Colors (For Output Messages):
+These variables define escape sequences for colored output in the terminal, making the output messages more readable and visually appealing.
+DEF_COLOR, GRAY, RED, GREEN, etc., correspond to different colors.
+
+Source and Object Files:
+FILES = main: Defines the base names of the source files (without the .c extension). If you have more source files, you'd add them here.
+SRCS = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES))): Creates a list of full paths to the source files. It appends .c to each name in FILES and prefixes each with SRC_DIR.
+OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES))): Creates a list of full paths to the object files. It appends .o to each name in FILES and prefixes each with OBJ_DIR.
+
+Directories:
+OBJF = .cache_exits: Defines a hidden file used as a marker to ensure the OBJ_DIR exists before compiling object files.
+Rules:
+$(OBJF)::
+
+Creates the OBJ_DIR directory if it doesn't already exist.
+The @mkdir -p $(OBJ_DIR) command ensures that the directory is created and no error is raised if it already exists.
+
+
+vpath %.c $(SRC_DIR) $(SRC_DIR)builtin $(SRC_DIR)utils $(SRC_DIR)parsing $(SRC_DIR)exec:
+This tells the Makefile to look for .c files in multiple directories (srcs/, srcs/builtin, srcs/utils, srcs/parsing, srcs/exec). This is useful if your source files are organized in different folders.
+all: $(NAME):
+
+The all target depends on the $(NAME) target, which means it will trigger the creation of the executable.
+$(NAME): $(OBJS):
+
+This rule links all the object files ($(OBJS)) to create the final executable $(NAME).
+It uses the cc compiler with the flags specified in FLAG and links with the readline library (-lreadline).
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER) Makefile | $(OBJF):
+
+This pattern rule compiles each source file into an object file.
+It specifies dependencies on the source file, header file, and the Makefile itself.
+The -c flag tells the compiler to produce an object file.
+clean::
+
+Deletes the OBJ_DIR directory and the OBJF marker file, effectively cleaning up all compiled object files.
+The @ symbol suppresses the command output in the terminal.
+fclean: clean:
+
+Extends the clean target by also deleting the compiled executable ($(NAME)).
+re: fclean all:
+
+Cleans everything and then rebuilds the entire project from scratch.
+Special Targets:
+.PHONY: all clean fclean re:
+Declares these targets as "phony," meaning they are not actual files but rather commands to be run.

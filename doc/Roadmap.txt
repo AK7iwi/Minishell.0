@@ -1,0 +1,81 @@
+1) Parsing :
+
+a) Tokenisation
+
+Voir comment fonctionne un shell?
+https://github.com/Hqndler/42-minishell
+Quels sont les tokens?
+Classer par token (chaque token aura sa propre liste chainee ou tableau).
+
+b) AST 
+
+Algo par rapport a la  syntaxe, se renseigner sur la grammaire shell et les cmds
+
+2) Exec :
+
+A voir 
+
+
+3) General
+
+I) Prompt
+
+II) Working History
+
+You can navigate through commands with up/down arrows
+
+Comment avoir acces a l'historique/ Ou le stock, comment le stock?
+
+III) Search and launch the right executable (based on the PATH variable or using a
+relative or an absolute path).
+
+IV)
+
+Not interpret unclosed quotes or special characters which are not required by the
+subject such as \ (backslash) or ; (semicolon).
+
+Handle ’ (single quote) which should prevent the shell from interpreting the metacharacters in the quoted sequence.
+Handle " (double quote) which should prevent the shell from interpreting the metacharacters in the quoted sequence except for $ (dollar sign).
+
+V) Implement redirections
+
+Comment fonctionne une redirection? Quesque c'est?
+
+VI) Implement pipes (| character). The output of each command in the pipeline is
+connected to the input of the next command via a pipe.
+
+VII)Handle environment variables ($ followed by a sequence of characters) which
+should expand to their values.
+
+VIII)Handle $? Which should expand to the exit status of the most recently executed
+foreground pipeline
+
+IX)Signaux 
+
+Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
+• In interactive mode:
+◦ ctrl-C displays a new prompt on a new line.
+◦ ctrl-D exits the shell.
+◦ ctrl-\ does nothing.
+
+One global variable
+
+X) Builtins:
+
+echo
+cd 
+pwd
+export
+env
+unset
+exit
+ls???
+Autre builtins a faire?
+
+
+XI) here-doc
+
+Doc utiles:
+
+https://github.com/Hqndler/42-minishell
+

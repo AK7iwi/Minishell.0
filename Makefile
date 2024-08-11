@@ -1,31 +1,22 @@
 NAME	=	minishell
 
 CC		=	cc
-FLAG	=	-Wall -Wextra -Werror -g3
+FLAG	=	-Wall -Wextra -Werror -g3 -fsanitize=address -fsanitize=undefined  -fno-omit-frame-pointer -fstack-protector-strong  -fno-optimize-sibling-calls
 
-DIRLIB	=	./libft/
-FILELIB	=	libft.a
-NAMELFT	=	$(addprefix $(DIRLIB), $(FILELIB))
-
-SRC_DIR	=	src/
+SRC_DIR	=	srcs/
 OBJ_DIR	=	obj/
-INCLUDE	=	-I ./include -I ./libft
+INCLUDE	=	-I ./include
 HEADER 	=	include/minishell.h
 
 # Color
-
 DEF_COLOR	= \033[0;39m
-GRAY 		= \033[0;90m
 RED 		= \033[0;91m
 GREEN 		= \033[0;92m
 YELLOW 		= \033[0;93m
-BLUE		= \033[0;94m
 MAGENTA		= \033[0;95m
-CYAN		= \033[0;96m
-WHITE		= \033[0;97m
 
 # Source
-FILES	=	main
+FILES	=	main parsing/token
 SRCS	=	$(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS	=	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
@@ -40,26 +31,23 @@ vpath %.c $(SRC_DIR) $(SRC_DIR)builtin $(SRC_DIR)utils $(SRC_DIR)parsing $(SRC_D
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	make -C $(DIRLIB)
-	$(CC)  -L$(DIRLIB) $(FLAG) $(OBJS) $(NAMELFT) -lreadline -o $(NAME)
+	$(CC) $(FLAG) $(OBJS) -lreadline -o $(NAME)
 	@echo "$(GREEN)Minishell Compiled!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER) Makefile | $(OBJF)
 	$(CC) $(FLAG) $(INCLUDE) -c $< -o $@
 
 clean:
-	@make clean -s -C $(DIRLIB)
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(OBJF)
 	@echo "$(MAGENTA)Minishell objects cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	@make fclean -s -C $(DIRLIB)
 	@rm -rf $(NAME)
-	@echo "$(YELLOW)Minishell cleaned!$(DEF_COLOR)"
+	@echo "$(RED)Minishell cleaned!$(DEF_COLOR)"
 
 re: fclean all
-	@echo "$(GREEN)Cleaned and rebuilt!$(DEF_COLOR)"
+	@echo "$(YELLOW)Cleaned and rebuilt!$(DEF_COLOR)"
 
 
 .PHONY : all clean fclean re

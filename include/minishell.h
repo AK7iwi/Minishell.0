@@ -1,11 +1,12 @@
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <sys/types.h>
-#include "libft.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define ERR_MALLOC "malloc error\n"
 #define ERR_PIPE "pipe error\n"
@@ -14,6 +15,14 @@
 #define EXT_MALLOC 1
 #define EXT_PIPE 1
 #define EXT_FORK 1
+
+# define INPUT		1	//"<"
+# define HEREDOC	2	//"<<"
+# define TRUNC		3	//">"
+# define APPEND		4	//">>"
+# define PIPE		5	//"|"
+# define WORD		6	
+
 
 extern pid_t g_signal_pid;
 
@@ -25,7 +34,7 @@ typedef struct s_cmd
     char **cmd_param;
     struct s_cmd *prev;
     struct s_cmd *next;
-} t_cmd;
+}	t_cmd;
 
 typedef struct s_token
 {
@@ -33,14 +42,14 @@ typedef struct s_token
     int type;
     struct s_token *prev;
     struct s_token *next;
-} t_token;
+}	t_token;
 
 typedef struct s_list
 {
     char *str;
     struct s_list *prev;
     struct s_list *next;
-} t_list;
+}	t_list;
 
 typedef struct s_data
 {
@@ -50,7 +59,7 @@ typedef struct s_data
     int exit_code;
     int pip[2];
     bool sq;
-} t_data;
+}	t_data;
 
 void quoting_choice(bool *dquote, bool *squote, int *i, char c);
 int open_quote(t_data *data, char *line);
