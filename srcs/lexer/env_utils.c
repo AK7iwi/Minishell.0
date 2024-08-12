@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+// Fonction pour libérer la liste chaînée
+void free_env_list(t_env_list **lst)
+{
+    t_env_list *tmp;
+
+    while (*lst)
+    {
+        tmp = (*lst)->next;
+        free((*lst)->str);
+        free(*lst);
+        *lst = tmp;
+    }
+}
+
 // Fonction pour obtenir la valeur d'une variable d'environnement
 char *get_env_value(char *var, t_env_list *env) 
 {
@@ -11,18 +25,19 @@ char *get_env_value(char *var, t_env_list *env)
             return (current->str + ft_strlen(var) + 1);  // +1 pour sauter le '='
         current = current->next;
     }
-    return NULL;
+
+    return (NULL);
 }
 
 // Fonction pour extraire le nom de la variable
 char *extract_var_name(char *str, int *i) 
 {
     int start = *i + 1;
+    
     while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_')) 
-    {
         (*i)++;
-    }
-    return ft_substr(str, start, *i - start);
+
+    return (ft_substr(str, start, *i - start));
 }
 
 // Fonction pour remplacer les variables d'environnement dans une ligne
@@ -59,7 +74,7 @@ char *replace_env_vars(char *line, t_env_list *env)
             i++;
         }
     }
-    return result;
+    return (result);
 }
 
 // Fonction pour remplacer les variables dans une commande et renvoyer une nouvelle commande
@@ -68,20 +83,6 @@ void replace_dollars_in_command(char **line, t_env_list *env)
     char *new_line = replace_env_vars(*line, env);
     free(*line);
     *line = new_line;
-}
-
-// Fonction pour créer une liste chaînée à partir des variables d'environnement
-t_env_list *create_env_list(char **envp) 
-{
-    t_env_list *env = NULL;
-    int i = 0;
-
-    while (envp[i]) 
-    {
-        append_env_list(&env, ft_strdup(envp[i]));
-        i++;
-    }
-    return env;
 }
 
 // Fonction pour ajouter un élément à la liste
@@ -106,16 +107,16 @@ void append_env_list(t_env_list **lst, char *str)
     new_node->prev = last;
 }
 
-// Fonction pour libérer la liste chaînée
-void free_env_list(t_env_list **lst)
+// Fonction pour créer une liste chaînée à partir des variables d'environnement
+t_env_list *create_env_list(char **envp) 
 {
-    t_env_list *tmp;
+    t_env_list *env = NULL;
+    int i = 0;
 
-    while (*lst)
+    while (envp[i]) 
     {
-        tmp = (*lst)->next;
-        free((*lst)->str);
-        free(*lst);
-        *lst = tmp;
+        append_env_list(&env, ft_strdup(envp[i]));
+        i++;
     }
+    return (env);
 }

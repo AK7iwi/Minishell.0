@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stddef.h>
 
 #define ERR_MALLOC "malloc error\n"
 #define ERR_PIPE "pipe error\n"
@@ -52,14 +53,36 @@ typedef struct s_data
     bool sq;
 } t_data;
 
+
+//////////// Lexer /////////////////////
+
+/* quote_utils.c */
 void quoting_choice(bool *dquote, bool *squote, int *i, char c);
 int open_quote(t_data *data, char *line);
+
+/* env_utils.c */
+void free_env_list(t_env_list **lst);
 char *get_env_value(char *var, t_env_list *env);
 char *extract_var_name(char *str, int *i);
 char *replace_env_vars(char *line, t_env_list *env);
 void replace_dollars_in_command(char **line, t_env_list *env);
-t_env_list *create_env_list(char **envp);
-void free_env_list(t_env_list **lst);
 void append_env_list(t_env_list **lst, char *str);
+t_env_list *create_env_list(char **envp);
+
+////////////// utils ////////////////////
+
+/* lib_checker.c */
+int	ft_isalnum(int c);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+
+/* lib_len.c */
+size_t	ft_strlen(const char *s);
+
+/* lib_memory.c */
+char	*ft_strdup(const char *s);
+
+/* lib_str_manip.c */
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

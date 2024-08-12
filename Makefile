@@ -1,20 +1,21 @@
-NAME		:= minishell
+NAME			:= minishell
 
-SRC_DIR		:= srcs
-OBJ_DIR		:= obj
+SRC_DIR			:= srcs
+OBJ_DIR			:= obj
 
-SRCS		:= main.c \
-
+SRCS			:= main.c \
+					lexer/token.c lexer/env_utils.c lexer/quote_utils.c \
+					utils/lib_checker.c utils/lib_len.c utils/lib_memory.c utils/lib_str_manip.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-CC			:= cc
-CFLAG		:= -Wall -Wextra -Werror
-CPPFLAGS    := -I includes
-FSANITIZE_FLAG := -fsanitize=address -fsanitize=undefined  -fno-omit-frame-pointer -fstack-protector-strong  -fno-optimize-sibling-calls -g3
+CC				:= cc
+CFLAGS			:= -Wall -Wextra -Werror
+CPPFLAGS    	:= -I includes
+FSANITIZE_FLAG	:= -g3 -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer -fstack-protector-strong -fno-optimize-sibling-calls 
 
-RM			:= rm -rf
-DIR_DUP		= mkdir -p $(@D)
+RM				:= rm -rf
+DIR_DUP     	= mkdir -p $(@D)
 
 # Color
 DEF_COLOR	= \033[0;39m
@@ -26,23 +27,22 @@ MAGENTA		= \033[0;95m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) $(OBJS) $(FSANITIZE_FLAG) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(DIR_DUP)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(FSANITIZE_FLAG) -c -o $@ $<
 
 clean:
 	$(RM) $(OBJS)
-	@echo "$(MAGENTA)Minishell objects cleaned!$(DEF_COLOR)"
+	$(RM) $(OBJ_DIR)
+	@echo "$(RED)Minishell objects cleaned!$(DEF_COLOR)"
 
 fclean: clean
 	$(RM) $(NAME)
 	@echo "$(RED)Minishell cleaned!$(DEF_COLOR)"
 
-re: 
-	$(MAKE) fclean
-	$(MAKE) all
-	@echo "$(YELLOW)Cleaned and rebuilt!$(DEF_COLOR)"
+re:	fclean all
+	@echo "$(RED)Cleaned and rebuilt!$(DEF_COLOR)"
 
 .PHONY: all clean fclean re
