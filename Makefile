@@ -20,14 +20,11 @@ DIR_DUP     	= mkdir -p $(@D)
 # Color
 DEF_COLOR	= \033[0;39m
 RED 		= \033[0;91m
-GREEN 		= \033[0;92m
-YELLOW 		= \033[0;93m
-MAGENTA		= \033[0;95m
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(FSANITIZE_FLAG) -o $(NAME)
+	$(CC) $(OBJS) $(FSANITIZE_FLAG) -lreadline -o $(NAME)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(DIR_DUP)

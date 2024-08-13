@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	*ft_free(char **tab, int i)
+static void	*ft_free(char **tab, int i)
 {
 	while (i >= 0)
 	{
@@ -11,7 +11,7 @@ void	*ft_free(char **tab, int i)
 	return (NULL);
 }
 
-int	c_words(char const *str, char set)
+static int	c_words(char const *str, char set)
 {
 	int	i;
 	int	words;
@@ -27,7 +27,7 @@ int	c_words(char const *str, char set)
 	return (words);
 }
 
-int	word_len(char const *str, char c)
+static int	word_len(char const *str, char c)
 {
 	int	i;
 	int	len;
@@ -44,7 +44,7 @@ int	word_len(char const *str, char c)
 	return (len);
 }
 
-const char	*cpy(char const *str, char *word, char c)
+static const char	*cpy(char const *str, char *word, char c)
 {
 	int	i;
 
@@ -86,54 +86,4 @@ char	**ft_split(char const *s, char c)
 	}
 	strs[i] = 0;
 	return (strs);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*res;
-	size_t	i;
-
-	i = 0;
-	if (start >= (unsigned int)ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > (unsigned int)ft_strlen(s) - start)
-		len = (unsigned int)ft_strlen(s) - start;
-	res = (char *)malloc((len + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
-	while (i < len && s[(size_t)start + i])
-	{
-		res[i] = s[(size_t)start + i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	while (s1[i])
-	{
-		str[j] = s1[i];
-		j++;
-		i++;
-	}
-	i = 0;
-	while (s2[i])
-	{
-		str[j] = s2[i];
-		j++;
-		i++;
-	}
-	str[j] = '\0';
-	return (str);
 }
