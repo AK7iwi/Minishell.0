@@ -1,15 +1,55 @@
 #include "minishell.h"
 
+static bool is_a_cmd(char *input)
+{
+    if (ft_strncmp(input, "echo", ft_strlen(input)) == 0)
+        return (true);
+    else if (ft_strncmp(input, "cd", ft_strlen(input)) == 0)
+        return (true);
+    else if (ft_strncmp(input, "pwd", ft_strlen(input)) == 0)
+        return (true);
+    else if (ft_strncmp(input, "export", ft_strlen(input)) == 0)
+        return (true);
+    else if (ft_strncmp(input, "unset", ft_strlen(input)) == 0)
+        return (true);
+    else if (ft_strncmp(input, "env", ft_strlen(input)) == 0)
+        return (true);
+    else if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
+        return (true);
+    
+    return (false);
+}
+
 static int wich_token(char *input)
 {
-    if (ft_strncmp(input, "|", ft_strlen(input)) == 0)
+    if (is_a_cmd(input))
+        return (TOKEN_COMMAND);
+    else if (ft_strncmp(input, "|", ft_strlen(input)) == 0)
         return (TOKEN_PIPE);
     else if (ft_strncmp(input, "<", ft_strlen(input)) == 0)
-        return (TOKEN_REDIRECT_IN);
+        return (TOKEN_SIMPLE_REDIRECT_IN);
     else if (ft_strncmp(input, ">", ft_strlen(input)) == 0)
-        return (TOKEN_REDIRECT_OUT);
-    else if (ft_strncmp(input, ">", ft_strlen(input)) == 0)
-        return (TOKEN_REDIRECT_OUT);
+        return (TOKEN_SIMPLE_REDIRECT_OUT);
+    else if (ft_strncmp(input, "<<", ft_strlen(input)) == 0)
+        return (TOKEN_DOUBLE_REDIRECT_IN);
+    else if (ft_strncmp(input, ">>", ft_strlen(input)) == 0)
+        return (TOKEN_DOUBLE_REDIRECT_OUT);
+    else if (ft_strncmp(input, "$", ft_strlen(input)) == 0)
+        return (TOKEN_ENV_VARIABLE);
+    else if (ft_strncmp(input, "\'", ft_strlen(input)) == 0)
+        return (TOKEN_SIMPLE_QUOTE);
+    else if (ft_strncmp(input, "\"", ft_strlen(input)) == 0)
+        return (TOKEN_DOUBLE_QUOTE);
+    else if (ft_strncmp(input, "&&", ft_strlen(input)) == 0)
+        return (TOKEN_AND);
+    else if (ft_strncmp(input, "||", ft_strlen(input)) == 0)
+        return (TOKEN_OR);
+    else if (ft_strncmp(input, "(", ft_strlen(input)) == 0)
+        return (TOKEN_OPEN_PAREN);
+    else if (ft_strncmp(input, ")", ft_strlen(input)) == 0)
+        return (TOKEN_CLOSE_PAREN);
+    else   
+        return (TOKEN_ARGUMENT);
     
     return (0);
 }
@@ -17,15 +57,12 @@ static int wich_token(char *input)
 static void print_token_list(t_token *head)
 {
     t_token *current = head;
-    printf("NOOOOOOOOOOOOOOOON\n");
+
     while (current != NULL)
     {
-        printf("OUIIIIIII");
-        printf("Token: %s, Type: %d, %s", current->str, current->type, "\n");
+        printf("Token: %s, Type: %d %s", current->str, current->type, "\n");
         current = current->next;
     }
-
-    printf("A LA FIN\n");
 }
 
 //work but not clean
@@ -62,11 +99,7 @@ static void add_input_to_list(char **input_array, t_token *tokens)
     while (input_array[i])
     {
         int token;
-        printf("%i%s", i, ":");
-        printf("%s\n", input_array[i]);
         token = wich_token(input_array[i]);
-
-        printf("TOKEN:%d", token);
 
         append_token_list(tokens, token, input_array[i]);
         i++;

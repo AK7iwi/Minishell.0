@@ -8,8 +8,7 @@ int main(int ac, char **av, char **envp)
     t_token tokens;
 
     tokens = (t_token){0};
-
-
+    
     char *input;
 
     (void)ac;

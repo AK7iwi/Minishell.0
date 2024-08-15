@@ -18,21 +18,20 @@
 #define EXT_PIPE 1
 #define EXT_FORK 1
 
-#define TOKEN_COMMAND         1
-#define TOKEN_ARGUMENT        2
-#define TOKEN_PIPE            3
-#define TOKEN_REDIRECT_IN     4
-#define TOKEN_REDIRECT_OUT    5
-#define TOKEN_APPEND_OUT      6
-#define TOKEN_ENV_VARIABLE    7
-#define TOKEN_QUOTE           8
-#define TOKEN_BACKGROUND      9
-#define TOKEN_END_OF_LINE     10
-#define TOKEN_AND             11
-#define TOKEN_OR              12
-#define TOKEN_SEMICOLON       13
-#define TOKEN_OPEN_PAREN      14
-#define TOKEN_CLOSE_PAREN     15
+#define TOKEN_COMMAND               1
+#define TOKEN_ARGUMENT              2
+#define TOKEN_PIPE                  3
+#define TOKEN_SIMPLE_REDIRECT_IN    4
+#define TOKEN_SIMPLE_REDIRECT_OUT   5
+#define TOKEN_DOUBLE_REDIRECT_IN    6
+#define TOKEN_DOUBLE_REDIRECT_OUT   7
+#define TOKEN_ENV_VARIABLE          8
+#define TOKEN_SIMPLE_QUOTE          10
+#define TOKEN_DOUBLE_QUOTE          11
+#define TOKEN_AND                   12
+#define TOKEN_OR                    13
+#define TOKEN_OPEN_PAREN            14
+#define TOKEN_CLOSE_PAREN           15
 
 extern pid_t g_signal_pid;
 
