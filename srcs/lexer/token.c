@@ -106,18 +106,17 @@ static void add_input_to_list(char **input_array, t_token *tokens)
     }
 }
 
-static inline char**   split_input(char *input)
-{
-    return (ft_split(input, ' '));
-}
-
 void   tokenisation(char *input, t_token *tokens)
 {
     char** input_array;
 
-    input_array = split_input(input);
+    input_array = ft_split(input, ' ');
     
-    add_input_to_list(input_array, tokens);
-    //test
-    print_token_list(tokens);
+    while (input_array[i])
+    {
+        printf("input_array[%i]: %s", i, input_array[i]);
+    }
+    // add_input_to_list(input_array, tokens);
+    // //test
+    // print_token_list(tokens);
 }

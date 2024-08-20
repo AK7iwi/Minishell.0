@@ -10,14 +10,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#define ERR_MALLOC "malloc error\n"
-#define ERR_PIPE "pipe error\n"
-#define ERR_FORK "fork error\n"
-
-#define EXT_MALLOC 1
-#define EXT_PIPE 1
-#define EXT_FORK 1
-
 #define TOKEN_COMMAND               1
 #define TOKEN_ARGUMENT              2
 #define TOKEN_PIPE                  3
@@ -92,22 +84,19 @@ t_env_list *create_env_list(char **envp);
 
 ////////////// utils ////////////////////
 
+/* Lib */
+
 /* lib_checker.c */
 int	ft_isalnum(int c);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-
 /* lib_len.c */
 size_t	ft_strlen(const char *s);
-
 /* lib_memory.c */
 char	*ft_strdup(const char *s);
-
 /* lib_str_manip.c */
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-
 /* lib_split.c */
-
 char	**ft_split(char const *s, char c);
 
 #endif
