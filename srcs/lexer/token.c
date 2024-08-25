@@ -71,7 +71,7 @@
 //     new_node->prev = last;
 // }
 
-static void add_input_to_list(char **input_array, t_token *tokens)
+static void add_input_to_tokens_list(char **input_array, t_token *tokens)
 {    
     int i = 0;
 
@@ -80,9 +80,9 @@ static void add_input_to_list(char **input_array, t_token *tokens)
 		//test
 		printf("input_array[%i]: %s\n", i, input_array[i]);
 
-        int token; //uint 
+        uint8_t token; 
         token = wich_token(input_array[i]);
-
+        
         append_token_list(tokens, token, input_array[i]);
         i++;
     }
@@ -93,12 +93,8 @@ void   tokenisation(char *input, t_token *tokens)
     char** input_array;
 
     input_array = ft_split(input, ' ');
-    
-	int i;
-	i = 0;
-	(void)tokens;
 
-    // add_input_to_list(input_array, tokens);
+    add_input_to_tokens_list(input_array, tokens);
     // //test
     // print_token_list(tokens);
 }

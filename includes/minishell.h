@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -10,20 +11,19 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#define TOKEN_COMMAND               1
-#define TOKEN_ARGUMENT              2
-#define TOKEN_PIPE                  3
-#define TOKEN_SIMPLE_REDIRECT_IN    4
-#define TOKEN_SIMPLE_REDIRECT_OUT   5
-#define TOKEN_DOUBLE_REDIRECT_IN    6
-#define TOKEN_DOUBLE_REDIRECT_OUT   7
-#define TOKEN_ENV_VARIABLE          8
-#define TOKEN_SIMPLE_QUOTE          10
-#define TOKEN_DOUBLE_QUOTE          11
-#define TOKEN_AND                   12
-#define TOKEN_OR                    13
-#define TOKEN_OPEN_PAREN            14
-#define TOKEN_CLOSE_PAREN           15
+#define TOKEN_WORD                  1
+#define TOKEN_PIPE                  2
+#define TOKEN_SIMPLE_REDIRECT_IN    3
+#define TOKEN_SIMPLE_REDIRECT_OUT   4
+#define TOKEN_DOUBLE_REDIRECT_IN    5 //here_doc
+#define TOKEN_DOUBLE_REDIRECT_OUT   6
+#define TOKEN_ENV_VARIABLE          7
+#define TOKEN_SIMPLE_QUOTE          8
+#define TOKEN_DOUBLE_QUOTE          9
+#define TOKEN_AND                   10
+#define TOKEN_OR                    11
+#define TOKEN_OPEN_PAREN            12
+#define TOKEN_CLOSE_PAREN           13
 
 extern pid_t g_signal_pid;
 
@@ -40,7 +40,7 @@ typedef struct s_cmd
 typedef struct s_token
 {
     char *str;
-    int type;
+    uint8_t type;
     
     struct s_token *prev;
     struct s_token *next;
