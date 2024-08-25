@@ -19,7 +19,9 @@ int main(int ac, char **av, char **envp)
     {
         input = readline("minishell> ");
         
+		//test
         printf("input: %s\n", input);
+		
         tokenisation(input, &tokens);
         //free token 
     }
