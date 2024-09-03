@@ -12,20 +12,18 @@
 #include <readline/history.h>
 
 #define TOKEN_WORD                  1
-#define TOKEN_PIPE                  2
-#define TOKEN_SIMPLE_REDIRECT_IN    3
-#define TOKEN_SIMPLE_REDIRECT_OUT   4
-#define TOKEN_DOUBLE_REDIRECT_IN    5 //here_doc
-#define TOKEN_DOUBLE_REDIRECT_OUT   6
-#define TOKEN_ENV_VARIABLE          7
-#define TOKEN_SIMPLE_QUOTE          8
-#define TOKEN_DOUBLE_QUOTE          9
-#define TOKEN_AND                   10
-#define TOKEN_OR                    11
-#define TOKEN_OPEN_PAREN            12
-#define TOKEN_CLOSE_PAREN           13
-
-extern pid_t g_signal_pid;
+#define TOKEN_PIPE                  2  // |
+#define TOKEN_SIMPLE_REDIRECT_IN    3  // <
+#define TOKEN_SIMPLE_REDIRECT_OUT   4  // >
+#define TOKEN_DOUBLE_REDIRECT_IN    5  // <<(here_doc)
+#define TOKEN_DOUBLE_REDIRECT_OUT   6  // >>
+#define TOKEN_ENV_VARIABLE          7  // &
+#define TOKEN_SIMPLE_QUOTE          8  // '
+#define TOKEN_DOUBLE_QUOTE          9  // "
+#define TOKEN_AND                   10 // &&
+#define TOKEN_OR                    11 // ||
+#define TOKEN_OPEN_PAREN            12 // (
+#define TOKEN_CLOSE_PAREN           13 // )
 
 typedef struct s_cmd
 {
@@ -58,9 +56,6 @@ typedef struct s_data
     t_env_list *env;
     t_token     *token;
     t_cmd *cmd;
-    int exit_code;
-    int pip[2];
-    bool sq;
 } t_data;
 
 

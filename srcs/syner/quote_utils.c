@@ -17,7 +17,7 @@ int open_quote(t_data *data, char *line)
 
     while (line[i])
         quoting_choice(&dquote, &squote, &i, line[i]);
-
+    
     if (squote || dquote) 
     {
         data->exit_code = 2;

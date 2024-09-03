@@ -2,21 +2,24 @@
 
 a) Tokenisation
 
-Voir comment fonctionne un shell?
-https://github.com/Hqndler/42-minishell
-Quels sont les tokens?
-Classer par token (chaque token aura sa propre liste chainee ou tableau).
+Find the right tokens: OK
 
-b) AST 
+b) Syner
+
+Read the token list and analyze them
+
+c) Parser 
+
+d) AST 
 
 Algo par rapport a la  syntaxe, se renseigner sur la grammaire shell et les cmds
 
-2) Exec :
 
-A voir 
+2) Exec
 
+Builtins
 
-3) General
+3) General infos
 
 I) Prompt
 

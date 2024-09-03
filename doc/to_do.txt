@@ -1,0 +1,2 @@
+Handle empty node at the start of t_token
+Free t_token list 

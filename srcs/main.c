@@ -1,9 +1,15 @@
 #include "minishell.h"
 
-int main(int ac, char **av, char **envp)
+int main(int argc, char **argv, char **envp)
 {
     // t_env_list *env;
     // char *line;
+
+    if (argc != 1)
+    {
+        printf("Get your arguments out of the way");
+        return (EXIT_FAILURE);
+    }
 
     t_token tokens;
 
@@ -11,27 +17,16 @@ int main(int ac, char **av, char **envp)
     
     char *input;
 
-    (void)ac;
-    (void)av;
+    (void)argv;
     (void)envp;
 
     while (1)
     {
-        input = readline("minishell> ");
-        
-		//test
-        printf("input: %s\n", input);
-		
+        input = readline("Minishell> ");
+	
         tokenisation(input, &tokens);
         //free token 
     }
     
-    // env = create_env_list(envp);
-    // line = ft_strdup("echo $USER");
-    // replace_dollars_in_command(&line, env);
-    // printf("%s\n", line);
-    // free(line);
-    // free_env_list(&env);
-    
-    return (0);
+    return (EXIT_SUCCESS);
 }
