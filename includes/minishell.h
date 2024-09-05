@@ -27,13 +27,16 @@
 
 typedef struct s_cmd
 {
-    bool skip_cmd;
-    int infile;
-    int outfile;
-    char **cmd_param;
     struct s_cmd *prev;
     struct s_cmd *next;
 } t_cmd;
+
+typedef struct s_env_list
+{
+    char *str;
+    struct s_env_list *prev;
+    struct s_env_list *next;
+} t_env_list;
 
 typedef struct s_token
 {
@@ -44,25 +47,22 @@ typedef struct s_token
     struct s_token *next;
 }   t_token;
 
-typedef struct s_env_list
-{
-    char *str;
-    struct s_env_list *prev;
-    struct s_env_list *next;
-} t_env_list;
-
 typedef struct s_data
 {
-    t_env_list *env;
-    t_token     *token;
-    t_cmd *cmd;
+    t_env_list	*env;
+    t_token		*token;
+    t_cmd 		*cmd;
 } t_data;
 
 
 //////////// Lexer /////////////////////
 
 /* token.c */
-void   tokenisation(char *input, t_token *tokens);
+void	tokenisation(char *input, t_token **tokens);
+
+/* init_struct.c */
+void	init_struct(t_data *data);
+
 
 // /* quote_utils.c */
 // void quoting_choice(bool *dquote, bool *squote, int *i, char c);
@@ -77,9 +77,15 @@ void   tokenisation(char *input, t_token *tokens);
 // void append_env_list(t_env_list **lst, char *str);
 // t_env_list *create_env_list(char **envp);
 
-////////////// utils ////////////////////
+////////////// Utils ////////////////////
 
-/* Lib */
+
+/* free.c */
+void 	free_array(char **array);
+void	free_token(t_token **tokens);
+void	free_all(t_data *data);
+
+/* Libft */
 
 /* lib_checker.c */
 int		ft_isalnum(int c);
@@ -92,5 +98,10 @@ char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
+
+
+///test 
+
+void print_token_list(t_token *head);
 
 #endif

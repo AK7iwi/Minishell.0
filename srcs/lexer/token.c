@@ -1,17 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/05 16:19:42 by mfeldman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void print_token_list(t_token *head)
-{
-    t_token *current = head;
-
-    while (current != NULL)
-    {
-        printf("Token: %s, Type: %d %s", current->str, current->type, "\n");
-        current = current->next;
-    }
-} 
-
-static void add_to_token_list(t_token **tokens, uint8_t input_type, char *name) 
+static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str) 
 {
     t_token *new_node;
     t_token *last;
@@ -21,7 +22,7 @@ static void add_to_token_list(t_token **tokens, uint8_t input_type, char *name)
         return ;
 
     new_node->type = input_type;
-    new_node->str = ft_strdup(name);
+    new_node->str = ft_strdup(str);
     new_node->next = NULL;
 
     if (*tokens == NULL) 
@@ -30,7 +31,6 @@ static void add_to_token_list(t_token **tokens, uint8_t input_type, char *name)
         *tokens = new_node;  
         return ;
     }
-
     last = *tokens;
     while (last->next)
         last = last->next;
@@ -58,9 +58,9 @@ static  uint8_t wich_token(char *input)
         return (TOKEN_DOUBLE_REDIRECT_OUT);
     else if (ft_strncmp(input, "$", input_len) == 0)
         return (TOKEN_ENV_VARIABLE);
-    else if (ft_strncmp(input, "\'", input_len) == 0) //test
+    else if (ft_strncmp(input, "\'", input_len) == 0) 
         return (TOKEN_SIMPLE_QUOTE);
-    else if (ft_strncmp(input, "\"", input_len) == 0) //test
+    else if (ft_strncmp(input, "\"", input_len) == 0) 
         return (TOKEN_DOUBLE_QUOTE);
     else if (ft_strncmp(input, "&&", input_len) == 0)
         return (TOKEN_AND);
@@ -74,23 +74,21 @@ static  uint8_t wich_token(char *input)
     return (TOKEN_WORD);
 }
 
-void   tokenisation(char *input, t_token *tokens)
+void   tokenisation(char *input, t_token **tokens)
 {
     char** input_array;
+	uint8_t token;
+	int i;
 
     input_array = ft_split(input, ' ');
-
-    int i = 0;
-
+	i = 0;
+	
     while (input_array[i])
     {
-        uint8_t token; 
         token = wich_token(input_array[i]);
-        
-        add_to_token_list(&tokens, token, input_array[i]);
+        add_to_token_list(tokens, token, input_array[i]);
         i++;
     }
-
-    // //test
-    print_token_list(tokens);
+	
+	free_array(input_array);
 }

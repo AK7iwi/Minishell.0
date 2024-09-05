@@ -4,8 +4,9 @@ SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
 SRCS			:= main.c \
-					lexer/token.c \
-					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c
+					lexer/token.c lexer/init_struct.c \
+					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
+					utils/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -24,11 +25,11 @@ RED 		= \033[0;91m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(FSANITIZE_FLAG) -lreadline -o $(NAME)
+	$(CC) $(OBJS) -lreadline -o $(NAME)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(DIR_DUP)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(FSANITIZE_FLAG) -c -o $@ $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 clean:
 	$(RM) $(OBJS)
@@ -43,3 +44,5 @@ re:	fclean all
 	@echo "$(RED)Cleaned and rebuilt!$(DEF_COLOR)"
 
 .PHONY: all clean fclean re
+
+# $(FSANITIZE_FLAG)
