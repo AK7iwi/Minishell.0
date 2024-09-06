@@ -52,21 +52,26 @@ typedef struct s_data
     t_env_list	*env;
     t_token		*token;
     t_cmd 		*cmd;
-} t_data;
+} 	t_data;
 
+//////////// Syner ///////////////////////
+
+/* parse_token.c */
+
+bool 	parsing(t_token *tokens);
 
 //////////// Lexer /////////////////////
 
+/* quote_utils.c */
+void	quoting_choice(bool *dquote, bool *squote, int *i, char c);
+bool		open_quote(char *line);
+
 /* token.c */
+uint8_t wich_token(char *input);
 void	tokenisation(char *input, t_token **tokens);
 
 /* init_struct.c */
 void	init_struct(t_data *data);
-
-
-// /* quote_utils.c */
-// void quoting_choice(bool *dquote, bool *squote, int *i, char c);
-// int open_quote(t_data *data, char *line);
 
 // /* env_utils.c */
 // void free_env_list(t_env_list **lst);

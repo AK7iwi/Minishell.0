@@ -4,7 +4,8 @@ SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
 SRCS			:= main.c \
-					lexer/token.c lexer/init_struct.c \
+					lexer/token.c lexer/init_struct.c syner/quote_utils.c \
+					syner/parse_token.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
@@ -20,7 +21,7 @@ DIR_DUP     	= mkdir -p $(@D)
 
 # Color
 DEF_COLOR	= \033[0;39m
-RED 		= \033[0;91m 
+RED 		= \033[0;36m
 
 all: $(NAME)
 

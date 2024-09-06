@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/05 17:20:34 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:06:40 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ int main(int argc, char **argv, char **envp)
 		//add_to_history
         tokenisation(input, &data.token);
 		print_token_list(data.token);
-		// free(input);
+		// if (parsing(data.token))
+		// 	return (free_all(&data), EXIT_FAILURE);
     	free_token(&data.token);
     }
-
+	
 	free_all(&data);
 	
     return (EXIT_SUCCESS);

@@ -6,12 +6,26 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/06 12:57:35 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:18:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+bool find_quote(char *line)
+{
+	int i;
+	i = 0;
+	
+	while(line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+			return (true);
+		i++;
+	}
+	
+	return (false);
+}
 static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str) 
 {
     t_token *new_node;
@@ -39,13 +53,13 @@ static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str)
     new_node->prev = last;
 }
 
-static  uint8_t wich_token(char *input)
+uint8_t wich_token(char *input)
 {
     size_t input_len;
 
     input_len = ft_strlen(input);
-
-    //fct special char + loop
+	
+    // loop on special char
     if (ft_strncmp(input, "|", input_len) == 0)
         return (TOKEN_PIPE);
     else if (ft_strncmp(input, "<", input_len) == 0)
@@ -58,7 +72,7 @@ static  uint8_t wich_token(char *input)
         return (TOKEN_DOUBLE_REDIRECT_OUT);
     else if (ft_strncmp(input, "$", input_len) == 0)
         return (TOKEN_ENV_VARIABLE);
-    else if (ft_strncmp(input, "\'", input_len) == 0) 
+    else if (ft_strncmp(input, "\'", input_len) == 0)
         return (TOKEN_SIMPLE_QUOTE);
     else if (ft_strncmp(input, "\"", input_len) == 0) 
         return (TOKEN_DOUBLE_QUOTE);
@@ -78,15 +92,38 @@ void   tokenisation(char *input, t_token **tokens)
 {
     char** input_array;
 	uint8_t token;
+	char *stock_input;
+	
 	int i;
-
+	int j;
+	int k;	
+	
     input_array = ft_split(input, ' ');
 	i = 0;
 	
     while (input_array[i])
     {
-        token = wich_token(input_array[i]);
-        add_to_token_list(tokens, token, input_array[i]);
+		if (find_quote(input_array[i]))
+		{
+			i++;
+			j = 0;
+			k = 0;
+			
+			while (input_array[i][j] != '\'' || input_array[i][j] != '\"')
+			{
+				// stock_input[k] = input_array[i][j];
+				j++;
+				k++;
+			}
+			token = TOKEN_WORD;
+		}
+		else
+		{
+			stock_input = input_array[i];
+			token = wich_token(stock_input);
+		}
+		
+		add_to_token_list(tokens, token, stock_input);
         i++;
     }
 	
