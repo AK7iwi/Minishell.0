@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/05 16:37:02 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:58:52 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	free_all(t_data *data)
 {
 	if (data->token)
 		free_token(&data->token);
+	
 }
