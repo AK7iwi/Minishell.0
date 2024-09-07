@@ -25,6 +25,9 @@
 #define TOKEN_OPEN_PAREN            12 // (
 #define TOKEN_CLOSE_PAREN           13 // )
 
+#define SQUOTE						0
+#define DQUOTE						1	
+
 typedef struct s_cmd
 {
     struct s_cmd *prev;
@@ -63,7 +66,8 @@ bool 	parsing(t_token *tokens);
 //////////// Lexer /////////////////////
 
 /* quote.c */
-bool	find_open_dquote(char *line);
+char *extract_str_from_quotes(char *line, bool handle_quotes);
+uint8_t	find_open_quote(char *line);
 
 /* token.c */
 uint8_t wich_token(char *input);

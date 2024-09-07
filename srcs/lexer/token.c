@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/07 16:24:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/07 19:29:50 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,31 +78,40 @@ bool	tokenisation(char *input, t_token **tokens)
 {
     char** input_array;
 	uint8_t token;
-	int i;	
 	char *str;
-	
-    input_array = ft_split(input, ' ');
+	uint8_t handle_quotes;
+	int i;
+
+	i = 0;
+	(void)tokens;
+    input_array = ft_split(input, '"');
+	while (input_array[i])
+	{
+		printf("input_array[%i]: %s\n", i, input_array[i]);
+		i++;
+	}
 	i = 0;
 	
     while (input_array[i])
     {
-		printf("input_array[%i]: %s\n", i, input_array[i]);
-		if (find_open_dquote(input_array[i]))
+		handle_quotes = find_open_quote(input_array[i]);
+
+		if (handle_quotes == SQUOTE || handle_quotes == DQUOTE) 
 		{
-			str = find_closed_dquote(input_array[i]);
-			str = "oui";
-			printf("oui");
-			// return (EXIT_FAILURE);
+			printf("Find quotes\n");
+			str = extract_str_from_quotes(input_array[i], handle_quotes);
 			token = TOKEN_WORD;
 		}
-		// else if (find_squotes(input_array[i]))
 		else
 		{
-			str = input_array[i];
+			printf("No_quote\n");
+			str = ft_strdup(input_array[i]);
 			token = wich_token(input_array[i]);
 		}
 		
+		printf("STR: %s\n", str);
 		add_to_token_list(tokens, token, str);
+		free(str);
         i++;
     }
 	
