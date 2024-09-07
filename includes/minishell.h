@@ -62,13 +62,12 @@ bool 	parsing(t_token *tokens);
 
 //////////// Lexer /////////////////////
 
-/* quote_utils.c */
-void	quoting_choice(bool *dquote, bool *squote, int *i, char c);
-bool		open_quote(char *line);
+/* quote.c */
+bool	find_open_dquote(char *line);
 
 /* token.c */
 uint8_t wich_token(char *input);
-void	tokenisation(char *input, t_token **tokens);
+bool	tokenisation(char *input, t_token **tokens);
 
 /* init_struct.c */
 void	init_struct(t_data *data);

@@ -6,26 +6,12 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/06 18:18:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/07 16:24:03 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool find_quote(char *line)
-{
-	int i;
-	i = 0;
-	
-	while(line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-			return (true);
-		i++;
-	}
-	
-	return (false);
-}
 static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str) 
 {
     t_token *new_node;
@@ -88,44 +74,39 @@ uint8_t wich_token(char *input)
     return (TOKEN_WORD);
 }
 
-void   tokenisation(char *input, t_token **tokens)
+bool	tokenisation(char *input, t_token **tokens)
 {
     char** input_array;
 	uint8_t token;
-	char *stock_input;
-	
-	int i;
-	int j;
-	int k;	
+	int i;	
+	char *str;
 	
     input_array = ft_split(input, ' ');
 	i = 0;
 	
     while (input_array[i])
     {
-		if (find_quote(input_array[i]))
+		printf("input_array[%i]: %s\n", i, input_array[i]);
+		if (find_open_dquote(input_array[i]))
 		{
-			i++;
-			j = 0;
-			k = 0;
-			
-			while (input_array[i][j] != '\'' || input_array[i][j] != '\"')
-			{
-				// stock_input[k] = input_array[i][j];
-				j++;
-				k++;
-			}
+			str = find_closed_dquote(input_array[i]);
+			str = "oui";
+			printf("oui");
+			// return (EXIT_FAILURE);
 			token = TOKEN_WORD;
 		}
+		// else if (find_squotes(input_array[i]))
 		else
 		{
-			stock_input = input_array[i];
-			token = wich_token(stock_input);
+			str = input_array[i];
+			token = wich_token(input_array[i]);
 		}
 		
-		add_to_token_list(tokens, token, stock_input);
+		add_to_token_list(tokens, token, str);
         i++;
     }
 	
 	free_array(input_array);
+
+	return (EXIT_SUCCESS);
 }
