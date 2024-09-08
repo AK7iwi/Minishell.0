@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/07 19:29:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:14:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,6 @@ uint8_t wich_token(char *input)
         return (TOKEN_DOUBLE_REDIRECT_OUT);
     else if (ft_strncmp(input, "$", input_len) == 0)
         return (TOKEN_ENV_VARIABLE);
-    else if (ft_strncmp(input, "\'", input_len) == 0)
-        return (TOKEN_SIMPLE_QUOTE);
-    else if (ft_strncmp(input, "\"", input_len) == 0) 
-        return (TOKEN_DOUBLE_QUOTE);
     else if (ft_strncmp(input, "&&", input_len) == 0)
         return (TOKEN_AND);
     else if (ft_strncmp(input, "||", input_len) == 0)
@@ -83,8 +79,9 @@ bool	tokenisation(char *input, t_token **tokens)
 	int i;
 
 	i = 0;
-	(void)tokens;
-    input_array = ft_split(input, '"');
+	
+    input_array = ft_split(input, ' ');
+	
 	while (input_array[i])
 	{
 		printf("input_array[%i]: %s\n", i, input_array[i]);
@@ -96,7 +93,7 @@ bool	tokenisation(char *input, t_token **tokens)
     {
 		handle_quotes = find_open_quote(input_array[i]);
 
-		if (handle_quotes == SQUOTE || handle_quotes == DQUOTE) 
+		if (handle_quotes == S_QUOTE || handle_quotes == D_QUOTE)
 		{
 			printf("Find quotes\n");
 			str = extract_str_from_quotes(input_array[i], handle_quotes);

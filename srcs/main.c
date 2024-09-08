@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/07 16:15:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:25:54 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,19 @@ void print_token_list(t_token *head)
     }
 }
 
+void	init_struct(t_data *data)
+{
+	data->token = NULL;
+	data->error = NULL;
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	(void)argv;
     (void)envp; //tmp
 
 	t_data	data;
-	char *input;
+	char	*input;
 
     if (argc != 1)
     {

@@ -1,6 +1,11 @@
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
+//**********************************************//
+//					INCLUDES					//
+//**********************************************//
+
+#include "errors.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -11,6 +16,10 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+//**********************************************//
+//					DEFINES						//
+//**********************************************//
+
 #define TOKEN_WORD                  1
 #define TOKEN_PIPE                  2  // |
 #define TOKEN_SIMPLE_REDIRECT_IN    3  // <
@@ -18,15 +27,17 @@
 #define TOKEN_DOUBLE_REDIRECT_IN    5  // <<(here_doc)
 #define TOKEN_DOUBLE_REDIRECT_OUT   6  // >>
 #define TOKEN_ENV_VARIABLE          7  // &
-#define TOKEN_SIMPLE_QUOTE          8  // '
-#define TOKEN_DOUBLE_QUOTE          9  // "
-#define TOKEN_AND                   10 // &&
-#define TOKEN_OR                    11 // ||
-#define TOKEN_OPEN_PAREN            12 // (
-#define TOKEN_CLOSE_PAREN           13 // )
+#define TOKEN_AND                   8 // &&
+#define TOKEN_OR                    9 // ||
+#define TOKEN_OPEN_PAREN            10 // (
+#define TOKEN_CLOSE_PAREN           11 // )
 
-#define SQUOTE						0
-#define DQUOTE						1	
+#define S_QUOTE						0
+#define D_QUOTE						1	
+
+//**********************************************//
+//					STRUCTURES					//
+//**********************************************//
 
 typedef struct s_cmd
 {
@@ -55,6 +66,7 @@ typedef struct s_data
     t_env_list	*env;
     t_token		*token;
     t_cmd 		*cmd;
+	t_cmd 		*error;
 } 	t_data;
 
 //////////// Syner ///////////////////////
@@ -66,7 +78,7 @@ bool 	parsing(t_token *tokens);
 //////////// Lexer /////////////////////
 
 /* quote.c */
-char *extract_str_from_quotes(char *line, bool handle_quotes);
+char	*extract_str_from_quotes(char *line, bool handle_quotes);
 uint8_t	find_open_quote(char *line);
 
 /* token.c */
@@ -112,4 +124,4 @@ char	**ft_split(char const *s, char c);
 
 void print_token_list(t_token *head);
 
-#endif
+#endif /* MINISHELL_H */
