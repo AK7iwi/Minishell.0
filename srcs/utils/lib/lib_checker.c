@@ -8,11 +8,6 @@ int	ft_isalnum(int c)
 	return (0);
 }
 
-bool is_space(char c)
-{
-	return (c == ' ');
-}
-
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
