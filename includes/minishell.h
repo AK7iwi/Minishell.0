@@ -33,8 +33,8 @@
 #define TOKEN_OPEN_PAREN            10 // (
 #define TOKEN_CLOSE_PAREN           11 // )
 
-#define S_QUOTE						0
-#define D_QUOTE						1	
+#define S_QUOTE						1
+#define D_QUOTE						2
 
 //**********************************************//
 //					STRUCTURES					//
@@ -84,7 +84,7 @@ bool 	parsing(t_token *tokens);
 
 /* quote.c */
 char	*extract_str_from_quotes(char *line, bool handle_quotes);
-uint8_t	find_quote(char *line);
+bool    is_quote(char c);
 
 /* token.c */
 uint8_t wich_token(char *input);
@@ -119,6 +119,7 @@ void	free_all(t_data *data);
 
 /* lib_checker.c */
 int		ft_isalnum(int c);
+bool    is_space(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 /* lib_len.c */
 size_t	ft_strlen(const char *s);

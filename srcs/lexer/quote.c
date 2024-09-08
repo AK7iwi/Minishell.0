@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:00:47 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/08 18:11:15 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/08 23:18:48 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,12 @@ char *extract_str_from_quotes(char *line, bool handle_quotes)
 	return (str);
 }
 
-uint8_t	find_quote(char *line)
+char is_quote(char c)
 {
-	int i;
-
-	i = 0;
-
-	while (line[i])
-	{
-		if (line[i] == '\'')
-			return (S_QUOTE);
-		else if (line[i] == '\"')
-			return (D_QUOTE);
-		i++;
-	}
+	if (c == "\'")
+		return (c);
+	else if (c == "\"")
+		return (c);
 		
-	return (2);
+	return ("");
 }
