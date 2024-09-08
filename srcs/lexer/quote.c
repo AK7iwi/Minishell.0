@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:00:47 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/08 17:16:31 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:11:15 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char *extract_str_from_quotes(char *line, bool handle_quotes)
 	return (str);
 }
 
-uint8_t	find_open_quote(char *line)
+uint8_t	find_quote(char *line)
 {
 	int i;
 

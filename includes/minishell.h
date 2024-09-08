@@ -6,6 +6,7 @@
 //**********************************************//
 
 #include "errors.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -69,21 +70,29 @@ typedef struct s_data
 	t_cmd 		*error;
 } 	t_data;
 
-//////////// Syner ///////////////////////
+//**********************************************//
+//					SYNER    					//
+//**********************************************//
 
 /* parse_token.c */
 
 bool 	parsing(t_token *tokens);
 
-//////////// Lexer /////////////////////
+//**********************************************//
+//					LEXER    					//
+//**********************************************//
 
 /* quote.c */
 char	*extract_str_from_quotes(char *line, bool handle_quotes);
-uint8_t	find_open_quote(char *line);
+uint8_t	find_quote(char *line);
 
 /* token.c */
 uint8_t wich_token(char *input);
 bool	tokenisation(char *input, t_token **tokens);
+
+//**********************************************//
+//					MAIN    					//
+//**********************************************//
 
 /* init_struct.c */
 void	init_struct(t_data *data);
@@ -97,8 +106,9 @@ void	init_struct(t_data *data);
 // void append_env_list(t_env_list **lst, char *str);
 // t_env_list *create_env_list(char **envp);
 
-////////////// Utils ////////////////////
-
+//**********************************************//
+//					UTILS   					//
+//**********************************************//
 
 /* free.c */
 void 	free_array(char **array);

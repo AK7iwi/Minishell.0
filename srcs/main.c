@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/08 17:25:54 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/08 18:57:13 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ int main(int argc, char **argv, char **envp)
 	t_data	data;
 	char	*input;
 
+	init_struct(&data);
+	
     if (argc != 1)
     {
         printf("Get your arguments out of the way");
         return (EXIT_FAILURE);
-    }
-	
-	init_struct(&data);
+	}
 	
     while (1)
     {
         input = readline("Minishell> ");
 		if (!input)
 			return (free_all(&data), EXIT_FAILURE);
-
+		
         if (tokenisation(input, &data.token))
 			return (free_all(&data), EXIT_FAILURE);
 		print_token_list(data.token);
