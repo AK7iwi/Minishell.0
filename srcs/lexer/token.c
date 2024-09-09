@@ -6,31 +6,27 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/09 14:34:01 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:15:28 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *	extract_str(char *input, size_t start, size_t end, size_t quotes_cnt)
+static char*	extract_str(char *input, size_t start, size_t end, size_t quotes_cnt)
 {
 	char *str; 
 	size_t i;
 	
-	str = (char *)malloc((end - start- quotes_cnt) + 1);
+	str = (char *)malloc((end - start - quotes_cnt) + 1);
 	if (!str)
 		return (NULL);
 
 	i = 0;
 	while (start < end)
 	{
-		if (input[i] != "\'" || input[i] != "\"")
-		{
-			str[i] = input[start];
-			start++;
-		}
-			
-		i++;
+		if (input[start] != '\'' && input[start] != '\"')
+			str[i++] = input[start];
+		start++;	
 	}
 	
 	str[i] = '\0';
@@ -101,9 +97,11 @@ bool	tokenisation(char *input, t_token **tokens)
 	uint8_t		token;
 	char 		*str;
 	size_t		i;
-	size_t		start;
-	size_t		end;
-	size_t		quotes_cnt;
+	size_t		str_start;
+	size_t		str_end;
+	size_t		quote_start;
+	size_t		quote_end;
+	
 	// char quote;
 	
 	i = 0;
@@ -113,44 +111,39 @@ bool	tokenisation(char *input, t_token **tokens)
 		while (input[i] == ' ')
 			i++;
 		
-		start = i;
+		str_start = i;
 		
+		printf("str_start: %c\n", input[i]);
+		
+		str_len = len_w_quote(&input[i], &i);
 		while (input[i] != ' ' && input[i] != '\0')
 		{
-			//handle_quotes
-			if (input[i] == ''' || input[i] == ")
-				quotes_cnt++;
+			//gen_fct 
+			if (input[i] == '\"')
+			{
+				i++;
+				while (input[i] != '\"')
+				{
+					i++;
+				}
+			}
 			i++;
 		}
 		
-		end = i;
+		str_end = i;
+
+		printf("str_end: %c\n", input[i]);
 		
-		printf("len : %li\n", end - start - quotes_cnt);
-		
-		str = extract_str(input, start, end, quotes_cnt);
+		str = extract_str(input, str_start, str_end, quotes_cnt);
 		
 		token = wich_token(str);
 		add_to_token_list(tokens, token, str);
-			
+		
 		printf("str: %s \n", str);
+		printf("nb_quotes: %li\n", quotes_cnt);
+		printf("len : %li\n", str_end - str_start - quotes_cnt);
+		
 		free(str);
-		
-		//fct handle quote
-		// if (input[i] == "\'" || input[i] == "\"")
-		// {
-		// 	quote = input[i];
-		// 	i++;
-		// 	while (input[i] != quote && input[i] != '\0')
-		// 	{
-		// 		str += input[i];
-		// 		i++;
-		// 	}
-		// 	token = TOKEN_WORD;
-		// 	add_to_token_list(tokens, token, str);
-		// }
-		
-		// str += input[i];
-		// i++;
 	}
 	
 	return (EXIT_SUCCESS);
