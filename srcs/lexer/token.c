@@ -6,33 +6,11 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/09 19:15:28 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/10 00:56:06 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char*	extract_str(char *input, size_t start, size_t end, size_t quotes_cnt)
-{
-	char *str; 
-	size_t i;
-	
-	str = (char *)malloc((end - start - quotes_cnt) + 1);
-	if (!str)
-		return (NULL);
-
-	i = 0;
-	while (start < end)
-	{
-		if (input[start] != '\'' && input[start] != '\"')
-			str[i++] = input[start];
-		start++;	
-	}
-	
-	str[i] = '\0';
-	
-	return (str);
-}
 
 static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str) 
 {
@@ -63,87 +41,138 @@ static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str)
 
 uint8_t wich_token(char *input)
 {
-    size_t input_len;
-
-    input_len = ft_strlen(input);
-	
-    // loop on special char
-    if (ft_strncmp(input, "|", input_len) == 0)
+    if (input[0] == '|' && !input[1])
         return (TOKEN_PIPE);
-    else if (ft_strncmp(input, "<", input_len) == 0)
+    else if (input[0] == '<' && !input[1])
         return (TOKEN_SIMPLE_REDIRECT_IN);
-    else if (ft_strncmp(input, ">", input_len) == 0)
+    else if (input[0] == '>' && !input[1])
         return (TOKEN_SIMPLE_REDIRECT_OUT);
-    else if (ft_strncmp(input, "<<", input_len) == 0)
+    else if (input[0] == '<' && input[1] == '<' && !input[2])
         return (TOKEN_DOUBLE_REDIRECT_IN);
-    else if (ft_strncmp(input, ">>", input_len) == 0)
+    else if (input[0] == '>' && input[1] == '>' && !input[2])
         return (TOKEN_DOUBLE_REDIRECT_OUT);
-    else if (ft_strncmp(input, "$", input_len) == 0)
+    else if (input[0] == '&' && !input[1])
         return (TOKEN_ENV_VARIABLE);
-    else if (ft_strncmp(input, "&&", input_len) == 0)
+    else if (input[0] == '&' && input[1] == '&' && !input[2])
         return (TOKEN_AND);
-    else if (ft_strncmp(input, "||", input_len) == 0)
+    else if (input[0] == '|' && input[1] == '|' && !input[2])
         return (TOKEN_OR);
-    else if (ft_strncmp(input, "(", input_len) == 0)
+    else if (input[0] == '(' && !input[1])
         return (TOKEN_OPEN_PAREN);
-    else if (ft_strncmp(input, ")", input_len) == 0)
+    else if (input[0] == ')' && !input[1])
         return (TOKEN_CLOSE_PAREN);
    
     return (TOKEN_WORD);
 }
 
+static char*	extract_str(char *input, size_t start, size_t end, size_t str_len)
+{
+	size_t i;
+	char *str;
+	char quote_char;
+	bool open_quote;
+	
+	str = (char *)malloc((str_len) + 1);
+	if (!str)
+		return (NULL);
+		
+	i = 0;
+	quote_char = '\0';
+	open_quote = false;
+	
+	while (start < end)
+	{
+		if ((input[start] == '\'' || input[start] == '\"') && !open_quote) 
+        {
+			open_quote = true;
+            quote_char = input[start];
+            start++;
+            while (input[start] != quote_char && input[start] != '\0')
+			{
+				str[i++] = input[start];
+                start++;
+			}
+            if (input[start] == quote_char)
+				open_quote = false;
+        }
+		else 
+			str[i++] = input[start];
+		start++;	
+	}
+	
+	str[i] = '\0';
+	
+	return (str);
+}
+
+static size_t skip_quotes_until_find_next_space_or_end(char *input, size_t *i)
+{
+    size_t len;
+    char quote_char;
+	bool open_quote;
+
+	len = 0;
+	quote_char = '\0';
+	open_quote = false;
+	
+    while (input[*i] != ' ' && input[*i] != '\0')
+    {
+        if ((input[*i] == '\'' || input[*i] == '\"') && !open_quote) 
+        {
+			open_quote = true;
+            quote_char = input[*i];
+            (*i)++;
+            while (input[*i] != quote_char && input[*i] != '\0')
+            {
+                len++;
+                (*i)++;
+            }
+            if (input[*i] == quote_char)
+				open_quote = false;
+			else if (input[*i] == '\0')
+				return (-1);		
+        }
+        else
+            len++;
+		
+		(*i)++;
+    }
+	
+    return (len);
+}
+
+static size_t skip_space(char *input, size_t *i)
+{
+	while (input[*i] == ' ')
+		(*i)++;
+
+	return (*i);
+}		
+
 bool	tokenisation(char *input, t_token **tokens)
 {
-	uint8_t		token;
 	char 		*str;
-	size_t		i;
+	uint8_t		token;
 	size_t		str_start;
+	int64_t		str_len;
 	size_t		str_end;
-	size_t		quote_start;
-	size_t		quote_end;
-	
-	// char quote;
+	size_t		i;
 	
 	i = 0;
-	
 	while (input[i])
 	{
-		while (input[i] == ' ')
-			i++;
-		
-		str_start = i;
-		
-		printf("str_start: %c\n", input[i]);
-		
-		str_len = len_w_quote(&input[i], &i);
-		while (input[i] != ' ' && input[i] != '\0')
-		{
-			//gen_fct 
-			if (input[i] == '\"')
-			{
-				i++;
-				while (input[i] != '\"')
-				{
-					i++;
-				}
-			}
-			i++;
-		}
-		
+		str_start = skip_space(input, &i);
+		str_len = skip_quotes_until_find_next_space_or_end(input, &i);
+		if (str_len == -1)
+			return (EXIT_FAILURE);	//error open_quotes	
 		str_end = i;
-
-		printf("str_end: %c\n", input[i]);
-		
-		str = extract_str(input, str_start, str_end, quotes_cnt);
-		
+		str = extract_str(input, str_start, str_end, str_len);
+		if (!str)
+			return (EXIT_FAILURE);	
 		token = wich_token(str);
 		add_to_token_list(tokens, token, str);
-		
-		printf("str: %s \n", str);
-		printf("nb_quotes: %li\n", quotes_cnt);
-		printf("len : %li\n", str_end - str_start - quotes_cnt);
-		
 		free(str);
+        i++;
 	}
 	
 	return (EXIT_SUCCESS);
