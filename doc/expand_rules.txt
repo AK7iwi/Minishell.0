@@ -1,0 +1,43 @@
+Si c'est entre simple quote; y a r 
+Si cest entre double : expand
+
+Si pas entre quote:
+
+1) Si c'est un chiffre apres: supprime le premier chiffre
+ex: $56 --> 6
+
+2) Si c'est une lettre apres: supprime tt
+
+ex: $test --> 
+
+3) Si c'est une parenthese:
+
+a) Si vide: supprime
+
+ex: $() -->
+
+b) Si rempli: applique la commade 
+
+ex: $(ls): applique la cmd
+
+4) Si "?" ou "#" ? et # -->0
+
+ex: $#test --> 0test
+
+5) Si @ ou *: supprime ce quil ya entre $ et @ ou *
+
+ex: $test*ls --> ls
+
+6) Si -  --> himBHs
+
+ex: $-ls --> himBHsls
+
+7) Si \ : supprime ce quil y a avant et garde le reste 
+
+ex: $\ls : $ls
+
+ex: $test\ls: ls
+
+8) Si tt seul: reste $
+
+ex: $ --> $

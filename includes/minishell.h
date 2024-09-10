@@ -27,14 +27,11 @@
 #define TOKEN_SIMPLE_REDIRECT_OUT   4  // >
 #define TOKEN_DOUBLE_REDIRECT_IN    5  // <<(here_doc)
 #define TOKEN_DOUBLE_REDIRECT_OUT   6  // >>
-#define TOKEN_ENV_VARIABLE          7  // &
+#define TOKEN_ENV_VARIABLE          7  // $
 #define TOKEN_AND                   8 // &&
 #define TOKEN_OR                    9 // ||
 #define TOKEN_OPEN_PAREN            10 // (
 #define TOKEN_CLOSE_PAREN           11 // )
-
-#define S_QUOTE						1
-#define D_QUOTE						2
 
 //**********************************************//
 //					STRUCTURES					//

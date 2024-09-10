@@ -1,3 +1,7 @@
-Handle quote
+TOKENISATIONS
 
-check perror, strerror
+Handle Env var OK but to clean
+Special char 
+
+Error:
+Ne pas exit et continuer a boucler
