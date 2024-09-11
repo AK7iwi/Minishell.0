@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/11 15:32:27 by diguler          ###   ########.fr       */
+/*   Updated: 2024/09/11 19:20:35 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static char*	extract_str(char *input, size_t start, size_t end, size_t str_len)
 		return (NULL);
 		
 	i = 0;
-	quote_char = '\0';
 	open_quote = false;
 	
 	while (start < end)
@@ -105,67 +104,68 @@ static char*	extract_str(char *input, size_t start, size_t end, size_t str_len)
 	return (str);
 }
 
-static size_t skip_quotes_until_find_next_space_or_end(char *input, size_t *i, uint8_t *token)
+// if (quote_char == '\"')
+// {
+// 	if (input[*i] == '$')
+// 	{
+// 		while ((*i) < ft_strlen(input))
+//         {
+//             len++;
+//             (*i)++;
+//         }
+// 		(*token) = TOKEN_ENV_VARIABLE;
+// 		return (len);
+// 	}
+// }
+// (*token) = TOKEN_WORD;
+
+// else if (input[*i] == '$')
+// 		{
+// 			while (input[*i] != '\0')
+//             {
+//                 len++;
+//                 (*i)++;
+//             }
+// 			(*token) = TOKEN_ENV_VARIABLE;
+// 		}
+
+static bool	len_inside_quotes(char *input, bool *open_quote, size_t *i, size_t *len)
+{
+	char quote_char;
+	
+	if ((input[*i] == '\'' || input[*i] == '\"') && !open_quote) 
+    {
+		(*open_quote) = true;
+        quote_char = input[*i];
+        (*i)++;
+        while (input[*i] != quote_char && input[*i] != '\0')
+        {
+			(*len)++;
+            (*i)++;
+        }
+        if (input[*i] == quote_char)
+			(*open_quote) = false;
+    }
+
+	return (input[*i] == '\0');
+}
+
+static size_t skip_quotes_until_find_next_space_or_end(char *input, size_t *i)
 {
     size_t len;
-    char quote_char;
 	bool open_quote;
 
 	len = 0;
-	quote_char = '\0';
 	open_quote = false;
 	
     while (input[*i] != ' ' && input[*i] != '\0')
     {
-        if ((input[*i] == '\'' || input[*i] == '\"') && !open_quote) 
-        {
-			printf("Je rentre dedans\n");
-			open_quote = true;
-            quote_char = input[*i];
-            (*i)++;
-            while (input[*i] != quote_char && input[*i] != '\0')
-            {
-				if (quote_char == '\"')
-				{
-					if (input[*i] == '$')
-					{
-						while ((*i) < ft_strlen(input))
-            			{
-                			len++;
-                			(*i)++;
-            			}
-						(*token) = TOKEN_ENV_VARIABLE;
-						return (len);
-					}
-				}
-                len++;
-                (*i)++;
-            }
-			
-            if (input[*i] == quote_char)
-				open_quote = false;
-			else if (input[*i] == '\0')
-				return (-1);
-			
-			(*token) = TOKEN_WORD;
-			return (len);
-
-        }
-		else if (input[*i] == '$')
-		{
-			while (input[*i] != '\0')
-            {
-                len++;
-                (*i)++;
-            }
-			(*token) = TOKEN_ENV_VARIABLE;
-		}
-		
+		if (len_inside_quotes(input, &open_quote, i, &len))
+			return (-1);
         else
             len++;
-		
 		(*i)++;
-    }
+	}
 	
     return (len);
 }
@@ -176,36 +176,7 @@ static size_t skip_space(char *input, size_t *i)
 		(*i)++;
 
 	return (*i);
-}	
-bool check_syntax_errors(t_token *tokens)
-{
-    t_token *current;
-
-    current = tokens;
-    while (current)
-    {
-        if (current->type == TOKEN_PIPE)
-        {
-            if (!current->prev || current->prev->type != TOKEN_WORD || !current->next || current->next->type != TOKEN_WORD)
-            {
-                printf("Syntax error: invalid use of pipe\n");
-                return false;
-            }
-        }
-        else if (current->type == TOKEN_SIMPLE_REDIRECT_IN || current->type == TOKEN_SIMPLE_REDIRECT_OUT ||
-                 current->type == TOKEN_DOUBLE_REDIRECT_IN || current->type == TOKEN_DOUBLE_REDIRECT_OUT)
-        {
-            if (!current->next || current->next->type != TOKEN_WORD)
-            {
-                printf("Syntax error: invalid use of redirection\n");
-                return false;
-            }
-        }
-        current = current->next;
-    }
-    return true;
 }
-	
 
 bool	tokenisation(char *input, t_token **tokens)
 {
@@ -218,18 +189,21 @@ bool	tokenisation(char *input, t_token **tokens)
 	
 	i = 0;
 	token = 0;
-	while (i < ft_strlen(input))
+	while (i < ft_strlen(input)) //input[i] != '\0'
 	{
-		str_start = skip_space(input, &i);
-		str_len = skip_quotes_until_find_next_space_or_end(input, &i, &token);
+		//fct extract_str
+		str_start = skip_space(input, &i); //str_start
+		str_len = skip_quotes_until_find_next_space_or_end(input, &i);
 		if (str_len == -1)
 			return (EXIT_FAILURE);	//error open_quotes
+
 		str_end = i;
 		str = extract_str(input, str_start, str_end, str_len);
 		if (!str)
 			return (EXIT_FAILURE);
 		
-		if (token == 0)
+		//fct token
+		if (!token)
 			token = wich_token(str);
 		
 		add_to_token_list(tokens, token, str);
@@ -237,12 +211,6 @@ bool	tokenisation(char *input, t_token **tokens)
 		free(str);
         i++;
 	}
-	if (!check_syntax_errors(*tokens))
-	{ 
-    	free_token(tokens);
-    	return (EXIT_FAILURE);
-	}
-
-	
+		
 	return (EXIT_SUCCESS);
 }
