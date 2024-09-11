@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/10 19:14:51 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:32:27 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,36 @@ static size_t skip_space(char *input, size_t *i)
 		(*i)++;
 
 	return (*i);
-}		
+}	
+bool check_syntax_errors(t_token *tokens)
+{
+    t_token *current;
+
+    current = tokens;
+    while (current)
+    {
+        if (current->type == TOKEN_PIPE)
+        {
+            if (!current->prev || current->prev->type != TOKEN_WORD || !current->next || current->next->type != TOKEN_WORD)
+            {
+                printf("Syntax error: invalid use of pipe\n");
+                return false;
+            }
+        }
+        else if (current->type == TOKEN_SIMPLE_REDIRECT_IN || current->type == TOKEN_SIMPLE_REDIRECT_OUT ||
+                 current->type == TOKEN_DOUBLE_REDIRECT_IN || current->type == TOKEN_DOUBLE_REDIRECT_OUT)
+        {
+            if (!current->next || current->next->type != TOKEN_WORD)
+            {
+                printf("Syntax error: invalid use of redirection\n");
+                return false;
+            }
+        }
+        current = current->next;
+    }
+    return true;
+}
+	
 
 bool	tokenisation(char *input, t_token **tokens)
 {
@@ -208,6 +237,12 @@ bool	tokenisation(char *input, t_token **tokens)
 		free(str);
         i++;
 	}
+	if (!check_syntax_errors(*tokens))
+	{ 
+    	free_token(tokens);
+    	return (EXIT_FAILURE);
+	}
+
 	
 	return (EXIT_SUCCESS);
 }

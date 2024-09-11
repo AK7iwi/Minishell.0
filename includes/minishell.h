@@ -74,6 +74,8 @@ typedef struct s_data
 /* parse_token.c */
 
 bool 	parsing(t_token *tokens);
+bool check_syntax_errors(t_token *tokens);
+
 
 //**********************************************//
 //					LEXER    					//

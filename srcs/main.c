@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/09 00:03:20 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:49:20 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int main(int argc, char **argv, char **envp)
 		
         if (tokenisation(input, &data.token))
 			return (free_all(&data), EXIT_FAILURE);
+        if (check_syntax_errors( &data.token))
+    	    return (free_all(&data), EXIT_FAILURE);
 		print_token_list(data.token);
 		// if (parsing(data.token))
 		// 	return (free_all(&data), EXIT_FAILURE);
