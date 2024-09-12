@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/11 19:20:35 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:27:48 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void add_to_token_list(t_token **tokens, uint8_t input_type, char *str)
     t_token *new_node;
     t_token *last;
 
-    new_node = (t_token *)malloc(sizeof(t_token));
+    new_node = malloc(sizeof(t_token));
     if (!new_node)
         return ;
 
@@ -65,14 +65,16 @@ uint8_t wich_token(char *input)
     return (TOKEN_WORD);
 }
 
-static char*	extract_str(char *input, size_t start, size_t end, size_t str_len)
+static char 
+
+static char*	extract_str(char *input, size_t start, size_t str_len, size_t end)
 {
 	size_t i;
 	char *str;
 	char quote_char;
 	bool open_quote;
 	
-	str = (char *)malloc((str_len) + 1);
+	str = malloc((str_len) + 1);
 	if (!str)
 		return (NULL);
 		
@@ -105,65 +107,50 @@ static char*	extract_str(char *input, size_t start, size_t end, size_t str_len)
 }
 
 // if (quote_char == '\"')
-// {
-// 	if (input[*i] == '$')
-// 	{
-// 		while ((*i) < ft_strlen(input))
-//         {
-//             len++;
-//             (*i)++;
-//         }
-// 		(*token) = TOKEN_ENV_VARIABLE;
-// 		return (len);
-// 	}
-// }
-// (*token) = TOKEN_WORD;
+// if (input[*i] == '$')
+// 				(*token) = TOKEN_ENV_VARIABLE;
 
-// else if (input[*i] == '$')
-// 		{
-// 			while (input[*i] != '\0')
-//             {
-//                 len++;
-//                 (*i)++;
-//             }
-// 			(*token) = TOKEN_ENV_VARIABLE;
-// 		}
-
-static bool	len_inside_quotes(char *input, bool *open_quote, size_t *i, size_t *len)
+static bool	handle_quotes_len(char *input, bool *open_quote, size_t **i, size_t *len)
 {
 	char quote_char;
-	
-	if ((input[*i] == '\'' || input[*i] == '\"') && !open_quote) 
+
+	quote_char = '\0';
+
+	if ((input[**i] == '\'' || input[**i] == '\"') && !open_quote) 
     {
 		(*open_quote) = true;
-        quote_char = input[*i];
-        (*i)++;
-        while (input[*i] != quote_char && input[*i] != '\0')
+        quote_char = input[**i];
+        (**i)++;
+        while (input[**i] != quote_char && input[**i] != '\0')
         {
 			(*len)++;
-            (*i)++;
+            (**i)++;
         }
-        if (input[*i] == quote_char)
+	
+        if (input[**i] == quote_char)
 			(*open_quote) = false;
+		else
+			return (0);
     }
 
-	return (input[*i] == '\0');
+	return (1);
 }
 
-static size_t skip_quotes_until_find_next_space_or_end(char *input, size_t *i)
+static size_t handle_str_len(char *input, uint8_t *token, size_t *i)
 {
-    size_t len;
-	bool open_quote;
+    size_t	len;
+	bool	open_quote;
 
 	len = 0;
 	open_quote = false;
 	
     while (input[*i] != ' ' && input[*i] != '\0')
     {
-		if (len_inside_quotes(input, &open_quote, i, &len))
+		if (!handle_quotes_len(input, &open_quote, &i, &len))
 			return (-1);
-        else
+		else
             len++;
+
 		(*i)++;
 	}
 	
@@ -182,32 +169,22 @@ bool	tokenisation(char *input, t_token **tokens)
 {
 	char 		*str;
 	uint8_t		token;
-	size_t		str_start;
-	int64_t		str_len;
-	size_t		str_end;
 	size_t		i;
 	
+	str = NULL;
 	i = 0;
-	token = 0;
+	
 	while (i < ft_strlen(input)) //input[i] != '\0'
 	{
-		//fct extract_str
-		str_start = skip_space(input, &i); //str_start
-		str_len = skip_quotes_until_find_next_space_or_end(input, &i);
-		if (str_len == -1)
-			return (EXIT_FAILURE);	//error open_quotes
-
-		str_end = i;
-		str = extract_str(input, str_start, str_end, str_len);
+		token = 0;
+		str = extract_str(input, skip_space(input, &i), handle_str_len(input, &token, &i), i);
 		if (!str)
 			return (EXIT_FAILURE);
 		
-		//fct token
 		if (!token)
 			token = wich_token(str);
 		
 		add_to_token_list(tokens, token, str);
-		token = 0;
 		free(str);
         i++;
 	}

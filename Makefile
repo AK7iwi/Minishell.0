@@ -4,7 +4,7 @@ SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
 SRCS			:= main.c \
-					lexer/token.c lexer/quote.c \
+					lexer/token.c \
 					syner/parse_token.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c
