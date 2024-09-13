@@ -25,9 +25,9 @@
 #define TOKEN_PIPE                  2  // |
 #define TOKEN_SIMPLE_REDIRECT_IN    3  // <
 #define TOKEN_SIMPLE_REDIRECT_OUT   4  // >
-#define TOKEN_DOUBLE_REDIRECT_IN    5  // <<(here_doc)
+#define TOKEN_DOUBLE_REDIRECT_IN    5  // << (here_doc)
 #define TOKEN_DOUBLE_REDIRECT_OUT   6  // >>
-#define TOKEN_ENV_VARIABLE          7  // $
+#define TOKEN_ENV_VAR         		7  // $
 #define TOKEN_AND                   8 // &&
 #define TOKEN_OR                    9 // ||
 #define TOKEN_OPEN_PAREN            10 // (
@@ -41,14 +41,14 @@ typedef struct s_cmd
 {
     struct s_cmd *prev;
     struct s_cmd *next;
-} t_cmd;
+}	t_cmd;
 
 typedef struct s_env_list
 {
     char *str;
     struct s_env_list *prev;
     struct s_env_list *next;
-} t_env_list;
+}	t_env_list;
 
 typedef struct s_token
 {
@@ -74,19 +74,20 @@ typedef struct s_data
 /* parse_token.c */
 
 bool 	parsing(t_token *tokens);
-bool check_syntax_errors(t_token *tokens);
+bool 	check_syntax_errors(t_token *tokens);
 
 
 //**********************************************//
 //					LEXER    					//
 //**********************************************//
 
-/* quote.c */
-char	*extract_str_from_quotes(char *line, bool handle_quotes);
-bool    is_quote(char c);
+/* str_len.c */
+size_t	handle_str_len(char *input, size_t **i);
+
+/* handle_str.c */
+char*	extract_str(char *input, uint8_t *token, size_t *index);
 
 /* token.c */
-uint8_t wich_token(char *input);
 bool	tokenisation(char *input, t_token **tokens);
 
 //**********************************************//
@@ -110,7 +111,7 @@ void	init_struct(t_data *data);
 //**********************************************//
 
 /* free.c */
-void 	free_array(char **array);
+// void 	free_array(char **array);
 void	free_token(t_token **tokens);
 void	free_all(t_data *data);
 

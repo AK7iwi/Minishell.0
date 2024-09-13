@@ -4,7 +4,6 @@ Valgrind without readline leaks:
 valgrind --suppressions="srcs/utils/readline_by_pass.txt" --leak-check=full --show-leak-kinds=all ./minishell
 
 
-
 Test: 
 
 echo "|"|

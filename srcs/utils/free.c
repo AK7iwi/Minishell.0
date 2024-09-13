@@ -6,23 +6,23 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/06 12:58:52 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:16:09 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_array(char **array)
-{
-    int i = 0;
+// void free_array(char **array)
+// {
+//     int i = 0;
 
-    while (array[i])
-    {
-        free(array[i]);
-        i++;
-    }
-    free(array);
-}
+//     while (array[i])
+//     {
+//         free(array[i]);
+//         i++;
+//     }
+//     free(array);
+// }
 
 void	free_token(t_token **tokens)
 {
