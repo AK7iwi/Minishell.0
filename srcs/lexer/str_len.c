@@ -6,54 +6,53 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:20:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/13 18:07:23 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:49:53 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	handle_quotes_len(char *input, bool *open_quote, size_t ***i, size_t *len)
+bool	handle_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i)
 {
 	char quote_char;
 
 	quote_char = '\0';
 
-	if ((input[***i] == '\'' || input[***i] == '\"') && !(*open_quote)) 
+	if ((input[*i] == '\'' || input[*i] == '\"')) 
     {
-		(*open_quote) = true;
-        quote_char = input[***i];
-        (***i)++;
-        while (input[***i] != quote_char && input[***i] != '\0')
+        quote_char = input[*i];
+        (*i)++;
+        while (input[*i] != quote_char && input[*i] != '\0')
         {
-			(*len)++;
-            (***i)++;
+			if (input[*i] == '$' && quote_char == '\"')
+				(*t) = TOKEN_ENV_VAR;
+			(*str_len)++;
+            (*i)++;
         }
-	
-        if (input[***i] == quote_char)
-			(*open_quote) = false;
-		else
-			return (0);
+		(*str_len)--; //find a cleaner way 
+        if (input[*i] != quote_char) //verif if open quote
+			return (1);
     }
 
-	return (1);
+	return (0);
 }
 
-size_t handle_str_len(char *input, size_t **i)
+ssize_t handle_str_len(char *input, uint8_t *token, size_t *i)
 {
-	bool	open_quote;
-    size_t	len;
+    ssize_t	str_len;
 
-	open_quote = false;
-	len = 0;
+	str_len = 0;
 	
-    while (input[**i] != ' ' && input[**i] != '\0')
+    while (input[*i] != ' ' && input[*i] != '\0')
     {
-		if (!handle_quotes_len(input, &open_quote, &i, &len))
+		if (handle_quotes_len(input, &str_len, token, i))
 			return (-1);
+		if (input[*i] == '$')
+			(*token) = TOKEN_ENV_VAR;
 		else
-            len++;
-		(**i)++;
+        	str_len++;
+		(*i)++;
 	}
 	
-    return (len);
+    return (str_len);
 }

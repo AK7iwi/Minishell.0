@@ -82,7 +82,8 @@ bool 	check_syntax_errors(t_token *tokens);
 //**********************************************//
 
 /* str_len.c */
-size_t	handle_str_len(char *input, size_t **i);
+bool	handle_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i);
+ssize_t handle_str_len(char *input, uint8_t *token, size_t *i);
 
 /* handle_str.c */
 char*	extract_str(char *input, uint8_t *token, size_t *index);

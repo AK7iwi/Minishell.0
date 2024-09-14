@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/13 17:57:39 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:39:26 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,25 @@ static	void add_to_token_list(t_token **tokens, uint8_t input_type, char *str)
     new_node->prev = last;
 }
 
-static	uint8_t wich_token(char *input)
+static	uint8_t wich_token(char *str)
 {
-    if (input[0] == '|' && !input[1])
+    if (str[0] == '|' && !str[1])
         return (TOKEN_PIPE);
-    else if (input[0] == '<' && !input[1])
+    else if (str[0] == '<' && !str[1])
         return (TOKEN_SIMPLE_REDIRECT_IN);
-    else if (input[0] == '>' && !input[1])
+    else if (str[0] == '>' && !str[1])
         return (TOKEN_SIMPLE_REDIRECT_OUT);
-    else if (input[0] == '<' && input[1] == '<' && !input[2])
+    else if (str[0] == '<' && str[1] == '<' && !str[2])
         return (TOKEN_DOUBLE_REDIRECT_IN);
-    else if (input[0] == '>' && input[1] == '>' && !input[2])
+    else if (str[0] == '>' && str[1] == '>' && !str[2])
         return (TOKEN_DOUBLE_REDIRECT_OUT);
-    else if (input[0] == '&' && input[1] == '&' && !input[2])
+    else if (str[0] == '&' && str[1] == '&' && !str[2])
         return (TOKEN_AND);
-    else if (input[0] == '|' && input[1] == '|' && !input[2])
+    else if (str[0] == '|' && str[1] == '|' && !str[2])
         return (TOKEN_OR);
-    else if (input[0] == '(' && !input[1])
+    else if (str[0] == '(' && !str[1])
         return (TOKEN_OPEN_PAREN);
-    else if (input[0] == ')' && !input[1])
+    else if (str[0] == ')' && !str[1])
         return (TOKEN_CLOSE_PAREN);
    
     return (TOKEN_WORD);
@@ -72,7 +72,7 @@ bool	tokenisation(char *input, t_token **tokens)
 	str = NULL;
 	i = 0;
 	
-	while (i < ft_strlen(input)) //input[i] != '\0'
+	while (i < ft_strlen(input))
 	{
 		token = 0;
 		str = extract_str(input, &token, &i);
