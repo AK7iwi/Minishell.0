@@ -6,7 +6,13 @@ valgrind --suppressions="srcs/utils/readline_by_pass.txt" --leak-check=full --sh
 
 Test: 
 
-echo "|"|
+a) Cas ou l'input finit par un pipe
+ls |
+cat |
 
-SH_LVL 
+b) special char : ? * #, ...
+
+c) echo "|"|
+
+d)SH_LVL 
 

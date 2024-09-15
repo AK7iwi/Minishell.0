@@ -1,0 +1,9 @@
+AST:
+
+associatives a droite
+() = 4; 
+>, >>, < = 3; 
+
+associatives a gauche
+| = 2; 
+&&, || = 1;
