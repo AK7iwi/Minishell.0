@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/14 17:20:51 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:19:21 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int main(int argc, char **argv, char **envp)
 		
         if (tokenisation(input, &data.token))
 			return (free_all(&data), EXIT_FAILURE);
+        if (!check_syntax_errors(&data.token))
+            return (free_all(&data), EXIT_FAILURE);
 		print_token_list(data.token);
     	free_token(&data.token);
     }
