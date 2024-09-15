@@ -1,17 +1,1 @@
-OK
-
-Parser rules:
-
-Premier token = TOKEN_WORD
-
-Dernier token = TOKEN_WORD
-
-Si pipe:
-
-TOKEN_WORD avant ou EXPAND
-
-Autre
-
-TOKEN_WORD avant ou pipe ou EXPAND
-
-TOKEN_WORD apres OU EXPAND 
+Closed parenthese

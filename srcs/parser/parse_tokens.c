@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 17:01:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:03:56 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ bool parse_tokens(t_data *data)
 			
         current = current->next;
     }
+	
     return (EXIT_SUCCESS);
 }

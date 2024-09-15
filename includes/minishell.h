@@ -84,7 +84,7 @@ bool	handle_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i);
 ssize_t handle_str_len(char *input, uint8_t *token, size_t *i);
 
 /* handle_str.c */
-char*	extract_str(char *input, uint8_t *token, size_t *index);
+char*	extract_str(char *input, uint8_t *token, size_t *index, t_data *data);
 
 /* token.c */
 bool	tokenisation(char *input, t_data *data);
@@ -110,7 +110,7 @@ bool	tokenisation(char *input, t_data *data);
 void	msg_error(t_error error);
 
 /* free.c */
-void	free_token(t_token **tokens);
+void	free_loop(t_data *data);
 void	free_all(t_data *data);
 
 /* Libft */

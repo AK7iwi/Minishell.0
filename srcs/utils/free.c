@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 16:38:47 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:23:19 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_token(t_token **tokens)
+static inline void	free_token(t_token **tokens)
 {
 	t_token	*tmp;
 	t_token	*current;
@@ -28,6 +28,19 @@ void	free_token(t_token **tokens)
 		free(tmp);
 	}
 	*tokens = NULL;
+}
+
+static inline void 	free_error(t_error *error)
+{
+	error->error_g = 0;
+}
+
+void	free_loop(t_data *data)
+{
+	if (data->error.error_g)
+		free_error(&data->error);
+	if (data->token)
+		free_token(&data->token);
 }
 
 void	free_all(t_data *data)

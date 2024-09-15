@@ -19,4 +19,6 @@ void	msg_error(t_error error)
 		ft_putstr(E_PIPE, 2);
 	if (error.error_g & ERROR_REDIR)
 		ft_putstr(E_REDIR, 2);
+	if (error.error_g & ERROR_MALLOC)
+		ft_putstr(E_MALLOC, 2);
 }

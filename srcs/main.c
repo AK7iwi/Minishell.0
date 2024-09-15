@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 17:05:38 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:24:18 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ static void	init_struct(t_data *data)
 static inline bool is_arg(int argc, t_error *error)
 {
 	if (argc != 1)
-	{
-		error->error_g |= ERROR_ARG;
-		return (true);
-	}
+		return (error->error_g |= ERROR_ARG, true);
 
 	return (false);
 }
@@ -58,16 +55,16 @@ int main(int argc, char **argv, char **envp)
         //protect input
         input = readline("Minishell> ");
 		if (!input)
-			return (free_all(&data), EXIT_FAILURE);
+			return (free_all(&data), EXIT_FAILURE); // error
 		
         if (tokenisation(input, &data) || parse_tokens(&data))
 		{
 			msg_error(data.error);
-			free_all(&data);
+			free_loop(&data);
 		}
 		
 		print_token_list(data.token);
-    	free_token(&data.token);
+		free_loop(&data);
     }
 	
 	free_all(&data);

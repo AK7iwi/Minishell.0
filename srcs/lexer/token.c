@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 17:50:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:05:06 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,10 @@ bool	tokenisation(char *input, t_data *data)
 	
 	str = NULL;
 	i = 0;
-	
 	while (i < ft_strlen(input))
 	{
 		token = 0;
-		str = extract_str(input, &token, &i);
+		str = extract_str(input, &token, &i, data);
 		if (!str)
 			return (EXIT_FAILURE);
 		
@@ -85,7 +84,7 @@ bool	tokenisation(char *input, t_data *data)
 			token = wich_token(str);
 		
 		if (add_to_token_list(&data->token, token, str))
-			return (EXIT_FAILURE);
+			return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
 		
 		free(str);
         i++;
