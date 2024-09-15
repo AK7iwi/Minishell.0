@@ -73,7 +73,7 @@ typedef struct s_data
 
 /* parse_token.c */
 
-bool parse_tokens(t_token **tokens);
+bool parse_tokens(t_data *data);
 
 //**********************************************//
 //					LEXER    					//
@@ -87,7 +87,7 @@ ssize_t handle_str_len(char *input, uint8_t *token, size_t *i);
 char*	extract_str(char *input, uint8_t *token, size_t *index);
 
 /* token.c */
-bool	tokenisation(char *input, t_token **tokens);
+bool	tokenisation(char *input, t_data *data);
 
 //**********************************************//
 //					MAIN    					//

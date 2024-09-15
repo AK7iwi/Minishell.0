@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 16:03:49 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 17:01:59 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,14 @@
 # define COLOR_RED     "\x1b[31m"
 
 # define ERROR_ARG				0x1
+# define ERROR_QUOTE			0x2
+# define ERROR_PIPE				0x4
+# define ERROR_REDIR			0x8
 
-# define E_PARS_ARGS "Error\nNo need argument.\n"
+# define E_ARGS		"Error\nNo need argument.\n"
+# define E_QUOTE	"Error\nClose you quotes.\n"
+# define E_PIPE 	"Error\nInvalid use of pipe.\n"
+# define E_REDIR 	"Error\ninvalid use of redirection.\n"
 
 /*Struct errors*/
 

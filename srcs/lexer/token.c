@@ -6,20 +6,20 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/14 17:39:26 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 17:50:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void add_to_token_list(t_token **tokens, uint8_t input_type, char *str) 
+static	bool add_to_token_list(t_token **tokens, uint8_t input_type, char *str) 
 {
     t_token *new_node;
     t_token *last;
 
     new_node = malloc(sizeof(t_token));
     if (!new_node)
-        return ;
+        return (EXIT_FAILURE);
 
     new_node->type = input_type;
     new_node->str = ft_strdup(str);
@@ -29,7 +29,7 @@ static	void add_to_token_list(t_token **tokens, uint8_t input_type, char *str)
     {
         new_node->prev = NULL;
         *tokens = new_node;  
-        return ;
+        return (EXIT_SUCCESS);
     }
     last = *tokens;
     while (last->next)
@@ -37,6 +37,8 @@ static	void add_to_token_list(t_token **tokens, uint8_t input_type, char *str)
 
     last->next = new_node;
     new_node->prev = last;
+
+	return (EXIT_SUCCESS);
 }
 
 static	uint8_t wich_token(char *str)
@@ -63,7 +65,7 @@ static	uint8_t wich_token(char *str)
     return (TOKEN_WORD);
 }
 
-bool	tokenisation(char *input, t_token **tokens)
+bool	tokenisation(char *input, t_data *data)
 {
 	char 		*str;
 	uint8_t		token;
@@ -82,10 +84,12 @@ bool	tokenisation(char *input, t_token **tokens)
 		if (!token)
 			token = wich_token(str);
 		
-		add_to_token_list(tokens, token, str);
+		if (add_to_token_list(&data->token, token, str))
+			return (EXIT_FAILURE);
+		
 		free(str);
         i++;
 	}
-		
+	
 	return (EXIT_SUCCESS);
 }

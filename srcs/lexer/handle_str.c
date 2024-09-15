@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/14 17:48:57 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 17:49:31 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ char*	extract_str(char *input, uint8_t *token, size_t *index)
 	str_start = skip_space(input, index);
 	str_len = handle_str_len(input, token, index);
 	if (str_len < 0)
-		return (NULL);
+		return (NULL); //error quote 
 
 	str = copy_str(input, str_start, index, str_len);
 	if (!str)
-		return (NULL);
+		return (NULL); //error_malloc
 	
 	return (str);
 }

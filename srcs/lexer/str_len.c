@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:20:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/14 17:55:02 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 17:35:21 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ bool	handle_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i)
         }
 		(*str_len)--; //find a cleaner way 
         if (input[*i] != quote_char) //verif if open quote
-			return (1);
+			return (EXIT_FAILURE);
     }
 	
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 ssize_t handle_str_len(char *input, uint8_t *token, size_t *i)
