@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/08 17:34:15 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:03:49 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define ERROR_ARG				0x1
 
-# define E_PARS_ARGS "Error\nNeed a single argument, a .cub map.\n"
+# define E_PARS_ARGS "Error\nNo need argument.\n"
 
 /*Struct errors*/
 
@@ -39,7 +39,6 @@
 typedef struct s_error
 {
 	uint32_t	error_g;
-}				t_error;
-
+}	t_error;
 
 #endif /* ERRORS_H */

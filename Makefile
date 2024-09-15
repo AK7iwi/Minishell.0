@@ -5,7 +5,8 @@ OBJ_DIR			:= obj
 
 SRCS			:= main.c \
 					lexer/token.c lexer/handle_str.c lexer/str_len.c \
-					syner/parse_token.c \
+					parser/parse_tokens.c \
+					utils/error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

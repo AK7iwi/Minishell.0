@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 14:05:28 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:42:19 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_token_list(t_token *head)
+static void print_token_list(t_token *head)
 {
     t_token *current = head;
 		
@@ -23,27 +23,35 @@ void print_token_list(t_token *head)
     }
 }
 
-void	init_struct(t_data *data)
+static void	init_struct(t_data *data)
 {
-	data->error = NULL;
+	data->error.error_g = 0;
 	data->token = NULL;
+}
+
+static inline bool is_arg(int argc, t_error *error)
+{
+	if (argc != 1)
+	{
+		error->error_g |= ERROR_ARG;
+		return (true);
+	}
+
+	return (false);
 }
 
 int main(int argc, char **argv, char **envp)
 {
-	(void)argv;
-    (void)envp; //tmp
-
 	t_data	data;
 	char	*input;
 
+	(void)argv;
+    (void)envp; //tmp
+	
 	init_struct(&data);
 	
-    if (argc != 1)
-    {
-        printf("Get your arguments out of the way");
-        return (EXIT_FAILURE);
-	}
+	if (is_arg(argc, &data.error))
+		return (msg_error(data.error), EXIT_FAILURE);
 	
     while (1)
     {
@@ -52,10 +60,13 @@ int main(int argc, char **argv, char **envp)
 		if (!input)
 			return (free_all(&data), EXIT_FAILURE);
 		
-        if (tokenisation(input, &data.token))
+		//parsing 
+        if (tokenisation(input, &data.token)) //|| !parse_tokens(&data.token)
+		{
+			msg_error(data.error);
 			free_all(&data);
-        if (!check_syntax_errors(&data.token))
-            free_all(&data);
+		}
+		
 		print_token_list(data.token);
     	free_token(&data.token);
     }

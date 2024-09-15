@@ -21,3 +21,13 @@ char	*ft_strdup(const char *s)
 	tab[i] = 0;
 	return (tab);
 }
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		*(unsigned char *)(s + i++) = (unsigned char)c;
+	return (s);
+}

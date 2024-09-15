@@ -37,18 +37,18 @@
 //					STRUCTURES					//
 //**********************************************//
 
-typedef struct s_cmd
-{
-    struct s_cmd *prev;
-    struct s_cmd *next;
-}	t_cmd;
-
 typedef struct s_env_list
 {
     char *str;
     struct s_env_list *prev;
     struct s_env_list *next;
 }	t_env_list;
+
+typedef struct s_cmd
+{
+    struct s_cmd *prev;
+    struct s_cmd *next;
+}	t_cmd;
 
 typedef struct s_token
 {
@@ -61,21 +61,19 @@ typedef struct s_token
 
 typedef struct s_data
 {
-    t_env_list	*env;
+	t_error 	error;
     t_token		*token;
     t_cmd 		*cmd;
-	t_cmd 		*error;
+    t_env_list	*env;
 } 	t_data;
 
 //**********************************************//
-//					SYNER    					//
+//					Parser   					//
 //**********************************************//
 
 /* parse_token.c */
 
-bool 	parsing(t_token *tokens);
-bool    check_syntax_errors(t_token **tokens);
-
+bool parse_tokens(t_token **tokens);
 
 //**********************************************//
 //					LEXER    					//
@@ -95,9 +93,6 @@ bool	tokenisation(char *input, t_token **tokens);
 //					MAIN    					//
 //**********************************************//
 
-/* init_struct.c */
-void	init_struct(t_data *data);
-
 // /* env_utils.c */
 // void free_env_list(t_env_list **lst);
 // char *get_env_value(char *var, t_env_list *env);
@@ -111,8 +106,10 @@ void	init_struct(t_data *data);
 //					UTILS   					//
 //**********************************************//
 
+/* msg_error.c*/
+void	msg_error(t_error error);
+
 /* free.c */
-// void 	free_array(char **array);
 void	free_token(t_token **tokens);
 void	free_all(t_data *data);
 
@@ -130,10 +127,5 @@ char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
-
-
-///test 
-
-void print_token_list(t_token *head);
 
 #endif /* MINISHELL_H */
