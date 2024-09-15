@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 12:20:06 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:00:19 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ bool check_syntax_errors(t_token **tokens)
                 return (false);
             }
         }
-        else if (current->type == TOKEN_SIMPLE_REDIRECT_IN || current->type == TOKEN_SIMPLE_REDIRECT_OUT ||
-                 current->type == TOKEN_DOUBLE_REDIRECT_IN || current->type == TOKEN_DOUBLE_REDIRECT_OUT)
+        else if (current->type == TOKEN_SIMPLE_REDIRECT_IN 
+				|| current->type == TOKEN_SIMPLE_REDIRECT_OUT 
+				|| current->type == TOKEN_DOUBLE_REDIRECT_IN 
+				|| current->type == TOKEN_DOUBLE_REDIRECT_OUT)
         {
             if (!current->next || current->next->type != TOKEN_WORD)
             {

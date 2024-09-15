@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 12:19:21 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 14:05:28 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void print_token_list(t_token *head)
 
 void	init_struct(t_data *data)
 {
-	data->token = NULL;
 	data->error = NULL;
+	data->token = NULL;
 }
 
 int main(int argc, char **argv, char **envp)
@@ -53,9 +53,9 @@ int main(int argc, char **argv, char **envp)
 			return (free_all(&data), EXIT_FAILURE);
 		
         if (tokenisation(input, &data.token))
-			return (free_all(&data), EXIT_FAILURE);
+			free_all(&data);
         if (!check_syntax_errors(&data.token))
-            return (free_all(&data), EXIT_FAILURE);
+            free_all(&data);
 		print_token_list(data.token);
     	free_token(&data.token);
     }
