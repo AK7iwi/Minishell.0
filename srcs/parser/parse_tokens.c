@@ -6,18 +6,18 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 18:03:56 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/15 19:34:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static inline bool check_separators(t_token *current)
+static inline bool check_redir(t_token *current)
 {
 	return (!current->next || current->next->type != TOKEN_WORD);
 }
 
-static inline bool is_separator(uint8_t type)
+static inline bool is_redir(uint8_t type)
 {
 	return (type == TOKEN_SIMPLE_REDIRECT_IN 
 		|| type == TOKEN_SIMPLE_REDIRECT_OUT 
@@ -25,7 +25,7 @@ static inline bool is_separator(uint8_t type)
 		|| type == TOKEN_DOUBLE_REDIRECT_OUT);
 }
 
-static inline bool check_pipe(t_token *current)
+static inline bool check_separator(t_token *current)
 {
 	return (!current->prev || current->prev->type != TOKEN_WORD);
 }
@@ -37,17 +37,20 @@ bool parse_tokens(t_data *data)
     current = data->token;
     while (current)
     {
-        if (current->type == TOKEN_PIPE)
+        if (current->type == TOKEN_PIPE 
+			|| current->type == TOKEN_AND 
+			|| current->type == TOKEN_OR)
 		{
-			if (check_pipe(current))
+			if (check_separator(current))
 				return (data->error.error_g |= ERROR_PIPE, EXIT_FAILURE);
 		}
-        else if (is_separator(current->type))
+        else if (is_redir(current->type))
 		{
-			if (check_separators(current))
+			if (check_redir(current))
 				return (data->error.error_g |= ERROR_REDIR, EXIT_FAILURE);
 		}
-			
+		
+		
         current = current->next;
     }
 	
