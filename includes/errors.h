@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 17:57:11 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:43:49 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@
 # define ERROR_QUOTE			0x4
 # define ERROR_PIPE				0x8
 # define ERROR_REDIR			0x10
+# define ERROR_PARAN			0x20
 
 # define E_MALLOC	"Error\nMalloc fail error.\n"
-# define E_ARGS		"Error\nNo need argument.\n"
+# define E_ARGS		"Error\nNo need argument bro.\n"
 # define E_QUOTE	"Error\nClose you quotes.\n"
 # define E_PIPE 	"Error\nInvalid use of pipe.\n"
-# define E_REDIR 	"Error\ninvalid use of redirection.\n"
+# define E_REDIR 	"Error\nInvalid use of redirection.\n"
+# define E_PARAN 	"Error\nClose the paranthese bro.\n"
 
 /*Struct errors*/
 

@@ -11,6 +11,8 @@ static void	ft_putstr(char *str, int fd)
 
 void	msg_error(t_error error)
 {
+	if (error.error_g & ERROR_MALLOC)
+		ft_putstr(E_MALLOC, 2);
 	if (error.error_g & ERROR_ARG)
 		ft_putstr(E_ARGS, 2);
 	if (error.error_g & ERROR_QUOTE)
@@ -19,6 +21,6 @@ void	msg_error(t_error error)
 		ft_putstr(E_PIPE, 2);
 	if (error.error_g & ERROR_REDIR)
 		ft_putstr(E_REDIR, 2);
-	if (error.error_g & ERROR_MALLOC)
-		ft_putstr(E_MALLOC, 2);
+	if (error.error_g & ERROR_PARAN)
+		ft_putstr(E_PARAN, 2);
 }
