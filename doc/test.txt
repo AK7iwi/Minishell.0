@@ -18,3 +18,5 @@ d)SH_LVL
 
 e) (( ))
 
+f) echo \
+

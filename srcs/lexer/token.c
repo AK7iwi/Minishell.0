@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 14:12:39 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:10:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static	uint8_t wich_token(char *str)
         return (TOKEN_SIMPLE_REDIRECT_IN);
     else if (str[0] == '>' && !str[1])
         return (TOKEN_SIMPLE_REDIRECT_OUT);
+	else if (str[0] == '$')
+        return (TOKEN_ENV_VAR);
     else if (str[0] == '<' && str[1] == '<' && !str[2])
         return (TOKEN_DOUBLE_REDIRECT_IN);
     else if (str[0] == '>' && str[1] == '>' && !str[2])
@@ -66,8 +68,61 @@ static	uint8_t wich_token(char *str)
 }
 inline	bool	is_special_char(char *input, size_t *i)
 {
-	return (input[*i] == '|' || input[*i] == '<' || input[*i] == '>' || input[*i] == '&');
-}	
+	return (input[*i] == '|' 
+			|| input[*i] == '<' 
+			|| input[*i] == '>' 
+			|| input[*i] == '&' 
+			|| input[*i] == '(' 
+			|| input[*i] == ')'
+			|| input[*i] == '$' );
+}
+
+static char *extract_special_char(t_data *data, char *input, size_t *i)
+{
+	char *str;
+	size_t len;
+
+	str = NULL;
+	len = 0;
+	size_t j = 0;
+	size_t start;
+	start = (*i);
+	char special_char;
+
+	special_char = '\0';
+
+	if (input[*i] == '$')
+	{
+		while(input[*i] != SPACE && input[*i] != NULL_CHAR)
+		{
+			len++;
+			(*i)++;
+		}
+	}
+	else if (is_special_char(input, i))
+	{
+		special_char = input[*i];
+		(*i)++;
+		if (input[*i] == special_char)
+		{
+			(*i)++;
+			len = 2;
+		}
+		else 
+			len = 1;
+	}
+
+	str = malloc(len + 1);
+	if (!str)
+		return (data->error.error_g |= ERROR_MALLOC, NULL);
+
+	while (start < (*i))
+		str[j++] = input[start++];
+
+	str[j] = '\0';
+	
+	return (str);
+}
 bool	tokenisation(t_data *data, char *input)
 {
 	char 		*str_token;
@@ -91,17 +146,21 @@ bool	tokenisation(t_data *data, char *input)
 				return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
 		
 		free(str_token);
+		token = 0;
 		
-		// str_token = extract_special_char(input, &i, data);
-		if (is_special_char(input, &i))
-		{
-			str_token = "|";
-			token = wich_token(str_token);
+		str_token = extract_special_char(data, input, &i);
+		if (!str_token)
+			return (EXIT_FAILURE);
+			
+		token = wich_token(str_token);
+		
+		if (ft_strlen(str_token))
 			if (add_to_token_list(&data->token, token, str_token))
 				return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
-		}
 		
-        i++;
+		printf("input_end:%c\n", input[i]);
+		free(str_token);
+        // i++;
 	}
 	
 	return (EXIT_SUCCESS);
