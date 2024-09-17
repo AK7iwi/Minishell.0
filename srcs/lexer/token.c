@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 15:14:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:54:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ static	uint8_t wich_token(char *str)
         return (TOKEN_OPEN_PAREN);
     else if (str[0] == ')' && !str[1])
         return (TOKEN_CLOSE_PAREN);
-   
-    return (TOKEN_WORD);
+	else if (str[0] == ')' && !str[1])
+        return (TOKEN_CLOSE_PAREN);
+	// else if (str[0] == '*' && !str[1])
+    //     return (TOKEN_WILDCARD);
+    return (0);
 }
 inline	bool	is_special_char(char *input, size_t *i)
 {
@@ -73,8 +76,7 @@ inline	bool	is_special_char(char *input, size_t *i)
 			|| input[*i] == '>' 
 			|| input[*i] == '&' 
 			|| input[*i] == '(' 
-			|| input[*i] == ')'
-			|| input[*i] == '$');
+			|| input[*i] == ')'); //|| input[*i] == '*')
 }
 
 static char *extract_special_char(t_data *data, char *input, size_t *i)
@@ -91,21 +93,20 @@ static char *extract_special_char(t_data *data, char *input, size_t *i)
 
 	special_char = '\0';
 
-	if (input[*i] == '$')
-	{
-		while(input[*i] != SPACE && input[*i] != NULL_CHAR)
-		{
-			len++;
-			(*i)++;
-		}
-	}
-	else if (is_special_char(input, i))
+	// if (input[*i] == '$')
+	// {
+	// 	while(input[*i] != SPACE && input[*i] != NULL_CHAR)
+	// 	{
+	// 		len++;
+	// 		(*i)++;
+	// 	}
+	// }
+	if (is_special_char(input, i))
 	{
 		special_char = input[*i];
 		(*i)++;
 		if (input[*i] == special_char && input[*i] != '(' && input[*i] != ')')
 		{
-			printf("Je rentre ici\n");
 			(*i)++;
 			len = 2;
 		}
@@ -147,6 +148,7 @@ bool	tokenisation(t_data *data, char *input)
 				return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
 		
 		free(str_token);
+		
 		token = 0;
 		
 		str_token = extract_special_char(data, input, &i);

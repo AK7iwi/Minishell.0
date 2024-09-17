@@ -1,4 +1,11 @@
-Closed parenthese
+
+>> l OK
+
+<< l pas OK
+
+echo | pas OK
+
+| ls pas ok
 
 
 

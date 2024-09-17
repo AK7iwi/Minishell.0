@@ -1,3 +1,12 @@
 TOKENISATIONS
 
 Special char (#,?, $)
+
+Verif space before special char:
+ex:
+
+echo pp$USER
+
+echo pp $USER
+
+echo '$USER'

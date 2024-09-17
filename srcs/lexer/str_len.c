@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:20:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 12:39:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:53:03 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ ssize_t handle_str_len(char *input, uint8_t *token, size_t *i)
     {
 		if (handle_quotes_len(input, &str_len, token, i))
 			return (-1);
+		if (input[*i] == '$')
+			(*token) = TOKEN_ENV_VAR;
 		else
         	str_len++;
 		(*i)++;
