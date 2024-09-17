@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 15:10:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:14:27 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ inline	bool	is_special_char(char *input, size_t *i)
 			|| input[*i] == '&' 
 			|| input[*i] == '(' 
 			|| input[*i] == ')'
-			|| input[*i] == '$' );
+			|| input[*i] == '$');
 }
 
 static char *extract_special_char(t_data *data, char *input, size_t *i)
@@ -103,8 +103,9 @@ static char *extract_special_char(t_data *data, char *input, size_t *i)
 	{
 		special_char = input[*i];
 		(*i)++;
-		if (input[*i] == special_char)
+		if (input[*i] == special_char && input[*i] != '(' && input[*i] != ')')
 		{
+			printf("Je rentre ici\n");
 			(*i)++;
 			len = 2;
 		}
@@ -157,10 +158,8 @@ bool	tokenisation(t_data *data, char *input)
 		if (ft_strlen(str_token))
 			if (add_to_token_list(&data->token, token, str_token))
 				return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
-		
-		printf("input_end:%c\n", input[i]);
+			
 		free(str_token);
-        // i++;
 	}
 	
 	return (EXIT_SUCCESS);
