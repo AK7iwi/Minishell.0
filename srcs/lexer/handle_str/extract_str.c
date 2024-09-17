@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_str.c                                       :+:      :+:    :+:   */
+/*   extract_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 14:09:43 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:01:31 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char*	extract_str(t_data *data, char *input, uint8_t *token, size_t *index)
 	char*	str;
 	
 	str_start = skip_space(input, index);
-	str_len = handle_str_len(input, token, index);
+	str_len = get_str_len(input, token, index);
 	if (str_len < 0)
 		return (data->error.error_g |= ERROR_QUOTE, NULL);
 	
