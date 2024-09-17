@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/15 18:05:06 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:12:39 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,43 @@ static	uint8_t wich_token(char *str)
    
     return (TOKEN_WORD);
 }
-
-bool	tokenisation(char *input, t_data *data)
+inline	bool	is_special_char(char *input, size_t *i)
 {
-	char 		*str;
+	return (input[*i] == '|' || input[*i] == '<' || input[*i] == '>' || input[*i] == '&');
+}	
+bool	tokenisation(t_data *data, char *input)
+{
+	char 		*str_token;
 	uint8_t		token;
 	size_t		i;
 	
-	str = NULL;
+	str_token = NULL;
 	i = 0;
+	
 	while (i < ft_strlen(input))
-	{
+	{	
 		token = 0;
-		str = extract_str(input, &token, &i, data);
-		if (!str)
+		
+		str_token = extract_str(data, input, &token, &i);
+		if (!str_token)
 			return (EXIT_FAILURE);
-		
 		if (!token)
-			token = wich_token(str);
+			token = TOKEN_WORD;
+		if (ft_strlen(str_token))
+			if (add_to_token_list(&data->token, token, str_token))
+				return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
 		
-		if (add_to_token_list(&data->token, token, str))
-			return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
+		free(str_token);
 		
-		free(str);
+		// str_token = extract_special_char(input, &i, data);
+		if (is_special_char(input, &i))
+		{
+			str_token = "|";
+			token = wich_token(str_token);
+			if (add_to_token_list(&data->token, token, str_token))
+				return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
+		}
+		
         i++;
 	}
 	

@@ -21,6 +21,8 @@
 //					DEFINES						//
 //**********************************************//
 
+/* Tokens */
+
 #define TOKEN_WORD                  1
 #define TOKEN_PIPE                  2  // |
 #define TOKEN_SIMPLE_REDIRECT_IN    3  // <
@@ -32,6 +34,13 @@
 #define TOKEN_OR                    9 // ||
 #define TOKEN_OPEN_PAREN            10 // (
 #define TOKEN_CLOSE_PAREN           11 // )
+
+/* Special characters */
+
+#define SPACE 						' '
+#define NULL_CHAR					'\0'
+#define S_QUOTE						'\''
+#define D_QUOTE						'\"'
 
 //**********************************************//
 //					STRUCTURES					//
@@ -84,10 +93,12 @@ bool	handle_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i);
 ssize_t handle_str_len(char *input, uint8_t *token, size_t *i);
 
 /* handle_str.c */
-char*	extract_str(char *input, uint8_t *token, size_t *index, t_data *data);
+
+char*	extract_str(t_data *data, char *input, uint8_t *token, size_t *index);
 
 /* token.c */
-bool	tokenisation(char *input, t_data *data);
+bool	is_special_char(char *input, size_t *i);
+bool	tokenisation(t_data *data, char *input);
 
 //**********************************************//
 //					MAIN    					//

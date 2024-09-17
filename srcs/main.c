@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/16 15:57:47 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:16:08 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	init_struct(t_data *data)
 	data->token = NULL;
 }
 
-static inline bool is_arg(int argc, t_error *error)
+static inline bool is_arg(t_error *error, int argc)
 {
 	if (argc != 1)
 		return (error->error_g |= ERROR_ARG, true);
@@ -47,7 +47,7 @@ int main(int argc, char **argv, char **envp)
 	
 	init_struct(&data);
 	
-	if (is_arg(argc, &data.error))
+	if (is_arg(&data.error, argc))
 		return (msg_error(data.error), EXIT_FAILURE);
 	
     while (1)
@@ -57,9 +57,9 @@ int main(int argc, char **argv, char **envp)
 		if (!input)
 			return (free_all(&data), EXIT_FAILURE); // error
 		
-        if (tokenisation(input, &data) || parse_tokens(&data))
+        if (tokenisation(&data, input) || parse_tokens(&data))
 			msg_error(data.error);
-		else 
+		else
 			print_token_list(data.token);
 		
 		free_loop(&data);

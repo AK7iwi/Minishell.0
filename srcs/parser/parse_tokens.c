@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/16 16:45:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:21:50 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	bool 		check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter)
+static	bool check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter)
 {
 	if (current->type == TOKEN_OPEN_PAREN)
 		(*o_counter)++;
@@ -39,7 +39,8 @@ static bool check_separator(t_token *current)
 	return ((current->type == TOKEN_PIPE 
 			|| current->type == TOKEN_AND 
 			|| current->type == TOKEN_OR) 
-			&& (!current->prev || current->prev->type != TOKEN_WORD));
+			&& ((!current->prev || current->prev->type != TOKEN_WORD) 
+			|| (!current->next || current->next->type != TOKEN_WORD)));
 }
 
 bool parse_tokens(t_data *data)
