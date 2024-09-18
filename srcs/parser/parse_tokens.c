@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 14:29:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:16:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool check_redir(t_token *current)
 		|| current->type == TOKEN_DOUBLE_REDIRECT_OUT
 		|| current->type == TOKEN_SIMPLE_REDIRECT_IN
 		|| current->type == TOKEN_DOUBLE_REDIRECT_IN)
-		&& (!current->next || current->next->type != TOKEN_WORD))
+		&& (!current->next || current->next->type != TOKEN_WORD));
 
 }
 static bool check_separator(t_token *current)
