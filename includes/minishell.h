@@ -88,10 +88,15 @@ bool parse_tokens(t_data *data);
 //					LEXER    					//
 //**********************************************//
 
+/* special_char_len.c */
+uint8_t get_special_char_len(char *input, size_t *i);
 
 /* extract_special_char.c*/
 bool	is_special_char(char *input, size_t *i);
 char*	extract_special_char(t_data *data, char *input, size_t *i);
+
+/* handle_special_char.c */
+bool handle_special_char(t_data *data, char *input, uint8_t *token, size_t *index);
 
 //////////// Handle str ///////////////////
 /* str_len.c */
@@ -99,11 +104,15 @@ bool	get_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i);
 ssize_t	get_str_len(char *input, uint8_t *token, size_t *i);
 
 /* extract_str.c */
-
 char*	extract_str(t_data *data, char *input, uint8_t *token, size_t *index);
 
+/* handle_str.c */
+
+bool handle_str(t_data *data, char *input, uint8_t *token, size_t *index);
+
 /* token.c */
-bool	is_special_char(char *input, size_t *i);
+bool	add_token(t_token **token_struct, uint8_t *token, char *str_token);
+uint8_t wich_token(char *str);
 bool	tokenisation(t_data *data, char *input);
 
 //**********************************************//
