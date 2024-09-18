@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 14:21:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:29:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static	bool check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_count
 
 static bool check_redir(t_token *current)
 {
-	return ((current->type == TOKEN_SIMPLE_REDIRECT_IN 
-		|| current->type == TOKEN_SIMPLE_REDIRECT_OUT 
-		|| current->type == TOKEN_DOUBLE_REDIRECT_IN 
-		|| current->type == TOKEN_DOUBLE_REDIRECT_OUT)
-		&& (!current->next || current->next->type != TOKEN_WORD));
-}
+	return ((current->type == TOKEN_SIMPLE_REDIRECT_OUT 
+		|| current->type == TOKEN_DOUBLE_REDIRECT_OUT
+		|| current->type == TOKEN_SIMPLE_REDIRECT_IN
+		|| current->type == TOKEN_DOUBLE_REDIRECT_IN)
+		&& (!current->next || current->next->type != TOKEN_WORD))
 
+}
 static bool check_separator(t_token *current)
 {	
 	return ((current->type == TOKEN_PIPE 
@@ -42,7 +42,6 @@ static bool check_separator(t_token *current)
 			&& ((!current->prev || current->prev->type != TOKEN_WORD) 
 			|| (!current->next || current->next->type != TOKEN_WORD)));
 }
-
 bool parse_tokens(t_data *data)
 {
     t_token		*current;
