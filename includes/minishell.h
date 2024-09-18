@@ -96,7 +96,7 @@ char*	extract_special_char(t_data *data, char *input, size_t *i);
 
 /* handle_special_char.c */
 bool	is_special_char(char *input, size_t *i);
-bool handle_special_char(t_data *data, char *input, uint8_t *token, size_t *index);
+bool 	handle_special_char(t_data *data, char *input, uint8_t *token, size_t *index);
 
 //////////// Handle str ///////////////////
 /* str_len.c */
