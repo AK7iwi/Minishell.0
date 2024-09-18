@@ -34,7 +34,6 @@
 #define TOKEN_OR                    9 // ||
 #define TOKEN_OPEN_PAREN            10 // (
 #define TOKEN_CLOSE_PAREN           11 // )
-// #define TOKEN_WILDCARD           	12 // *
 
 /* Special characters */
 

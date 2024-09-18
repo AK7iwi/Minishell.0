@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/17 16:01:31 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:29:46 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static	bool	handle_quotes(char *input, char *str, size_t *start, size_t *i)
     {
 		quote_char = input[*start];
        	(*start)++;
-        while (input[*start] != quote_char && input[*start] != '\0')
+        while (input[*start] != quote_char && input[*start] != NULL_CHAR)
 		{
 			str[(*i)] = input[*start];
             (*start)++;
