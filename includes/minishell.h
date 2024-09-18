@@ -74,7 +74,25 @@ typedef struct s_data
     t_token		*token;
     t_cmd 		*cmd;
     t_env_list	*env;
+    t_ast       *ast_root;
 } 	t_data;
+
+typedef enum e_ast_type
+{
+    AST_COMMAND,
+    AST_ARGS,
+    AST_OPERATOR,    
+    AST_REDIR,       
+} t_ast_type;
+
+typedef struct s_ast
+{
+    t_ast_type       type;       // Type de nœud (commande, opérateur, redirection)
+    char        *value;     // Valeur associée (ex: "ls", "|", ">", etc.)
+    
+    struct s_ast *left;     // Pointeur vers le sous-arbre gauche (ex: première commande dans un pipe)
+    struct s_ast *right;    // Pointeur vers le sous-arbre droit (ex: deuxième commande dans un pipe)
+} t_ast;
 
 //**********************************************//
 //					Parser   					//
