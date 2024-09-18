@@ -2,8 +2,6 @@ AST:
 
 https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing
 
-
-
 AST:
 
 associatives a droite

@@ -6,12 +6,21 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:07:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 13:24:11 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:21:56 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+bool	is_special_char(char *input, size_t *i)
+{
+	return (input[*i] == '|' 
+			|| input[*i] == '<' 
+			|| input[*i] == '>' 
+			|| input[*i] == '&' 
+			|| input[*i] == '(' 
+			|| input[*i] == ')');
+}
 bool handle_special_char(t_data *data, char *input, uint8_t *token, size_t *index)
 {
 	char *str_token;

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:03:10 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 12:00:02 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:21:51 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,6 @@ static char* copy_special_char(char *input, size_t start, size_t *end, size_t le
 	str[i] = '\0';
 
 	return (str);
-}
-
-bool	is_special_char(char *input, size_t *i)
-{
-	return (input[*i] == '|' 
-			|| input[*i] == '<' 
-			|| input[*i] == '>' 
-			|| input[*i] == '&' 
-			|| input[*i] == '(' 
-			|| input[*i] == ')');
 }
 char *extract_special_char(t_data *data, char *input, size_t *index)
 {
