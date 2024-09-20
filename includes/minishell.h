@@ -49,11 +49,11 @@
 typedef enum e_ast_type
 {
     AST_COMMAND,
-    AST_ARGS,
-    AST_OPERATOR,    
-    AST_REDIR,       
+    AST_PIPE,
+	AST_AND,
+	AST_OR,
+	AST_SUBSH,
 }	t_ast_type;
-
 
 //**********************************************//
 //					STRUCTURES					//
@@ -66,8 +66,23 @@ typedef struct s_env_list
     struct s_env_list *next;
 }	t_env_list;
 
+typedef struct s_ast
+{
+    t_ast_type  type;
+	t_cmd 		cmd;
+    char        *value;
+    
+    struct s_ast *left;     
+    struct s_ast *right;   
+} 	t_ast;
+
 typedef struct s_cmd
 {
+	char *cmd;
+	char **args;
+	char **i_files;
+	char **o_files;
+	
     struct s_cmd *prev;
     struct s_cmd *next;
 }	t_cmd;

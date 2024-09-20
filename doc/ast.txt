@@ -41,3 +41,17 @@ Une commande comme ls
 Un argument comme -l
 Un fichier comme file.txt
 Ou encore un nombre dans une expression mathématique dans un script.
+
+
+Parenthese exemple:
+
+bash-5.1$ pwd
+/mnt/nfs/homes/mfeldman
+bash-5.1$ (cd .. && pwd)
+/mnt/nfs/homes
+bash-5.1$ pwd
+/mnt/nfs/homes/mfeldman
+bash-5.1$ cd .. && pwd
+/mnt/nfs/homes
+bash-5.1$ pwd
+/mnt/nfs/homes
