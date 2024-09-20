@@ -1,48 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_tokens.c                                     :+:      :+:    :+:   */
+/*   analyze_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 12:12:01 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:38:23 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	bool check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter)
-{
-	if (current->type == TOKEN_OPEN_PAREN)
-		(*o_counter)++;
-	else if (current->type == TOKEN_CLOSE_PAREN)
-		(*c_counter)++;
-	
-	if (c_counter > o_counter)
-		return (EXIT_FAILURE);
-	
-	return (EXIT_SUCCESS);
-}
-
-static bool check_redir(t_token *current)
-{
-	return ((current->type == TOKEN_SIMPLE_REDIRECT_OUT 
-		|| current->type == TOKEN_DOUBLE_REDIRECT_OUT
-		|| current->type == TOKEN_SIMPLE_REDIRECT_IN
-		|| current->type == TOKEN_DOUBLE_REDIRECT_IN)
-		&& (!current->next || current->next->type != TOKEN_WORD));
-
-}
-static bool check_separator(t_token *current)
-{	
-	return ((current->type == TOKEN_PIPE 
-			|| current->type == TOKEN_AND 
-			|| current->type == TOKEN_OR) 
-			&& ((!current->prev || current->prev->type != TOKEN_WORD) 
-			|| (!current->next || current->next->type != TOKEN_WORD)));
-}
-bool parse_tokens(t_data *data)
+bool analyze_tokens(t_data *data)
 {
     t_token		*current;
 	uint64_t	o_counter;
@@ -54,13 +24,13 @@ bool parse_tokens(t_data *data)
 	
     while (current)
     {
-		if (check_separator(current))
+		if (check_operator(current))
 			return (data->error.error_g |= ERROR_PIPE, EXIT_FAILURE);
 		else if (check_redir(current))
 			return (data->error.error_g |= ERROR_REDIR, EXIT_FAILURE);	
 		else if (check_paren(current, &o_counter, &c_counter))
 			return (data->error.error_g |= ERROR_PARAN, EXIT_FAILURE);
-		fill_cmd(data);
+		fill_cmd(data, current);
         current = current->next;
     }
 	

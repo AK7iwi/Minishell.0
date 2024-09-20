@@ -66,36 +66,36 @@ typedef struct s_env_list
     struct s_env_list *next;
 }	t_env_list;
 
-typedef struct s_subshell
-{    
-    t_ast	*root;
-} 	t_subshell;
+// typedef struct s_ast
+// {
+//     t_ast_type  type;
 
-typedef struct s_operator
-{    
-    struct s_ast *left;     
-    struct s_ast *right;   
-} 	t_operator;
+// 	t_cmd 		cmd;
+// 	t_operator	operator;
+// 	t_subshell 	subshell;
+// } 	t_ast;
 
-typedef struct s_cmd
-{
-	char *cmd;
-	char **args;
-	char **i_files;
-	char **o_files;
+// typedef struct s_cmd
+// {
+// 	char *cmd;
+// 	char **args;
+// 	char **i_files;
+// 	char **o_files;
 	
-    struct s_cmd *prev;
-    struct s_cmd *next;
-}	t_cmd;
+//     struct s_cmd *prev;
+//     struct s_cmd *next;
+// }	t_cmd;
 
-typedef struct s_ast
-{
-    t_ast_type  type;
+// typedef struct s_subshell
+// {    
+//     t_ast	*root;
+// } 	t_subshell;
 
-	t_cmd 		cmd;
-	t_operator	operator;
-	t_subshell 	subshell;
-} 	t_ast;
+// typedef struct s_operator
+// {    
+//     struct s_ast *left;     
+//     struct s_ast *right;   
+// } 	t_operator;
 
 typedef struct s_token
 {
@@ -110,7 +110,7 @@ typedef struct s_data
 {
 	t_error 	error;
     t_token		*token;
-	t_ast 		*ast;
+	// t_ast 		*ast;
     t_env_list	*env;
 } 	t_data;
 
@@ -118,8 +118,22 @@ typedef struct s_data
 //					PARSER   					//
 //**********************************************//
 
-/* parse_token.c */
-bool	parse_tokens(t_data *data);
+/* fill_cmd.c */
+void 	fill_cmd(t_data *data, t_token *current);
+
+/* synthesis_analysis_utils.c */
+bool 	is_open_paren(uint8_t type);
+bool 	is_closed_paren(uint8_t type);
+bool	is_redir(uint8_t type);
+bool	is_operator(uint8_t type);
+
+/* synthax_error.c */
+bool	check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter);
+bool 	check_redir(t_token *current);
+bool 	check_operator(t_token *current);
+
+/* analyze_token.c */
+bool		analyze_tokens(t_data *data);
 
 //**********************************************//
 //					LEXER    					//

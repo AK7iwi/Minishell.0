@@ -7,7 +7,11 @@ SRCS			:= main.c \
 					lexer/token.c \
 					lexer/handle_str/handle_str.c lexer/handle_str/extract_str.c lexer/handle_str/str_len.c \
 					lexer/handle_special_char/handle_special_char.c lexer/handle_special_char/extract_special_char.c lexer/handle_special_char/special_char_len.c \
-					parser/parse_tokens.c \
+					lexer/token_utils.c \
+					synthesis_analysis/analyze_tokens.c \
+					synthesis_analysis/synthesis_error.c \
+					synthesis_analysis/fill_cmd.c \
+					synthesis_analysis/synthesis_analysis_utils.c \
 					ast/ast.c \
 					error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
