@@ -1,11 +1,7 @@
 
->> l OK
+First word, token word 
 
-<< l pas OK
 
-echo | pas OK
-
-| ls pas ok
 
 
 

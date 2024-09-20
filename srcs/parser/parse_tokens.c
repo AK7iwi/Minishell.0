@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 16:16:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 11:33:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ bool parse_tokens(t_data *data)
 	
 	o_counter = 0;
 	c_counter = 0;
-
     current = data->token;
+	
     while (current)
     {
 		if (check_separator(current))
@@ -60,7 +60,6 @@ bool parse_tokens(t_data *data)
 			return (data->error.error_g |= ERROR_REDIR, EXIT_FAILURE);	
 		else if (check_paren(current, &o_counter, &c_counter))
 			return (data->error.error_g |= ERROR_PARAN, EXIT_FAILURE);
-		
         current = current->next;
     }
 	
