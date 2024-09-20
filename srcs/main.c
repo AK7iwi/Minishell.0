@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 13:43:54 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:17:35 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static inline bool is_arg(t_error *error, int argc)
 
 	return (false);
 }
-
 int main(int argc, char **argv, char **envp)
 {
 	t_data	data;

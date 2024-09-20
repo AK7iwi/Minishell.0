@@ -6,11 +6,19 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:17:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 13:43:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:59:09 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool is_cmd(uint8_t type)
+{
+	return (!is_operator(type)
+		&& !is_redir(type) 
+		&& !is_closed_paren(type) 
+		&& !is_open_paren(type));
+}
 
 inline bool is_open_paren(uint8_t type)
 {

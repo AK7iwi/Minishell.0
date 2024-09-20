@@ -68,7 +68,6 @@ typedef struct s_env_list
 
 typedef struct s_cmd
 {
-	char *cmd;
 	char **args;
 	char **i_files;
 	char **o_files;
@@ -78,7 +77,9 @@ typedef struct s_cmd
 }	t_cmd;
 
 typedef struct s_operator
-{    
+{
+	uint8_t prec;
+	uint8_t assoc;
     struct s_ast *left;
     struct s_ast *right;  
 } 	t_operator;
@@ -97,7 +98,7 @@ typedef struct s_ast
     {
         t_cmd      cmd;
         t_operator operator;  
-        t_subshell subshell;  
+        t_subshell subshell;
     };
 } 	t_ast;
 
@@ -123,9 +124,10 @@ typedef struct s_data
 //**********************************************//
 
 /* fill_cmd.c */
-void 	fill_cmd(t_data *data, t_token *current);
+void fill_ast_node(t_data *data, t_token **current);
 
 /* synthesis_analysis_utils.c */
+bool 	is_cmd(uint8_t type);
 bool 	is_open_paren(uint8_t type);
 bool 	is_closed_paren(uint8_t type);
 bool	is_redir(uint8_t type);

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 13:38:23 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:06:20 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ bool analyze_tokens(t_data *data)
 	c_counter = 0;
     current = data->token;
 	
+	printf ("FILL CMD:\n");
+	
     while (current)
     {
 		if (check_operator(current))
@@ -30,8 +32,8 @@ bool analyze_tokens(t_data *data)
 			return (data->error.error_g |= ERROR_REDIR, EXIT_FAILURE);	
 		else if (check_paren(current, &o_counter, &c_counter))
 			return (data->error.error_g |= ERROR_PARAN, EXIT_FAILURE);
-		fill_cmd(data, current);
-        current = current->next;
+		fill_ast_node(data, &current);
+        // current = current->next;
     }
 	
 	if (o_counter != c_counter)
