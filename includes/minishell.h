@@ -95,9 +95,6 @@ typedef struct s_ast
 	t_cmd 		cmd;
 	t_operator	operator;
 	t_subshell 	subshell;
-
-    struct s_ast *left;     
-    struct s_ast *right;   
 } 	t_ast;
 
 typedef struct s_token
