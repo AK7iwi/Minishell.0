@@ -66,15 +66,16 @@ typedef struct s_env_list
     struct s_env_list *next;
 }	t_env_list;
 
-typedef struct s_ast
-{
-    t_ast_type  type;
-	t_cmd 		cmd;
-    char        *value;
-    
+typedef struct s_subshell
+{    
+    t_ast	*root;
+} 	t_subshell;
+
+typedef struct s_operator
+{    
     struct s_ast *left;     
     struct s_ast *right;   
-} 	t_ast;
+} 	t_operator;
 
 typedef struct s_cmd
 {
@@ -87,9 +88,21 @@ typedef struct s_cmd
     struct s_cmd *next;
 }	t_cmd;
 
+typedef struct s_ast
+{
+    t_ast_type  type;
+
+	t_cmd 		cmd;
+	t_operator	operator;
+	t_subshell 	subshell;
+
+    struct s_ast *left;     
+    struct s_ast *right;   
+} 	t_ast;
+
 typedef struct s_token
 {
-    char *str;
+    char	*str;
     uint8_t type;
     
     struct s_token *prev;
@@ -100,7 +113,7 @@ typedef struct s_data
 {
 	t_error 	error;
     t_token		*token;
-    t_cmd 		*cmd;
+	t_ast 		*ast;
     t_env_list	*env;
 } 	t_data;
 

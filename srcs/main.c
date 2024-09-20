@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 11:39:32 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:20:11 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_struct(t_data *data)
 {
 	data->error.error_g = 0;
 	data->token = NULL;
-	data->cmd = NULL;
+	data->ast = NULL;
 }
 
 static inline bool is_arg(t_error *error, int argc)
