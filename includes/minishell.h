@@ -43,6 +43,19 @@
 #define D_QUOTE						'\"'
 
 //**********************************************//
+//					ENUM						//
+//**********************************************//
+
+typedef enum e_ast_type
+{
+    AST_COMMAND,
+    AST_ARGS,
+    AST_OPERATOR,    
+    AST_REDIR,       
+}	t_ast_type;
+
+
+//**********************************************//
 //					STRUCTURES					//
 //**********************************************//
 
@@ -74,28 +87,10 @@ typedef struct s_data
     t_token		*token;
     t_cmd 		*cmd;
     t_env_list	*env;
-    t_ast       *ast_root;
 } 	t_data;
 
-typedef enum e_ast_type
-{
-    AST_COMMAND,
-    AST_ARGS,
-    AST_OPERATOR,    
-    AST_REDIR,       
-} t_ast_type;
-
-typedef struct s_ast
-{
-    t_ast_type       type;       // Type de nœud (commande, opérateur, redirection)
-    char        *value;     // Valeur associée (ex: "ls", "|", ">", etc.)
-    
-    struct s_ast *left;     // Pointeur vers le sous-arbre gauche (ex: première commande dans un pipe)
-    struct s_ast *right;    // Pointeur vers le sous-arbre droit (ex: deuxième commande dans un pipe)
-} t_ast;
-
 //**********************************************//
-//					Parser   					//
+//					PARSER   					//
 //**********************************************//
 
 /* parse_token.c */
@@ -126,7 +121,7 @@ char*	extract_str(t_data *data, char *input, uint8_t *token, size_t *index);
 
 /* handle_str.c */
 
-bool handle_str(t_data *data, char *input, uint8_t *token, size_t *index);
+bool 	handle_str(t_data *data, char *input, uint8_t *token, size_t *index);
 
 /* token.c */
 bool	add_token(t_token **token_struct, uint8_t *token, char *str_token);
@@ -149,9 +144,6 @@ bool	tokenisation(t_data *data, char *input);
 //**********************************************//
 //					UTILS   					//
 //**********************************************//
-
-/* msg_error.c*/
-void	msg_error(t_error error);
 
 /* free.c */
 void	free_loop(t_data *data);

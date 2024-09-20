@@ -30,7 +30,7 @@ RED 		= \033[0;36m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -lreadline -o $(NAME)
+	$(CC) $(OBJS) $(CFLAGS) $(CPPFLAGS) -lreadline -o $(NAME)
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(DIR_DUP)

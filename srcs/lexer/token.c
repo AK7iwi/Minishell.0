@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 17:35:40 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 11:01:07 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static	bool add_to_token_list(t_token **token, uint8_t *str_type, char *str)
         return (EXIT_FAILURE);
 
     new_node->type = (*str_type);
-    new_node->str = ft_strdup(str);
+    new_node->str = ft_strdup(str); //protect 
     new_node->next = NULL;
 
     if (*token == NULL) 
@@ -70,18 +70,14 @@ uint8_t wich_token(char *str_token)
         return (TOKEN_OPEN_PAREN);
     else if (str_token[0] == ')' && !str_token[1])
         return (TOKEN_CLOSE_PAREN);
-	else if (str_token[0] == ')' && !str_token[1])
-        return (TOKEN_CLOSE_PAREN);
 
     return (0);
 }
 bool	tokenisation(t_data *data, char *input)
 {
-	char 		*str_token;
 	uint8_t		token;
 	size_t		i;
 	
-	str_token = NULL;
 	i = 0;
 	
 	while (i < ft_strlen(input))

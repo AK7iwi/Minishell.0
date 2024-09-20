@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 11:29:46 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 10:54:21 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	bool	handle_quotes(char *input, char *str, size_t *start, size_t *i)
+static	bool	handle_quotes(char *input, char *str, size_t *start, size_t *i) //void 
 {
 	char	quote_char;
 
