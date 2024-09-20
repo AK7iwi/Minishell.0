@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   synthax_error.c                                    :+:      :+:    :+:   */
+/*   synthesis_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:09:55 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 13:24:18 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:43:26 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ bool check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter)
 	
 	return (EXIT_SUCCESS);
 }
-
 bool check_redir(t_token *current)
 {
 	return (is_redir(current->type)

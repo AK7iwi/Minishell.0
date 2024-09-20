@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:17:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 13:22:45 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:43:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ inline bool is_open_paren(uint8_t type)
 {
 	return (type == TOKEN_OPEN_PAREN);
 }
-
 inline bool is_closed_paren(uint8_t type)
 {
 	return (type == TOKEN_CLOSE_PAREN);
 }
-
 inline bool is_redir(uint8_t type)
 {
 	return (type == TOKEN_SIMPLE_REDIRECT_OUT 
@@ -29,7 +27,6 @@ inline bool is_redir(uint8_t type)
 		|| type == TOKEN_SIMPLE_REDIRECT_IN
 		|| type == TOKEN_DOUBLE_REDIRECT_IN);
 }
-
 inline bool is_operator(uint8_t type)
 {
 	return ((type == TOKEN_PIPE 

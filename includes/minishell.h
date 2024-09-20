@@ -66,36 +66,40 @@ typedef struct s_env_list
     struct s_env_list *next;
 }	t_env_list;
 
-// typedef struct s_ast
-// {
-//     t_ast_type  type;
-
-// 	t_cmd 		cmd;
-// 	t_operator	operator;
-// 	t_subshell 	subshell;
-// } 	t_ast;
-
-// typedef struct s_cmd
-// {
-// 	char *cmd;
-// 	char **args;
-// 	char **i_files;
-// 	char **o_files;
+typedef struct s_cmd
+{
+	char *cmd;
+	char **args;
+	char **i_files;
+	char **o_files;
 	
-//     struct s_cmd *prev;
-//     struct s_cmd *next;
-// }	t_cmd;
+    struct s_cmd *prev;
+    struct s_cmd *next;
+}	t_cmd;
 
-// typedef struct s_subshell
-// {    
-//     t_ast	*root;
-// } 	t_subshell;
+typedef struct s_operator
+{    
+    struct s_ast *left;
+    struct s_ast *right;  
+} 	t_operator;
 
-// typedef struct s_operator
-// {    
-//     struct s_ast *left;     
-//     struct s_ast *right;   
-// } 	t_operator;
+typedef struct s_subshell
+{
+    struct s_ast *root;
+} 	t_subshell;
+
+// Main AST node struct
+typedef struct s_ast
+{
+    t_ast_type  type;
+
+    union
+    {
+        t_cmd      cmd;
+        t_operator operator;  
+        t_subshell subshell;  
+    };
+} 	t_ast;
 
 typedef struct s_token
 {
@@ -110,7 +114,7 @@ typedef struct s_data
 {
 	t_error 	error;
     t_token		*token;
-	// t_ast 		*ast;
+	t_ast 		*ast;
     t_env_list	*env;
 } 	t_data;
 
