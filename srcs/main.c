@@ -6,23 +6,23 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 14:17:35 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:15:34 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void print_token_list(t_token *head)
-{
-    t_token *current = head;
+// static void print_token_list(t_token *head)
+// {
+//     t_token *current = head;
 	
-	printf("PRINT_TEST:\n");
-    while (current)
-    {
-        printf("Token: %s, Type: %d %s", current->str, current->type, "\n");
-        current = current->next;
-    }
-}
+// 	printf("PRINT_TEST:\n");
+//     while (current)
+//     {
+//         printf("Token: %s, Type: %d %s", current->str, current->type, "\n");
+//         current = current->next;
+//     }
+// }
 
 static void	init_struct(t_data *data)
 {
@@ -58,7 +58,8 @@ int main(int argc, char **argv, char **envp)
 			return (free_all(&data), EXIT_FAILURE);
         if (tokenisation(&data, input) || analyze_tokens(&data))
 			msg_error(data.error);
-		print_token_list(data.token);
+		// print_data_cmd(&data);
+		// print_token_list(data.token);
 		free_loop(&data);
     }
 	

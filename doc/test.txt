@@ -3,7 +3,6 @@ Valgrind without readline leaks:
 
 valgrind --suppressions="srcs/utils/readline_by_pass.txt" --leak-check=full --show-leak-kinds=all ./minishell
 
-
 Test: 
 
 a) Cas ou l'input finit par un pipe
@@ -19,4 +18,6 @@ d)SH_LVL
 e) (( ))
 
 f) echo \ (not to handle )
+
+g) handle tab
 

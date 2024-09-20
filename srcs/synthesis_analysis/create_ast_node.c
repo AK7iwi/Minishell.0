@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:03:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 16:05:55 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:12:15 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void fill_ast_node(t_data *data, t_token **current)
+void create_ast_node(t_data *data, t_token **current)
 {
 	t_ast *new_node;
 	t_token *temp;
@@ -31,7 +31,6 @@ void fill_ast_node(t_data *data, t_token **current)
         nb_args++;
         temp = temp->next;
     }
-	
 	printf("Nb_args:%li\n", nb_args);
 	if (nb_args > 0)
 	{
@@ -42,10 +41,14 @@ void fill_ast_node(t_data *data, t_token **current)
 		i = 0;
 		while (i < nb_args)
 		{
-			new_node->cmd.args[i++] = ft_strdup((*current)->str);//protect 
+			new_node->cmd.args[i++] = ft_strdup((*current)->str); //protect 
 			(*current) = (*current)->next;
 		}
 		new_node->cmd.args[i] = NULL;
+	}
+	else if (is_operator((*current)->type))
+	{
+		(*current) = (*current)->next;
 	}
 	
 	i = 0;
@@ -54,14 +57,4 @@ void fill_ast_node(t_data *data, t_token **current)
 		printf("cmd elem:%s\n", new_node->cmd.args[i]);
 		i++;
 	}
-	
-	// else if (is_operator(type)) 
-	// {
-
-	// }
-	// else if (is_open_paren(type)) 
-	// {
-		
-	// }
-	
 }

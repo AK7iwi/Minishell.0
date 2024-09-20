@@ -124,7 +124,7 @@ typedef struct s_data
 //**********************************************//
 
 /* fill_cmd.c */
-void fill_ast_node(t_data *data, t_token **current);
+void create_ast_node(t_data *data, t_token **current);
 
 /* synthesis_analysis_utils.c */
 bool 	is_cmd(uint8_t type);
@@ -139,7 +139,7 @@ bool 	check_redir(t_token *current);
 bool 	check_operator(t_token *current);
 
 /* analyze_token.c */
-bool		analyze_tokens(t_data *data);
+bool	analyze_tokens(t_data *data);
 
 //**********************************************//
 //					LEXER    					//

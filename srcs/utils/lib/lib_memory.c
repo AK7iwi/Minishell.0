@@ -21,7 +21,6 @@ char	*ft_strdup(const char *s)
 	tab[i] = 0;
 	return (tab);
 }
-
 void	*ft_memset(void *s, int c, size_t n)
 {
 	size_t	i;

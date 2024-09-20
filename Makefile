@@ -10,7 +10,7 @@ SRCS			:= main.c \
 					lexer/token_utils.c \
 					synthesis_analysis/analyze_tokens.c \
 					synthesis_analysis/synthesis_error.c \
-					synthesis_analysis/fill_ast_node.c \
+					synthesis_analysis/create_ast_node.c \
 					synthesis_analysis/synthesis_analysis_utils.c \
 					ast/ast.c \
 					error/msg_error.c \
@@ -54,4 +54,4 @@ re:	fclean all
 
 .PHONY: all clean fclean re
 
-# $(FSANITIZE_FLAG)
+# $(FSANITIZE_FLAG
