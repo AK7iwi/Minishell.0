@@ -49,11 +49,16 @@
 typedef enum e_ast_type
 {
     AST_COMMAND,
+    AST_OPERATOR,
+	AST_SUBSH,
+}	t_ast_type;
+
+typedef enum e_operator_type
+{
     AST_PIPE,
 	AST_AND,
 	AST_OR,
-	AST_SUBSH,
-}	t_ast_type;
+}	t_operator_type;
 
 //**********************************************//
 //					STRUCTURES					//
@@ -78,8 +83,9 @@ typedef struct s_cmd
 
 typedef struct s_operator
 {
-	uint8_t prec;
-	uint8_t assoc;
+	t_operator_type	type;
+	// uint8_t prec;
+	// uint8_t assoc;
     struct s_ast *left;
     struct s_ast *right;  
 } 	t_operator;
@@ -97,7 +103,7 @@ typedef struct s_ast
     union
     {
         t_cmd      cmd;
-        t_operator operator;  
+        t_operator operator;
         t_subshell subshell;
     };
 } 	t_ast;
@@ -128,10 +134,15 @@ void create_ast_node(t_data *data, t_token **current);
 
 /* synthesis_analysis_utils.c */
 bool 	is_cmd(uint8_t type);
-bool 	is_open_paren(uint8_t type);
-bool 	is_closed_paren(uint8_t type);
 bool	is_redir(uint8_t type);
 bool	is_operator(uint8_t type);
+
+/* synthesis_analysis_utils2.c */
+bool	is_or(uint8_t type);
+bool	is_and(uint8_t type);
+bool	is_pipe(uint8_t type);
+bool 	is_open_paren(uint8_t type);
+bool 	is_closed_paren(uint8_t type);
 
 /* synthax_error.c */
 bool	check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter);
