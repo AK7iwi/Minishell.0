@@ -126,14 +126,25 @@ typedef struct s_data
 } 	t_data;
 
 //**********************************************//
+//					AST   						//
+//**********************************************//
+
+/* ast_utils.c */
+
+bool 	is_cmd(uint8_t type);
+
+/* create_node_ast.c */
+t_ast	*create_node_cmd(t_token **current);
+
+/* ast.c */
+t_ast *compute_expr(t_token **tokens, int min_prec);
+void 	create_ast(t_data *data);
+
+//**********************************************//
 //					PARSER   					//
 //**********************************************//
 
-/* fill_cmd.c */
-void create_ast_node(t_data *data, t_token **current);
-
 /* synthesis_analysis_utils.c */
-bool 	is_cmd(uint8_t type);
 bool	is_redir(uint8_t type);
 bool	is_operator(uint8_t type);
 

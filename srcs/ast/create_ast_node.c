@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:03:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/21 16:17:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:19:11 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static size_t get_cmd_len(t_token *current)
 	return (cmd_len);
 }
 
-void create_ast_node(t_data *data, t_token **current)
+t_ast	*create_node_cmd(t_token **current)
 {
 	t_ast *new_node;
 	size_t cmd_len;
@@ -37,18 +37,17 @@ void create_ast_node(t_data *data, t_token **current)
 
 	new_node = malloc(sizeof(t_ast));
 	if (!new_node)
-		return ;
+		return (NULL);
 	
-	(void)data;
 	cmd_len = get_cmd_len((*current));
 	
-	//fill cmd
 	if (cmd_len > 0)
 	{
 		new_node->type = AST_COMMAND;
 		new_node->cmd.args = malloc((cmd_len + 1) * sizeof(char *));
 		if (!new_node->cmd.args)
-            return ;
+            return (NULL);
+		
 		i = 0;
 		while (i < cmd_len)
 		{
@@ -56,33 +55,20 @@ void create_ast_node(t_data *data, t_token **current)
 			(*current) = (*current)->next;
 		}
 		new_node->cmd.args[i] = NULL;
-
-		i = 0;
-		while (i < cmd_len)
-		{
-			printf("cmd elem:%s\n", new_node->cmd.args[i]);
-			i++;
-		}
 	}
-	else if (is_operator((*current)->type))
-	{
-		new_node->type = AST_OPERATOR;
-		if (is_pipe((*current)->type))
-			new_node->operator.type = AST_PIPE;	
-		else if (is_and((*current)->type))
-			new_node->operator.type = AST_AND;
-		else if (is_or((*current)->type))
-			new_node->operator.type = AST_OR;
-		printf ("Operator elem:%d\n", new_node->operator.type);
-		(*current) = (*current)->next;
-	}
-	else 
-	{
-		(*current) = (*current)->next;
-	}
-// 	else if (is_open_paren((*current)->type))
-// 	{
-// 		new_node->type = AST_SUBSH;
-// 		(*current) = (*current)->next;
-// 	}
+	
+	return (new_node);
 }
+
+// void create_operator_node(t_data *data, t_token **current)
+// {
+// 	new_node->type = AST_OPERATOR;
+// 	if (is_pipe((*current)->type))
+// 		new_node->operator.type = AST_PIPE;	
+// 	else if (is_and((*current)->type))
+// 		new_node->operator.type = AST_AND;
+// 	else if (is_or((*current)->type))
+// 		new_node->operator.type = AST_OR;
+// 	printf ("Operator elem:%d\n", new_node->operator.type);
+// 		// (*current) = (*current)->next;
+// }

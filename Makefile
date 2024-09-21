@@ -10,9 +10,8 @@ SRCS			:= main.c \
 					lexer/token_utils.c \
 					synthesis_analysis/analyze_tokens.c \
 					synthesis_analysis/synthesis_error.c \
-					synthesis_analysis/create_ast_node.c \
 					synthesis_analysis/synthesis_analysis_utils.c synthesis_analysis/synthesis_analysis_utils2.c \
-					ast/ast.c \
+					ast/ast.c ast/ast_utils.c ast/create_ast_node.c\
 					error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c
