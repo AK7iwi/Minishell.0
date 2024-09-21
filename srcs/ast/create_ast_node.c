@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:03:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/21 18:19:11 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:07:30 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,37 @@ t_ast	*create_node_cmd(t_token **current)
 			(*current) = (*current)->next;
 		}
 		new_node->cmd.args[i] = NULL;
+	
+		// i = 0;
+		// while (i < cmd_len)
+		// {
+		// 	printf("cmd elem:%s\n", new_node->cmd.args[i]);
+		// 	i++;
+		// }
 	}
 	
 	return (new_node);
 }
 
-// void create_operator_node(t_data *data, t_token **current)
-// {
-// 	new_node->type = AST_OPERATOR;
-// 	if (is_pipe((*current)->type))
-// 		new_node->operator.type = AST_PIPE;	
-// 	else if (is_and((*current)->type))
-// 		new_node->operator.type = AST_AND;
-// 	else if (is_or((*current)->type))
-// 		new_node->operator.type = AST_OR;
-// 	printf ("Operator elem:%d\n", new_node->operator.type);
-// 		// (*current) = (*current)->next;
-// }
+t_ast	*create_operator_node(t_ast *result, t_token **current, t_ast *right_s)
+{
+	t_ast *new_node;
+
+	new_node = malloc(sizeof(t_ast));
+	if (!new_node)
+		return (NULL);
+	
+	new_node->type = AST_OPERATOR;
+	if (is_pipe((*current)->type))
+		new_node->operator.type = AST_PIPE;	
+	else if (is_and((*current)->type))
+		new_node->operator.type = AST_AND;
+	else if (is_or((*current)->type))
+		new_node->operator.type = AST_OR;
+	printf ("Operator elem:%d\n", new_node->operator.type);
+		// (*current) = (*current)->next;
+	new_node->operator.right = right_s;
+	new_node->operator.left = result;
+	
+	return (new_node);
+}

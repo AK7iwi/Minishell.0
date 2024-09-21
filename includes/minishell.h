@@ -134,6 +134,7 @@ typedef struct s_data
 bool 	is_cmd(uint8_t type);
 
 /* create_node_ast.c */
+t_ast	*create_operator_node(t_ast *ast, t_token **current, t_ast *right_s);
 t_ast	*create_node_cmd(t_token **current);
 
 /* ast.c */
