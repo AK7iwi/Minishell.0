@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:07:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 16:21:56 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/22 14:35:36 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool handle_special_char(t_data *data, char *input, uint8_t *token, size_t *inde
 {
 	char *str_token;
 	
-	str_token = extract_special_char(data, input, index);
+	str_token = extract_special_char(data, input, index); //t_error
 	if (!str_token)
 		return (EXIT_FAILURE);
 	

@@ -76,16 +76,13 @@ typedef struct s_cmd
 	char **args;
 	char **i_files;
 	char **o_files;
-	
-    struct s_cmd *prev;
-    struct s_cmd *next;
+
 }	t_cmd;
 
 typedef struct s_operator
 {
 	t_operator_type	type;
-	// uint8_t prec;
-	// uint8_t assoc;
+
     struct s_ast *left;
     struct s_ast *right;  
 } 	t_operator;
@@ -95,7 +92,6 @@ typedef struct s_subshell
     struct s_ast *root;
 } 	t_subshell;
 
-// Main AST node struct
 typedef struct s_ast
 {
     t_ast_type  type;
@@ -129,16 +125,18 @@ typedef struct s_data
 //					AST   						//
 //**********************************************//
 
-/* ast_utils.c */
+/* ast_print.c */
+void 	print_ast(t_data *data);
 
-bool 	is_cmd(uint8_t type);
+/* ast_utils.c */
+bool 	is_arg_cmd(uint8_t type);
 
 /* create_node_ast.c */
-t_ast	*create_operator_node(t_ast *ast, t_token **current, t_ast *right_s);
+t_ast	*create_operator_node(t_ast *left, t_ast *right, t_operator_type operator_type);
 t_ast	*create_node_cmd(t_token **current);
 
 /* ast.c */
-t_ast *compute_expr(t_token **tokens, int min_prec);
+t_ast*	compute_expr(t_token **tokens, int min_prec);
 void 	create_ast(t_data *data);
 
 //**********************************************//

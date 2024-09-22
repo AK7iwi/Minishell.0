@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:03:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/21 19:07:30 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/22 18:24:29 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static size_t get_cmd_len(t_token *current)
 	cmd_len = 0;
 	temp = current;
 	
-    while (temp && is_cmd(temp->type))
+    while (temp && is_arg_cmd(temp->type))
     {
         cmd_len++;
         temp = temp->next;
@@ -29,7 +29,7 @@ static size_t get_cmd_len(t_token *current)
 	return (cmd_len);
 }
 
-t_ast	*create_node_cmd(t_token **current)
+t_ast	*create_node_cmd(t_token **tokens)
 {
 	t_ast *new_node;
 	size_t cmd_len;
@@ -39,9 +39,9 @@ t_ast	*create_node_cmd(t_token **current)
 	if (!new_node)
 		return (NULL);
 	
-	cmd_len = get_cmd_len((*current));
+	cmd_len = get_cmd_len((*tokens));
 	
-	if (cmd_len > 0)
+	if (cmd_len)
 	{
 		new_node->type = AST_COMMAND;
 		new_node->cmd.args = malloc((cmd_len + 1) * sizeof(char *));
@@ -51,23 +51,17 @@ t_ast	*create_node_cmd(t_token **current)
 		i = 0;
 		while (i < cmd_len)
 		{
-			new_node->cmd.args[i++] = ft_strdup((*current)->str); //protect
-			(*current) = (*current)->next;
+			new_node->cmd.args[i++] = ft_strdup((*tokens)->str); //protect
+			(*tokens) = (*tokens)->next;
 		}
 		new_node->cmd.args[i] = NULL;
-	
-		// i = 0;
-		// while (i < cmd_len)
-		// {
-		// 	printf("cmd elem:%s\n", new_node->cmd.args[i]);
-		// 	i++;
-		// }
 	}
+	//else if cmd_len = 0;
 	
 	return (new_node);
 }
 
-t_ast	*create_operator_node(t_ast *result, t_token **current, t_ast *right_s)
+t_ast	*create_operator_node(t_ast *left, t_ast *right, t_operator_type operator_type)
 {
 	t_ast *new_node;
 
@@ -76,16 +70,13 @@ t_ast	*create_operator_node(t_ast *result, t_token **current, t_ast *right_s)
 		return (NULL);
 	
 	new_node->type = AST_OPERATOR;
-	if (is_pipe((*current)->type))
-		new_node->operator.type = AST_PIPE;	
-	else if (is_and((*current)->type))
-		new_node->operator.type = AST_AND;
-	else if (is_or((*current)->type))
-		new_node->operator.type = AST_OR;
-	printf ("Operator elem:%d\n", new_node->operator.type);
-		// (*current) = (*current)->next;
-	new_node->operator.right = right_s;
-	new_node->operator.left = result;
+	new_node->operator.left = left;
+	new_node->operator.right = right;
+	// new_node->operator.left->left = NULL;
+	// new_node->operator.left->right = NULL;
+	// new_node->operator.right->left = NULL;
+	// new_node->operator.right->right = NULL;
+	new_node->operator.type = operator_type;
 	
 	return (new_node);
 }
