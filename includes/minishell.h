@@ -126,7 +126,7 @@ typedef struct s_data
 //**********************************************//
 
 /* ast_print.c */
-void 	print_ast(t_data *data);
+void print_ast(t_ast *ast, int depth);
 
 /* ast_utils.c */
 bool 	is_arg_cmd(uint8_t type);

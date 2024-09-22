@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/22 18:55:26 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/22 19:43:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,9 @@ t_ast *compute_expr(t_token **tokens, int min_prec)
 	
     return (result);
 }
-
-
 void 	create_ast(t_data *data)
 {
 	data->ast = compute_expr(&data->token, 0);
-	// print_ast(data);
+	printf ("AST\n");
+	print_ast(data->ast, 0);
 }
