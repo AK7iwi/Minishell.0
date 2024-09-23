@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/23 18:25:14 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/23 19:00:08 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ void 	create_ast(t_data *data)
 {
 	data->ast = compute_expr(&data->token, 0);
 	printf ("AST:\n");
-	print_ast(data->ast, 5);
+	print_ast(data->ast, 0);
 }
