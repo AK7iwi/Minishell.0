@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/22 19:43:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:25:14 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 uint8_t get_prec(uint8_t type)
 {
 	if (is_pipe(type))
-		return (2);
-	else if (is_and(type) || is_or(type))
 		return (1);
+	else if (is_and(type) || is_or(type))
+		return (2);
 
 	return (3);
 }
@@ -75,6 +75,6 @@ t_ast *compute_expr(t_token **tokens, int min_prec)
 void 	create_ast(t_data *data)
 {
 	data->ast = compute_expr(&data->token, 0);
-	printf ("AST\n");
-	print_ast(data->ast, 0);
+	printf ("AST:\n");
+	print_ast(data->ast, 5);
 }
