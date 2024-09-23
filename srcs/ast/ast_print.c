@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/23 19:00:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/23 19:06:14 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ void print_cmd(t_ast *ast, int *depth)
 	i = 0;
 
 	for (int i = 0; i < (*depth) ; i++)
-			printf("\t");
+		printf("\t");
 		
 	while (ast->cmd.args[i])
 	{
 		printf("%s ", ast->cmd.args[i]);
 		i++;
 	}
+	printf("\n");
 }
 
 void print_operator(t_ast *ast, int *depth)
@@ -40,18 +41,13 @@ void print_operator(t_ast *ast, int *depth)
 	else if (ast->operator.type == AST_OR)
 		printf("||\n");
 
-	for (int i = 0; i < (*depth) ; i++)
-			printf("\t");
-        printf("/ \\\n");
     if (ast->operator.left)
 	{
-		printf("A gauche:");
-        print_ast(ast->operator.left, (*depth) - 1);
+        print_ast(ast->operator.left, (*depth) + 1);
     }
 
     if (ast->operator.right)
 	{
-		printf("A droite:");
         print_ast(ast->operator.right, (*depth) + 1);
     }
 }
