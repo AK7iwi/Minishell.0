@@ -6,21 +6,17 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/23 19:06:14 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:43:57 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_cmd(t_ast *ast, int *depth)
+void print_cmd(t_ast *ast)
 {
 	size_t i;
 
 	i = 0;
-
-	for (int i = 0; i < (*depth) ; i++)
-		printf("\t");
-		
 	while (ast->cmd.args[i])
 	{
 		printf("%s ", ast->cmd.args[i]);
@@ -30,32 +26,36 @@ void print_cmd(t_ast *ast, int *depth)
 }
 
 void print_operator(t_ast *ast, int *depth)
-{
-    for (int i = 0; i < (*depth); i++)
-		printf("\t");
-	
+{	
+	printf("[Operator]: ");
     if (ast->operator.type == AST_PIPE)
-		printf("|\n");
+		printf("'|'");
 	else if (ast->operator.type == AST_AND)
-		printf("&&\n");
+		printf("'&&'");
 	else if (ast->operator.type == AST_OR)
-		printf("||\n");
-
+		printf("'||'");
+	
+	printf("\n");
     if (ast->operator.left)
 	{
+		for (int i = 0; i < (*depth) + 1; i++)
+			printf("\t");
+        printf("    [left]: ");
         print_ast(ast->operator.left, (*depth) + 1);
     }
 
     if (ast->operator.right)
 	{
+		for (int i = 0; i < (*depth) + 1; i++)
+			printf("\t");
+        printf("    [right]: ");
         print_ast(ast->operator.right, (*depth) + 1);
     }
 }
-
 void print_ast(t_ast *ast, int depth)
 {
 	if (ast->type == AST_COMMAND)
-		print_cmd(ast, &depth);
+		print_cmd(ast);
 	else if (ast->type == AST_OPERATOR)
 		print_operator(ast, &depth);
 }

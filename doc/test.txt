@@ -5,19 +5,21 @@ valgrind --suppressions="srcs/utils/readline_by_pass.txt" --leak-check=full --sh
 
 Test: 
 
-a) Cas ou l'input finit par un pipe
+1) Cas ou l'input finit par un pipe
 ls |
 cat |
 
-b) special char : ? * #, ...
+2) special char : ? * #, ...
 
-c) echo "|"|
+3) echo "|"|
 
-d)SH_LVL 
+4)SH_LVL 
 
-e) (( ))
+5) (( ))
 
-f) echo \ (not to handle )
+6) echo \ (not to handle )
 
-g) handle tab
+7) handle tab
+
+8) Handle many \n
 
