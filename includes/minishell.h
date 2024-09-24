@@ -125,6 +125,8 @@ typedef struct s_data
 //					AST   						//
 //**********************************************//
 
+/* ast_free.c */
+void 	free_ast(t_ast **ast);
 /* ast_print.c */
 void 	print_ast(t_ast *ast, int depth);
 

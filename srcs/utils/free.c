@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/16 15:11:53 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:23:44 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static inline void	free_token(t_token **tokens)
+static void	free_token(t_token **tokens)
 {
 	t_token	*tmp;
 	t_token	*current;
@@ -41,10 +41,23 @@ void	free_loop(t_data *data)
 		free_error(&data->error);
 	if (data->token)
 		free_token(&data->token);
+	if (data->ast)
+		free_ast(&data->ast);
 }
 
-void	free_all(t_data *data)
-{
-	if (data->token)
-		free_token(&data->token);
-}
+//maybe need later for env_var
+
+// void	free_all(t_data *data)
+// {
+// 	printf("Free all:\n");
+// 	if (data->token)
+// 	{
+// 		printf("Free token\n");
+// 		free_token(&data->token);
+// 	}
+// 	if (data->ast)
+// 	{
+// 		printf("Free AST\n");
+// 		free_ast(&data->ast);
+// 	}
+// }
