@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:15:11 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/24 18:26:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:54:09 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void free_cmd(t_cmd *cmd)
 		free(cmd->args[i]);
 		i++;
 	}
-
 	free(cmd->args);
 	cmd->args = NULL; 
 }

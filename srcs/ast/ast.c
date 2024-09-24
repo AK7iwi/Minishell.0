@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/24 18:12:06 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:59:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_operator_type get_operator_type(uint8_t type)
 
 	return (operator_type);
 }
-t_ast *ast_algo(t_token **current, int min_prec)
+t_ast *ast_algo(t_token *current, int min_prec)
 {
 	t_ast 			*result;
 	t_ast 			*right_side;
@@ -51,32 +51,36 @@ t_ast *ast_algo(t_token **current, int min_prec)
 	bool 			assoc;
 	uint8_t 		next_min_prec;
 	
-	result = create_node_cmd(current); //protect
+	result = create_node_cmd(&current);
+	if (!result)
+		return (NULL);
 	
-	while ((*current) && is_operator((*current)->type) && get_prec((*current)->type) >= min_prec)
+	while (current && is_operator(current->type) && get_prec(current->type) >= min_prec)
 	{
-		prec = get_prec((*current)->type);
-		assoc = get_assoc((*current)->type);
+		prec = get_prec(current->type);
+		assoc = get_assoc(current->type);
 
 		if (assoc == 1)
         	next_min_prec = prec + 1;
         else
             next_min_prec = prec;
 		
-		operator_type = get_operator_type((*current)->type);
-		(*current) = (*current)->next;
+		operator_type = get_operator_type(current->type);
+		current = current->next;
 		
 		right_side = ast_algo(current, next_min_prec);
 		result = create_operator_node(result, right_side, operator_type);
 	}
-	
     return (result);
 }
 void 	create_ast(t_data *data)
 {
 	t_token *current;
 	current = data->token;
-	data->ast = ast_algo(&current, 0);
-	printf ("AST:\n");
-	print_ast(data->ast, 0);
+	data->ast = ast_algo(current, 0);
+	if (data->ast)
+	{
+		printf ("AST:\n");
+		print_ast(data->ast, 0);
+	}
 }
