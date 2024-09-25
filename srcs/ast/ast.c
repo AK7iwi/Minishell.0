@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 15:42:15 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:43:21 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ t_ast *ast_algo(t_token *current, int min_prec)
 		if (!result)
     		return (NULL);
 	}
-	
 	if (current && current->type == TOKEN_CLOSE_PAREN)
+	{
 		current = current->next;
+		return (result);
+	}
 	
 	if (current)
 		printf("Current:%s\n", current->str);
