@@ -144,7 +144,7 @@ t_ast	*create_node_cmd(t_token **current);
 t_ast	*create_subsh_node(t_token **current);
 
 /* ast.c */
-t_ast	*ast_algo(t_token *current, int min_prec);
+t_ast	*ast_algo(t_token **current, int min_prec);
 void 	create_ast(t_data *data);
 
 //**********************************************//
@@ -198,10 +198,12 @@ char*	extract_str(t_error *error, char *input, uint8_t *token, size_t *index);
 /* handle_str.c */
 bool 	handle_str(t_data *data, char *input, uint8_t *token, size_t *index);
 
-/* token.c */
+/* token_utils.c */
 bool	add_token(t_token **token_struct, uint8_t *token, char *str_token);
 uint8_t wich_token(char *str);
-bool	tokenisation(t_data *data, char *input);
+
+/* token.c */
+bool	tokeniser(t_data *data, char *input);
 
 //**********************************************//
 //					MAIN    					//

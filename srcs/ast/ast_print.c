@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 20:27:38 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:43:34 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void print_subshell(t_ast *ast, int *depth)
 {
-	printf("[Subshell]:\n");
+	printf("[Subshell]\n");
 	for (int i = 0; i < (*depth) + 1; i++)
 			printf("\t");
 	print_ast(ast->subshell.root, (*depth));
@@ -25,6 +25,7 @@ void print_cmd(t_ast *ast)
 	size_t i;
 
 	i = 0;
+	printf("[Cmd] ");
 	while (ast->cmd.args[i])
 	{
 		printf("%s ", ast->cmd.args[i]);
@@ -34,7 +35,7 @@ void print_cmd(t_ast *ast)
 }
 void print_operator(t_ast *ast, int *depth)
 {	
-	printf("[Operator]: ");
+	printf("[Operator] ");
     if (ast->operator.type == AST_PIPE)
 		printf("'|'");
 	else if (ast->operator.type == AST_AND)
@@ -47,7 +48,7 @@ void print_operator(t_ast *ast, int *depth)
 	{
 		for (int i = 0; i < (*depth) + 1; i++)
 			printf("\t");
-        printf("    [left]: ");
+        printf("    [left] ");
         print_ast(ast->operator.left, (*depth) + 1);
     }
 
@@ -55,7 +56,7 @@ void print_operator(t_ast *ast, int *depth)
 	{
 		for (int i = 0; i < (*depth) + 1; i++)
 			printf("\t");
-        printf("    [right]: ");
+        printf("    [right] ");
         print_ast(ast->operator.right, (*depth) + 1);
     }
 }

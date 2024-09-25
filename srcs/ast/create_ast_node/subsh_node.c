@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:24:08 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 20:46:34 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 23:01:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_ast	*create_subsh_node(t_token **current)
 	
 	new_node->type = AST_SUBSH;
 	(*current) = (*current)->next;
-    new_node->subshell.root = ast_algo((*current), 0);
+    new_node->subshell.root = ast_algo(current, 0);
 	while((*current)->type != TOKEN_CLOSE_PAREN)
 		(*current) = (*current)->next;
 	(*current) = (*current)->next;

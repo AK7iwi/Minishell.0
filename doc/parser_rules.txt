@@ -1,3 +1,5 @@
-Handle expand token before operator
+Handle expand token before operatorOK
 Handle redir (is_redir), separate redirin/redirout OK
 Handle paren token before operator OK
+
+Parse for paren: echo (ls)

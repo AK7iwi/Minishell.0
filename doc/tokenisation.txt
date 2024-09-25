@@ -1,5 +1,8 @@
 TOKENISATIONS
 
+
+
+!!hqndle &
 Special char (#,?, $)
 
 Verif space before special char:

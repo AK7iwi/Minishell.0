@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 17:47:24 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:17:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool analyze_tokens(t_data *data)
     while (current)
     {
 		if (check_operator(current))
-			return (data->error.error_g |= ERROR_PIPE, EXIT_FAILURE); //operator error 
+			return (data->error.error_g |= ERROR_OPERATOR, EXIT_FAILURE);
 		else if (check_redir(current))
 			return (data->error.error_g |= ERROR_REDIR, EXIT_FAILURE);	
 		else if (check_paren(current, &o_counter, &c_counter))

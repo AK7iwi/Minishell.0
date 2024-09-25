@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 21:26:59 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 23:18:38 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_op_type get_operator_type(uint8_t type)
 {
 	t_op_type operator_type;
 
-	operator_type = 0; //!! verif 
+	operator_type = 9; //!! verif 
 	
 	if (is_pipe(type))
 		operator_type = AST_PIPE;	
@@ -38,39 +38,37 @@ t_op_type get_operator_type(uint8_t type)
 
 	return (operator_type);
 }
-t_ast *ast_algo(t_token *current, int min_prec)
+t_ast *ast_algo(t_token **current, int min_prec)
 {
 	t_ast 		*result;
 	t_ast 		*right_side;
 	t_op_type	op_type;
 	uint8_t 	next_min_prec;
 
-	if (current->type == TOKEN_OPEN_PAREN)
-		result = create_subsh_node(&current);
+	if ((*current) && (*current)->type == TOKEN_OPEN_PAREN)
+		result = create_subsh_node(current);
 	else
-	{
-		result = create_node_cmd(&current);
-		if (!result)
-    		return (NULL);
-	}
-	if (current && current->type == TOKEN_CLOSE_PAREN)
+		result = create_node_cmd(current);	
+	if (!result)
+    		return (NULL);		
+	if ((*current) && (*current)->type == TOKEN_CLOSE_PAREN)
 		return (result);
 			
-	while (current && is_operator(current->type) && get_prec(current->type) >= min_prec)
+	while ((*current) && is_operator((*current)->type) && get_prec((*current)->type) >= min_prec)
 	{
-		next_min_prec = get_prec(current->type) + 1; //verif
-		op_type = get_operator_type(current->type);
-		current = current->next;
+		next_min_prec = get_prec((*current)->type); //verif
+		op_type = get_operator_type((*current)->type);
+		(*current) = (*current)->next;
 		right_side = ast_algo(current, next_min_prec);
 		result = create_operator_node(result, right_side, op_type);
 	}
-	
+
     return (result);
 }
 void 	create_ast(t_data *data)
 {
-	t_token *current;
-	current = data->token;
+	t_token **current;
+	current = &data->token;
 	data->ast = ast_algo(current, 0);
 	if (data->ast)
 	{
