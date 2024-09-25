@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 20:41:06 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:26:59 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 uint8_t get_prec(uint8_t type)
 {
+	//verif
 	if (is_pipe(type))
 		return (1);
 	else if (is_and(type) || is_or(type))
@@ -57,7 +58,7 @@ t_ast *ast_algo(t_token *current, int min_prec)
 			
 	while (current && is_operator(current->type) && get_prec(current->type) >= min_prec)
 	{
-		next_min_prec = get_prec(current->type) + 1;
+		next_min_prec = get_prec(current->type) + 1; //verif
 		op_type = get_operator_type(current->type);
 		current = current->next;
 		right_side = ast_algo(current, next_min_prec);

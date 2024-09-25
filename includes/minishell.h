@@ -27,7 +27,7 @@
 #define TOKEN_PIPE                  2  // |
 #define TOKEN_SIMPLE_REDIRECT_IN    3  // <
 #define TOKEN_SIMPLE_REDIRECT_OUT   4  // >
-#define TOKEN_DOUBLE_REDIRECT_IN    5  // << (here_doc)
+#define TOKEN_HERE_DOC              5  // << (here_doc)
 #define TOKEN_DOUBLE_REDIRECT_OUT   6  // >>
 #define TOKEN_ENV_VAR         		7  // $
 #define TOKEN_AND                   8 // &&
@@ -74,8 +74,8 @@ typedef struct s_env_list
 typedef struct s_cmd
 {
 	char **args;
-	char **i_files;
-	char **o_files;
+	// char **i_files;
+	// char **o_files;
 
 }	t_cmd;
 

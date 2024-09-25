@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:14:17 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 13:14:53 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:17:27 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ uint8_t wich_token(char *str_token)
     else if (str_token[0] == '>' && !str_token[1])
         return (TOKEN_SIMPLE_REDIRECT_OUT);
     else if (str_token[0] == '<' && str_token[1] == '<' && !str_token[2])
-        return (TOKEN_DOUBLE_REDIRECT_IN);
+        return (TOKEN_HERE_DOC);
     else if (str_token[0] == '>' && str_token[1] == '>' && !str_token[2])
         return (TOKEN_DOUBLE_REDIRECT_OUT);
     else if (str_token[0] == '&' && str_token[1] == '&' && !str_token[2])
