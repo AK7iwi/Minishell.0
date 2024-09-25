@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:09:55 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/21 16:59:47 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:44:29 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ bool check_redir(t_token *current)
 bool check_operator(t_token *current)
 {	
 	return (is_operator(current->type)
-			&& ((!current->prev || current->prev->type != TOKEN_WORD) 
-			|| (!current->next || current->next->type != TOKEN_WORD)));
+			&& ((!current->prev || (current->prev->type != TOKEN_WORD && current->prev->type != TOKEN_CLOSE_PAREN))
+			|| (!current->next || (current->next->type != TOKEN_WORD && current->next->type != TOKEN_OPEN_PAREN))));
 }

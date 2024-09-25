@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_ast_node.c                                  :+:      :+:    :+:   */
+/*   cmd_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/20 12:03:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/24 18:57:23 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/25 11:29:27 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/25 11:42:28 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_ast	*create_operator_node(t_ast *left, t_ast *right, t_operator_type operator_type)
-{
-	t_ast *new_node;
-
-	new_node = malloc(sizeof(t_ast));
-	if (!new_node)
-		return (NULL);
-	
-	new_node->type = AST_OPERATOR;
-	new_node->operator.type = operator_type;
-	new_node->operator.left = left;
-	new_node->operator.right = right;
-	
-	return (new_node);
-}
 
 static char **copy_args(t_token **current, size_t cmd_len)
 {
@@ -60,7 +44,6 @@ static size_t get_cmd_len(t_token *current)
 
 	return (cmd_len);
 }
-
 t_ast	*create_node_cmd(t_token **current)
 {
 	t_ast *new_node;

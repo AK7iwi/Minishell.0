@@ -1,6 +1,3 @@
-
-
-
-
-
-
+Handle expand token before operator
+Handle redir (is_redir), separate redirin/redirout
+Handle paren token before operator

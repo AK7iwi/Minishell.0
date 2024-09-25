@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   synthesis_analysis_utils.c                         :+:      :+:    :+:   */
+/*   operator_node.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/20 13:17:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 14:40:56 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/25 11:29:19 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/25 12:32:24 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-inline bool is_redir(uint8_t type)
+t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type)
 {
-	return (type == TOKEN_SIMPLE_REDIRECT_OUT 
-		|| type == TOKEN_DOUBLE_REDIRECT_OUT
-		|| type == TOKEN_SIMPLE_REDIRECT_IN
-		|| type == TOKEN_DOUBLE_REDIRECT_IN);
-}
-inline bool is_operator(uint8_t type)
-{
-	return ((is_pipe(type) 
-		|| is_and(type) 
-		|| is_or(type)));
+	t_ast *new_node;
+
+	new_node = malloc(sizeof(t_ast));
+	if (!new_node)
+		return (NULL);
+	
+	new_node->type = AST_OPERATOR;
+	new_node->operator.type = op_type;
+	new_node->operator.left = left;
+	new_node->operator.right = right;
+	
+	return (new_node);
 }

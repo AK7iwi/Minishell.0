@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   synthesis_analysis_utils.c                         :+:      :+:    :+:   */
+/*   subsh_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/20 13:17:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 14:40:56 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/25 12:24:08 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/25 15:48:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-inline bool is_redir(uint8_t type)
+t_ast	*create_subsh_node(t_token **current)
 {
-	return (type == TOKEN_SIMPLE_REDIRECT_OUT 
-		|| type == TOKEN_DOUBLE_REDIRECT_OUT
-		|| type == TOKEN_SIMPLE_REDIRECT_IN
-		|| type == TOKEN_DOUBLE_REDIRECT_IN);
-}
-inline bool is_operator(uint8_t type)
-{
-	return ((is_pipe(type) 
-		|| is_and(type) 
-		|| is_or(type)));
+	t_ast 		*new_node;
+	new_node = malloc(sizeof(t_ast));
+	if (!new_node)
+		return (NULL);
+	
+	new_node->type = AST_SUBSH;
+	printf("Create subshell\n");
+	(*current) = (*current)->next;
+    new_node->subshell.root = ast_algo((*current), 0);
+	while((*current)->type != TOKEN_CLOSE_PAREN)
+		(*current) = (*current)->next;
+
+	return (new_node);
 }

@@ -2,54 +2,13 @@ AST:
 
 https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing
 
-1) SUbshell
+1) Subshell
 2) i/o file;
-3) Free l'arbre
 4) parentheses
-
-
-
-
+5)Handle prec
 
 
 int prec and int assoc in token struct 
-
-AST:
-
-associatives a droite
-() = 4; 
->, >>, < = 3; 
-
-associatives a gauche
-| = 2; 
-&&, || = 1;
-
-EXEMPLES:
-
-       |
-      / \
-    ls  grep
-t_ast *pipe_node = malloc(sizeof(t_ast));
-pipe_node->type = AST_OPERATOR;
-pipe_node->value = "|";
-pipe_node->left = create_command_node("ls");  // Fonction pour créer un nœud de commande
-pipe_node->right = create_command_node("grep");
-
-t_data data;
-data.ast_root = pipe_node;
-
-COMPUTE_ATOM : Lit et renvoie un élément atomique simple comme un nombre, 
-               une commande ou un argument.
-
-COMPUTE_EX: evalue l'ensemble des expression, gere operateurs, priorite,
-            et associavite et les traite de manieres recursive 
-            selon l'ordre de priorite
-
-elements atomique: 
-Une commande comme ls
-Un argument comme -l
-Un fichier comme file.txt
-Ou encore un nombre dans une expression mathématique dans un script.
 
 
 Parenthese exemple:

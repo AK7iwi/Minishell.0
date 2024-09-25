@@ -53,12 +53,12 @@ typedef enum e_ast_type
 	AST_SUBSH,
 }	t_ast_type;
 
-typedef enum e_operator_type
+typedef enum e_op_type
 {
     AST_PIPE,
 	AST_AND,
 	AST_OR,
-}	t_operator_type;
+}	t_op_type;
 
 //**********************************************//
 //					STRUCTURES					//
@@ -81,7 +81,7 @@ typedef struct s_cmd
 
 typedef struct s_operator
 {
-	t_operator_type	type;
+	t_op_type	type;
 
     struct s_ast *left;
     struct s_ast *right;  
@@ -127,18 +127,24 @@ typedef struct s_data
 
 /* ast_free.c */
 void 	free_ast(t_ast **ast);
+
 /* ast_print.c */
 void 	print_ast(t_ast *ast, int depth);
 
 /* ast_utils.c */
 bool 	is_arg_cmd(uint8_t type);
 
-/* create_node_ast.c */
-t_ast	*create_operator_node(t_ast *left, t_ast *right, t_operator_type operator_type);
+/* operator_node.c */
+t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type);
+
+/* cmd_node.c */
 t_ast	*create_node_cmd(t_token **current);
 
+/*subsh_node.c */
+t_ast	*create_subsh_node(t_token **current);
+
 /* ast.c */
-t_ast*	compute_expr(t_token **tokens, int min_prec);
+t_ast	*ast_algo(t_token *current, int min_prec);
 void 	create_ast(t_data *data);
 
 //**********************************************//

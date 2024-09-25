@@ -6,11 +6,19 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/24 18:26:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:14:18 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void print_subshell(t_ast *ast, int *depth)
+{
+	printf("[Subshell]:\n");
+	for (int i = 0; i < (*depth) + 1; i++)
+			printf("\t");
+	print_ast(ast->subshell.root, (*depth));
+}
 
 void print_cmd(t_ast *ast)
 {
@@ -24,7 +32,6 @@ void print_cmd(t_ast *ast)
 	}
 	printf("\n");
 }
-
 void print_operator(t_ast *ast, int *depth)
 {	
 	printf("[Operator]: ");
@@ -58,4 +65,6 @@ void print_ast(t_ast *ast, int depth)
 		print_operator(ast, &depth);
 	else if (ast->type == AST_COMMAND)
 		print_cmd(ast);
+	else if (ast->type == AST_SUBSH)
+		print_subshell(ast, &depth);
 }
