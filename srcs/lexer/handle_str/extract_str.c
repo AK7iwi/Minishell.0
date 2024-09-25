@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/20 11:30:52 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:49:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static size_t skip_space(char *input, size_t *i)
 	return (*i);
 }
 
-char*	extract_str(t_data *data, char *input, uint8_t *token, size_t *index)
+char*	extract_str(t_error *error, char *input, uint8_t *token, size_t *index)
 {
 	size_t 	str_start;
 	ssize_t	str_len;
@@ -69,11 +69,11 @@ char*	extract_str(t_data *data, char *input, uint8_t *token, size_t *index)
 	str_start = skip_space(input, index);
 	str_len = get_str_len(input, token, index);
 	if (str_len < 0)
-		return (data->error.error_g |= ERROR_QUOTE, NULL);
+		return (error->error_g |= ERROR_QUOTE, NULL);
 	
 	str = copy_str(input, str_start, index, str_len);
 	if (!str)
-		return (data->error.error_g |= ERROR_MALLOC, NULL);
+		return (error->error_g |= ERROR_MALLOC, NULL);
 
 	return (str);
 }
