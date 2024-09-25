@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 11:53:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:47:24 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 bool analyze_tokens(t_data *data)
 {
     t_token		*current;
-	uint64_t	o_counter;
-	uint64_t	c_counter;
+	uint32_t	o_counter;
+	uint32_t	c_counter;
 	
 	o_counter = 0;
 	c_counter = 0;

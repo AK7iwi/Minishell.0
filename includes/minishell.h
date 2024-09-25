@@ -163,7 +163,7 @@ bool 	is_open_paren(uint8_t type);
 bool 	is_closed_paren(uint8_t type);
 
 /* synthax_error.c */
-bool	check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter);
+bool	check_paren(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
 bool 	check_redir(t_token *current);
 bool 	check_operator(t_token *current);
 

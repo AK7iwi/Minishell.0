@@ -6,20 +6,20 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:09:55 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 14:44:29 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:47:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool check_paren(t_token *current, uint64_t *o_counter, uint64_t *c_counter)
+bool check_paren(t_token *current, uint32_t *o_counter, uint32_t *c_counter)
 {
 	if (is_open_paren(current->type))
 		(*o_counter)++;
 	else if (is_closed_paren(current->type))
 		(*c_counter)++;
 	
-	if (c_counter > o_counter)
+	if ((*c_counter) > (*o_counter))
 		return (EXIT_FAILURE);
 	
 	return (EXIT_SUCCESS);
