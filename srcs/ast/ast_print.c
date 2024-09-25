@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 16:14:18 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:27:38 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ void print_operator(t_ast *ast, int *depth)
 }
 void print_ast(t_ast *ast, int depth)
 {
-	if (ast->type == AST_OPERATOR)
-		print_operator(ast, &depth);
-	else if (ast->type == AST_COMMAND)
-		print_cmd(ast);
-	else if (ast->type == AST_SUBSH)
-		print_subshell(ast, &depth);
+	t_ast *current = ast;
+	
+	if (current->type == AST_OPERATOR)
+		print_operator(current, &depth);
+	else if (current->type == AST_COMMAND)
+		print_cmd(current);
+	else if (current->type == AST_SUBSH)
+		print_subshell(current, &depth);
 }
