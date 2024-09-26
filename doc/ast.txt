@@ -2,10 +2,7 @@ AST:
 
 https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing
 
-1) Subshell
-2) i/o file;
-4) parentheses
-5)Handle prec
+1) Be sure of the precedence
 
 
 int prec and int assoc in token struct 

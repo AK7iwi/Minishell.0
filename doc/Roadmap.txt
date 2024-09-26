@@ -1,69 +1,24 @@
-1) Parsing :
-
-a) Tokenisation
-
-Find the right tokens: OK
-
-b) Syner
-
-Read the token list and analyze them
-
-c) Parser 
-
-d) AST 
-
-Algo par rapport a la  syntaxe, se renseigner sur la grammaire shell et les cmds
 
 
-2) Exec
 
-Builtins
 
-3) General infos
+1) Lexer: OK
 
-I) Prompt
+2) Synthesis_analysis:
 
-II) Working History
 
-You can navigate through commands with up/down arrows
+3) AST: 
 
-Comment avoir acces a l'historique/ Ou le stock, comment le stock?
+Find the right precedence
 
-III) Search and launch the right executable (based on the PATH variable or using a
-relative or an absolute path).
 
-IV)
+4) Exec: 
 
-Not interpret unclosed quotes or special characters which are not required by the
-subject such as \ (backslash) or ; (semicolon).
+a) Prompt: OK
 
-Handle ’ (single quote) which should prevent the shell from interpreting the metacharacters in the quoted sequence.
-Handle " (double quote) which should prevent the shell from interpreting the metacharacters in the quoted sequence except for $ (dollar sign).
+b) Working History
 
-V) Implement redirections
-
-Comment fonctionne une redirection? Quesque c'est?
-
-VI) Implement pipes (| character). The output of each command in the pipeline is
-connected to the input of the next command via a pipe.
-
-VII)Handle environment variables ($ followed by a sequence of characters) which
-should expand to their values.
-
-VIII)Handle $? Which should expand to the exit status of the most recently executed
-foreground pipeline
-
-IX)Signaux 
-
-Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
-• In interactive mode:
-◦ ctrl-C displays a new prompt on a new line.
-◦ ctrl-D exits the shell.
-◦ ctrl-\ does nothing.
-
-One global variable
-
-X) Builtins:
+c) Builtins
 
 echo
 cd 
@@ -72,13 +27,30 @@ export
 env
 unset
 exit
-ls???
-Autre builtins a faire?
 
+d) Command
+Search and launch the right executable (based on the PATH variable or using a
+relative or an absolute path).
 
-XI) here-doc
+e) Implement redirections
 
-Doc utiles:
+f) Implement pipes (| character). The output of each command in the pipeline is
+connected to the input of the next command via a pipe.
 
-https://github.com/Hqndler/42-minishell
+g)Handle environment variables ($ followed by a sequence of characters) which
+should expand to their values.
+
+Handle $? Which should expand to the exit status of the most recently executed
+foreground pipeline
+
+h)Signaux 
+
+Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
+• In interactive mode:
+◦ ctrl-C displays a new prompt on a new line.
+◦ ctrl-D exits the shell.
+◦ ctrl-\ does nothing.
+
+i) here-doc
+
 

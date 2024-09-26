@@ -3,6 +3,7 @@ TOKENISATIONS
 
 
 !!hqndle &
+handle tab
 Special char (#,?, $)
 
 Verif space before special char:
