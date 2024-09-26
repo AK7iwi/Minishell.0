@@ -3,3 +3,22 @@ Handle redir (is_redir), separate redirin/redirout OK
 Handle paren token before operator OK
 
 Parse for paren: echo (ls)
+
+Open paren:
+
+After:
+
+WORD, 
+
+Before:
+operator
+
+Close paren:
+
+After: 
+
+operator, redir, paren
+
+Before:
+
+WORD, paren_close

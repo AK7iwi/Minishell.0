@@ -1,11 +1,11 @@
+1) Lexer: 
 
-
-
-
-1) Lexer: OK
+protect ft_strdup
 
 2) Synthesis_analysis:
 
+To improve
+protect ft_strdup
 
 3) AST: 
 

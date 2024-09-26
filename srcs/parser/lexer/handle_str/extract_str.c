@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 21:49:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:55:06 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static	bool	handle_quotes(char *input, char *str, size_t *start, size_t *i)
        	(*start)++;
         while (input[*start] != quote_char && input[*start] != NULL_CHAR)
 			str[(*i)++] = input[(*start)++];
-		return (1);
+		return (true);
     }
 	
-	return (0);
+	return (false);
 }
 
 static char* copy_str(char *input, size_t start, size_t *end, size_t len)
@@ -60,7 +60,7 @@ static size_t skip_space(char *input, size_t *i)
 	return (*i);
 }
 
-char*	extract_str(t_error *error, char *input, uint8_t *token, size_t *index)
+char*	extract_str(t_error *error, char *input, t_tok_type *token, size_t *index)
 {
 	size_t 	str_start;
 	ssize_t	str_len;

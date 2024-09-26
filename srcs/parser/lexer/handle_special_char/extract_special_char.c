@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:03:10 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 21:45:42 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:31:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static char* copy_special_char(char *input, size_t start, size_t *end, size_t le
 {
 	char *str;
 	size_t i;
-
 
 	str = malloc(len + 1);
 	if (!str)

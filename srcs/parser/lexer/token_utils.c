@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:14:17 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 21:17:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:04:02 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	bool add_to_token_list(t_token **token, uint8_t *str_type, char *str) 
+static	bool add_to_token_list(t_token **token, t_tok_type *str_type, char *str) 
 {
     t_token *new_node;
     t_token *last;
@@ -41,7 +41,7 @@ static	bool add_to_token_list(t_token **token, uint8_t *str_type, char *str)
 	return (EXIT_SUCCESS);
 }
 
-bool	add_token(t_token **token_struct, uint8_t *token, char *str_token)
+bool	add_token(t_token **token_struct, t_tok_type *token, char *str_token)
 {
 	if (ft_strlen(str_token))
 		if (add_to_token_list(token_struct, token, str_token))
@@ -50,7 +50,7 @@ bool	add_token(t_token **token_struct, uint8_t *token, char *str_token)
 
 	return (EXIT_SUCCESS);
 }
-uint8_t wich_token(char *str_token)
+t_tok_type wich_token(char *str_token)
 {
     if (str_token[0] == '|' && !str_token[1])
         return (TOKEN_PIPE);
@@ -71,5 +71,5 @@ uint8_t wich_token(char *str_token)
     else if (str_token[0] == ')' && !str_token[1])
         return (TOKEN_CLOSE_PAREN);
 
-    return (0);
+    return (TOKEN_WORD);
 }

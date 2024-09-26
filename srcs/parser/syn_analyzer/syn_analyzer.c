@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   analyze_tokens.c                                   :+:      :+:    :+:   */
+/*   syn_analyzer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 22:17:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:43:51 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool analyze_tokens(t_data *data)
+bool syn_analyzer(t_data *data)
 {
     t_token		*current;
 	uint32_t	o_counter;

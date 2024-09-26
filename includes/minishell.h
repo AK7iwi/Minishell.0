@@ -21,30 +21,32 @@
 //					DEFINES						//
 //**********************************************//
 
-/* Tokens */
-
-#define TOKEN_WORD                  1
-#define TOKEN_PIPE                  2  // |
-#define TOKEN_SIMPLE_REDIRECT_IN    3  // <
-#define TOKEN_SIMPLE_REDIRECT_OUT   4  // >
-#define TOKEN_HERE_DOC              5  // << (here_doc)
-#define TOKEN_DOUBLE_REDIRECT_OUT   6  // >>
-#define TOKEN_ENV_VAR         		7  // $
-#define TOKEN_AND                   8 // &&
-#define TOKEN_OR                    9 // ||
-#define TOKEN_OPEN_PAREN            10 // (
-#define TOKEN_CLOSE_PAREN           11 // )
-
 /* Special characters */
 
 #define SPACE 						' '
 #define NULL_CHAR					'\0'
 #define S_QUOTE						'\''
 #define D_QUOTE						'\"'
+#define ENV_VAR						'$'
 
 //**********************************************//
 //					ENUM						//
 //**********************************************//
+
+typedef enum e_tok_type
+{
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_SIMPLE_REDIRECT_IN,
+	TOKEN_SIMPLE_REDIRECT_OUT,
+	TOKEN_HERE_DOC,
+	TOKEN_DOUBLE_REDIRECT_OUT,
+	TOKEN_ENV_VAR,
+	TOKEN_AND,
+	TOKEN_OR,
+	TOKEN_OPEN_PAREN,
+	TOKEN_CLOSE_PAREN,
+}	t_tok_type;
 
 typedef enum e_ast_type
 {
@@ -74,8 +76,6 @@ typedef struct s_env_list
 typedef struct s_cmd
 {
 	char **args;
-	// char **i_files;
-	// char **o_files;
 
 }	t_cmd;
 
@@ -106,8 +106,8 @@ typedef struct s_ast
 
 typedef struct s_token
 {
+    t_tok_type type;
     char	*str;
-    uint8_t type;
     
     struct s_token *prev;
     struct s_token *next;
@@ -122,6 +122,26 @@ typedef struct s_data
 } 	t_data;
 
 //**********************************************//
+//					PARSER   					//
+//**********************************************//
+
+//**********************************************//
+//					PARSER_UTILS   				//
+//**********************************************//
+
+/* parse_checker2.c */
+bool	is_or(t_tok_type type);
+bool	is_and(t_tok_type type);
+bool	is_pipe(t_tok_type type);
+bool 	is_open_paren(t_tok_type type);
+bool 	is_closed_paren(t_tok_type type);
+
+/* parse_checker.c */
+bool 	is_cmd(t_tok_type type);
+bool	is_redir(t_tok_type type);
+bool	is_operator(t_tok_type type);
+
+//**********************************************//
 //					AST   						//
 //**********************************************//
 
@@ -130,9 +150,6 @@ void 	free_ast(t_ast **ast);
 
 /* ast_print.c */
 void 	print_ast(t_ast *ast, int depth);
-
-/* ast_utils.c */
-bool 	is_arg_cmd(uint8_t type);
 
 /* operator_node.c */
 t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type);
@@ -148,31 +165,24 @@ t_ast	*ast_algo(t_token **current, int min_prec);
 void 	create_ast(t_data *data);
 
 //**********************************************//
-//					PARSER   					//
+//					SYNER   					//
 //**********************************************//
 
-/* synthesis_analysis_utils.c */
-bool	is_redir(uint8_t type);
-bool	is_operator(uint8_t type);
-
-/* synthesis_analysis_utils2.c */
-bool	is_or(uint8_t type);
-bool	is_and(uint8_t type);
-bool	is_pipe(uint8_t type);
-bool 	is_open_paren(uint8_t type);
-bool 	is_closed_paren(uint8_t type);
-
-/* synthax_error.c */
+/* syn_checker.c */
 bool	check_paren(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
 bool 	check_redir(t_token *current);
 bool 	check_operator(t_token *current);
 
 /* analyze_token.c */
-bool	analyze_tokens(t_data *data);
+bool	syn_analyzer(t_data *data);
 
 //**********************************************//
 //					LEXER    					//
 //**********************************************//
+
+/* token_utils.c */
+bool		add_token(t_token **token_struct, t_tok_type *token, char *str_token);
+t_tok_type	wich_token(char *str);
 
 //////////// Handle special character ///////////////////
 
@@ -184,23 +194,19 @@ char*	extract_special_char(t_error *error, char *input, size_t *i);
 
 /* handle_special_char.c */
 bool	is_special_char(char *input, size_t *i);
-bool 	handle_special_char(t_data *data, char *input, uint8_t *token, size_t *index);
+bool 	handle_special_char(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 //////////// Handle str ///////////////////
 
 /* str_len.c */
-bool	get_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i);
-ssize_t	get_str_len(char *input, uint8_t *token, size_t *i);
+bool	get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i);
+ssize_t	get_str_len(char *input, t_tok_type *token, size_t *i);
 
 /* extract_str.c */
-char*	extract_str(t_error *error, char *input, uint8_t *token, size_t *index);
+char*	extract_str(t_error *error, char *input, t_tok_type *token, size_t *index);
 
 /* handle_str.c */
-bool 	handle_str(t_data *data, char *input, uint8_t *token, size_t *index);
-
-/* token_utils.c */
-bool	add_token(t_token **token_struct, uint8_t *token, char *str_token);
-uint8_t wich_token(char *str);
+bool 	handle_str(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 /* token.c */
 bool	tokeniser(t_data *data, char *input);

@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_utils.c                                        :+:      :+:    :+:   */
+/*   subsh_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/21 16:37:19 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/22 16:24:54 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/25 12:24:08 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/26 13:49:33 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-inline bool is_arg_cmd(uint8_t type)
+t_ast	*create_subsh_node(t_token **current)
 {
-	return (!is_operator(type) 
-		&& !is_closed_paren(type) 
-		&& !is_open_paren(type));
+	t_ast 		*new_node;
+	
+	new_node = malloc(sizeof(t_ast));
+	if (!new_node)
+		return (NULL);
+	
+	new_node->type = AST_SUBSH;
+	(*current) = (*current)->next;
+    new_node->subshell.root = ast_algo(current, 0);
+	while((*current)->type != TOKEN_CLOSE_PAREN)
+		(*current) = (*current)->next;
+	(*current) = (*current)->next;
+	return (new_node);
 }

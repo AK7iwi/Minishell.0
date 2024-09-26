@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:29:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 11:42:28 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:23:01 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static size_t get_cmd_len(t_token *current)
 
 	cmd_len = 0;
 	
-    while (current && is_arg_cmd(current->type))
+    while (current && is_cmd(current->type))
     {
         cmd_len++;
         current = current->next;
@@ -58,7 +58,7 @@ t_ast	*create_node_cmd(t_token **current)
 		return (NULL);
 	
 	new_node->type = AST_COMMAND;
-	new_node->cmd.args = copy_args(current, cmd_len);
+	new_node->cmd.args = copy_args(current, cmd_len); //protect
 	
 	return (new_node);
 }

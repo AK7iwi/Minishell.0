@@ -4,15 +4,14 @@ SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
 SRCS			:= main.c \
-					lexer/token.c \
-					lexer/handle_str/handle_str.c lexer/handle_str/extract_str.c lexer/handle_str/str_len.c \
-					lexer/handle_special_char/handle_special_char.c lexer/handle_special_char/extract_special_char.c lexer/handle_special_char/special_char_len.c \
-					lexer/token_utils.c \
-					synthesis_analysis/analyze_tokens.c \
-					synthesis_analysis/synthesis_error.c \
-					synthesis_analysis/synthesis_analysis_utils.c synthesis_analysis/synthesis_analysis_utils2.c \
-					ast/ast.c ast/ast_utils.c ast/ast_print.c ast/ast_free.c \
-					ast/create_ast_node/cmd_node.c ast/create_ast_node/operator_node.c ast/create_ast_node/subsh_node.c \
+					parser/lexer/token.c \
+					parser/lexer/handle_str/handle_str.c parser/lexer/handle_str/extract_str.c parser/lexer/handle_str/str_len.c \
+					parser/lexer/handle_special_char/handle_special_char.c parser/lexer/handle_special_char/extract_special_char.c parser/lexer/handle_special_char/special_char_len.c \
+					parser/lexer/token_utils.c \
+					parser/syn_analyser/syn_analyser.c parser/syn_analyser/syn_checker.c \
+					parser/ast/ast.c parser/ast/ast_print.c parser/ast/ast_free.c \
+					parser/ast/create_ast_node/cmd_node.c parser/ast/create_ast_node/operator_node.c parser/ast/create_ast_node/subsh_node.c \
+					parser/parser_utils.c/parser_checker.c parser/parser_utils.c/parser_checker2.c\
 					error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c

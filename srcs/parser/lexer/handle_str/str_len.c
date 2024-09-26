@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:20:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/18 16:13:41 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 13:55:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	get_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i)
+bool	get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i)
 {
 	char quote_char;
 
@@ -24,19 +24,19 @@ bool	get_quotes_len(char *input, ssize_t *str_len, uint8_t *t, size_t *i)
         (*i)++;
         while (input[*i] != quote_char && input[*i] != NULL_CHAR)
         {
-			if (input[*i] == '$' && quote_char == '\"')
+			if (input[*i] == ENV_VAR && quote_char == D_QUOTE)
 				(*t) = TOKEN_ENV_VAR;
 			(*str_len)++;
             (*i)++;
         }
 		(*str_len)--;
-        if (input[*i] != quote_char) //verif if open quote
+        if (input[*i] != quote_char)
 			return (EXIT_FAILURE);
     }
 	
 	return (EXIT_SUCCESS);
 }
-ssize_t	get_str_len(char *input, uint8_t *token, size_t *i)
+ssize_t	get_str_len(char *input, t_tok_type *token, size_t *i)
 {
     ssize_t	str_len;
 
@@ -48,8 +48,8 @@ ssize_t	get_str_len(char *input, uint8_t *token, size_t *i)
 			return (-1);
 		else
         	str_len++;
-
-		if (input[*i] == '$')
+		
+		if (input[*i] == ENV_VAR)
 			(*token) = TOKEN_ENV_VAR;
 		
 		(*i)++;

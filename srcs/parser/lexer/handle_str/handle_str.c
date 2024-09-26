@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   handle_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 22:05:42 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/18 12:07:39 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/26 13:54:36 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	tokeniser(t_data *data, char *input)
+bool handle_str(t_data *data, char *input, t_tok_type *token, size_t *index)
 {
-	uint8_t		token;
-	size_t 		input_len;
-	size_t		i;
-	
-	input_len = ft_strlen(input);
-	if (input_len <= 0)
+	char 		*str_token;
+
+	str_token = extract_str(&data->error, input, token, index);
+	if (!str_token)
 		return (EXIT_FAILURE);
-	
-	i = 0;
-	while (i < input_len)
-	{	
-		token = 0;
-		if (handle_str(data, input, &token, &i))
-			return (EXIT_FAILURE);
-		if (handle_special_char(data, input, &token, &i))
-			return (EXIT_FAILURE);
-	}
+	if (!(*token))
+		(*token) = TOKEN_WORD;
+	if (add_token(&data->token, token, str_token))
+		return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
 	
 	return (EXIT_SUCCESS);
 }

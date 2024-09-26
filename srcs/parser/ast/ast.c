@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 23:18:38 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:30:04 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-uint8_t get_prec(uint8_t type)
+uint8_t get_prec(t_tok_type type)
 {
 	//verif
 	if (is_pipe(type))
@@ -23,11 +23,11 @@ uint8_t get_prec(uint8_t type)
 	return (3);
 }
 
-t_op_type get_operator_type(uint8_t type)
+t_op_type get_operator_type(t_tok_type type)
 {
 	t_op_type operator_type;
 
-	operator_type = 9; //!! verif 
+	operator_type = 0; //verif 
 	
 	if (is_pipe(type))
 		operator_type = AST_PIPE;	
@@ -45,12 +45,13 @@ t_ast *ast_algo(t_token **current, int min_prec)
 	t_op_type	op_type;
 	uint8_t 	next_min_prec;
 
+	//one fct 
 	if ((*current) && (*current)->type == TOKEN_OPEN_PAREN)
 		result = create_subsh_node(current);
 	else
-		result = create_node_cmd(current);	
+		result = create_node_cmd(current);
 	if (!result)
-    		return (NULL);		
+    	return (NULL);
 	if ((*current) && (*current)->type == TOKEN_CLOSE_PAREN)
 		return (result);
 			
@@ -67,9 +68,9 @@ t_ast *ast_algo(t_token **current, int min_prec)
 }
 void 	create_ast(t_data *data)
 {
-	t_token **current;
-	current = &data->token;
-	data->ast = ast_algo(current, 0);
+	t_token *current;
+	current = data->token;
+	data->ast = ast_algo(&current, 0);
 	if (data->ast)
 	{
 		printf ("AST:\n");

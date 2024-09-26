@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subsh_node.c                                       :+:      :+:    :+:   */
+/*   synthesis_analysis_utils2.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 12:24:08 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 23:01:55 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/21 13:40:57 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/26 14:09:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*create_subsh_node(t_token **current)
+inline bool is_open_paren(t_tok_type type)
 {
-	t_ast 		*new_node;
-	new_node = malloc(sizeof(t_ast));
-	if (!new_node)
-		return (NULL);
-	
-	new_node->type = AST_SUBSH;
-	(*current) = (*current)->next;
-    new_node->subshell.root = ast_algo(current, 0);
-	while((*current)->type != TOKEN_CLOSE_PAREN)
-		(*current) = (*current)->next;
-	(*current) = (*current)->next;
-	return (new_node);
+	return (type == TOKEN_OPEN_PAREN);
+}
+inline bool is_closed_paren(t_tok_type type)
+{
+	return (type == TOKEN_CLOSE_PAREN);
+}
+inline bool is_or(t_tok_type type)
+{
+	return (type == TOKEN_OR);
+}
+
+inline bool is_and(t_tok_type type)
+{
+	return (type == TOKEN_AND);	
+}
+inline bool is_pipe(t_tok_type type)
+{
+	return (type == TOKEN_PIPE);
 }
