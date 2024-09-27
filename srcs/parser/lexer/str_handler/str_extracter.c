@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extract_str.c                                      :+:      :+:    :+:   */
+/*   str_extracter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:15:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:03:47 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	bool	handle_quotes(char *input, char *str, size_t *start, size_t *i)
+static	bool	quotes_handler(char *input, char *str, size_t *start, size_t *i)
 {
 	char	quote_char;
 
@@ -41,7 +41,7 @@ static char* copy_str(char *input, size_t start, size_t *end, size_t len)
 	i = 0;
 	while (start < (*end))
 	{
-		if (handle_quotes(input, str, &start, &i))
+		if (quotes_handler(input, str, &start, &i))
 			start++;
 		else 
 			str[i++] = input[start++];	
@@ -60,7 +60,7 @@ static size_t skip_space(char *input, size_t *i)
 	return (*i);
 }
 
-char*	extract_str(t_error *error, char *input, t_tok_type *token, size_t *index)
+char*	str_extracter(t_error *error, char *input, t_tok_type *token, size_t *index)
 {
 	size_t 	str_start;
 	ssize_t	str_len;

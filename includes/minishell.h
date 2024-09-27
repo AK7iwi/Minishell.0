@@ -121,6 +121,14 @@ typedef struct s_data
     t_env_list	*env;
 } 	t_data;
 
+
+//**********************************************//
+//					EXEC	   					//
+//**********************************************//
+
+bool ast_exec(t_ast *root);
+bool exec(t_data *data);
+
 //**********************************************//
 //					PARSER   					//
 //**********************************************//
@@ -146,34 +154,34 @@ bool	is_operator(t_tok_type type);
 //**********************************************//
 
 /* ast_free.c */
-void 	free_ast(t_ast **ast);
+void	ast_freer(t_ast **ast);
 
 /* ast_print.c */
 void 	print_ast(t_ast *ast, int depth);
 
 /* operator_node.c */
-t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type);
+t_ast	*operator_node_creator(t_ast *left, t_ast *right, t_op_type op_type);
 
 /* cmd_node.c */
-t_ast	*create_node_cmd(t_ast **new_node, t_token **current);
+t_ast	*node_cmd_creator(t_ast **new_node, t_token **current);
 
 /*subsh_node.c */
-t_ast	*create_subsh_node(t_ast **new_node, t_token **current);
+t_ast	*subsh_node_creator(t_ast **new_node, t_token **current);
 
 /* ast.c */
 t_ast	*ast_cmd_and_subsh_handler(t_token **current);
 void	ast_op_handler(t_ast ** result, t_token **current, uint8_t min_prec);
 t_ast	*ast_algo(t_token **current, uint8_t min_prec);
-bool 	create_ast(t_data *data);
+bool	ast_creator(t_data *data);
 
 //**********************************************//
 //					SYNER   					//
 //**********************************************//
 
 /* syn_checker.c */
-bool	check_paren(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
-bool 	check_redir(t_token *current);
-bool 	check_operator(t_token *current);
+bool	paren_checker(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
+bool 	redir_checker(t_token *current);
+bool 	operator_checker(t_token *current);
 
 /* syn_analyzer.c */
 bool	syn_analyzer(t_data *data);
@@ -191,12 +199,12 @@ t_tok_type	wich_token(char *str);
 /* special_char_len.c */
 uint8_t get_special_char_len(char *input, size_t *i);
 
-/* extract_special_char.c*/
-char*	extract_special_char(t_error *error, char *input, size_t *i);
+/* special_char_extracter.c*/
+char*	special_char_extracter(t_error *error, char *input, size_t *i);
 
-/* handle_special_char.c */
+/* special_char_handler.c */
 bool	is_special_char(char *input, size_t *i);
-bool 	handle_special_char(t_data *data, char *input, t_tok_type *token, size_t *index);
+bool 	special_char_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 //////////// Handle str ///////////////////
 
@@ -204,11 +212,11 @@ bool 	handle_special_char(t_data *data, char *input, t_tok_type *token, size_t *
 bool	get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i);
 ssize_t	get_str_len(char *input, t_tok_type *token, size_t *i);
 
-/* extract_str.c */
-char*	extract_str(t_error *error, char *input, t_tok_type *token, size_t *index);
+/* str_extracter.c */
+char*	str_extracter(t_error *error, char *input, t_tok_type *token, size_t *index);
 
-/* handle_str.c */
-bool 	handle_str(t_data *data, char *input, t_tok_type *token, size_t *index);
+/* str_handler.c */
+bool 	str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 /* tokenizer.c */
 bool	tokenizer(t_data *data, char *input);

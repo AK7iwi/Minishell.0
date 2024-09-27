@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:09:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:33:27 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ t_ast *ast_cmd_and_subsh_handler(t_token **current)
 		return (NULL);
 	
 	if ((*current) && (*current)->type == TOKEN_OPEN_PAREN)
-		new_node = create_subsh_node(&new_node, current);
+		new_node = subsh_node_creator(&new_node, current);
 	else
-		new_node = create_node_cmd(&new_node, current);
+		new_node = node_cmd_creator(&new_node, current);
 
 	return (new_node);
 }
@@ -67,7 +67,7 @@ void	ast_op_handler(t_ast **result, t_token **current, uint8_t min_prec)
 		op_type = get_operator_type((*current)->type);
 		(*current) = (*current)->next;
 		right_side = ast_algo(current, next_min_prec);
-		(*result) = create_operator_node((*result), right_side, op_type); // protect
+		(*result) = operator_node_creator((*result), right_side, op_type); // protect
 	}
 }
 t_ast *ast_algo(t_token **current, uint8_t min_prec)
@@ -83,18 +83,11 @@ t_ast *ast_algo(t_token **current, uint8_t min_prec)
 
     return (result);
 }
-bool	create_ast(t_data *data)
+bool	ast_creator(t_data *data)
 {
 	t_token *current;
 	current = data->token;
 	data->ast = ast_algo(&current, 0);
-	if (!data->ast)
-		return (EXIT_FAILURE);
-	if (data->ast)
-	{
-		printf ("AST:\n");
-		print_ast(data->ast, 0);
-	}
 
-	return (EXIT_SUCCESS);
+	return (!data->ast);
 }

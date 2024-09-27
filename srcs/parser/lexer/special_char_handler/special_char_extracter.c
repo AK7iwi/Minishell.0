@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extract_special_char.c                             :+:      :+:    :+:   */
+/*   special_char_extracter.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:03:10 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/26 13:31:10 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:50:29 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char* copy_special_char(char *input, size_t start, size_t *end, size_t le
 
 	return (str);
 }
-char *extract_special_char(t_error *error, char *input, size_t *index)
+char *special_char_extracter(t_error *error, char *input, size_t *index)
 {
 	char	*str;
 	size_t 	start;

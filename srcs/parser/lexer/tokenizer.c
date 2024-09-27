@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 10:26:18 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:50:52 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ bool	tokenizer(t_data *data, char *input)
 	while (i < input_len)
 	{	
 		token = 0;
-		if (handle_str(data, input, &token, &i))
+		if (str_handler(data, input, &token, &i))
 			return (EXIT_FAILURE);
-		if (handle_special_char(data, input, &token, &i))
+		if (special_char_handler(data, input, &token, &i))
 			return (EXIT_FAILURE);
 	}
 	

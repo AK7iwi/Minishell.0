@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subsh_node.c                                       :+:      :+:    :+:   */
+/*   str_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 12:24:08 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:00:38 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/18 12:07:39 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/27 11:49:43 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*create_subsh_node(t_ast **new_node, t_token **current)
+bool str_handler(t_data *data, char *input, t_tok_type *token, size_t *index)
 {
-	(*new_node)->type = AST_SUBSH;
-	(*current) = (*current)->next;
-    (*new_node)->subshell.root = ast_algo(current, 0);
-	while((*current)->type != TOKEN_CLOSE_PAREN)
-		(*current) = (*current)->next;
-	(*current) = (*current)->next;
+	char 		*str_token;
+
+	str_token = str_extracter(&data->error, input, token, index);
+	if (!str_token)
+		return (EXIT_FAILURE);
+	if (!(*token))
+		(*token) = TOKEN_WORD;
+	if (add_token(&data->token, token, str_token))
+		return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
 	
-	return ((*new_node));
+	return (EXIT_SUCCESS);
 }

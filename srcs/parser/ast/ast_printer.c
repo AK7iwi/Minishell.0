@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_print.c                                        :+:      :+:    :+:   */
+/*   ast_printer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 22:43:34 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:44:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_subshell(t_ast *ast, int *depth)
+static void print_subshell(t_ast *ast, int *depth)
 {
 	printf("[Subshell]\n");
 	for (int i = 0; i < (*depth) + 1; i++)
@@ -20,7 +20,7 @@ void print_subshell(t_ast *ast, int *depth)
 	print_ast(ast->subshell.root, (*depth));
 }
 
-void print_cmd(t_ast *ast)
+static void print_cmd(t_ast *ast)
 {
 	size_t i;
 
@@ -33,7 +33,7 @@ void print_cmd(t_ast *ast)
 	}
 	printf("\n");
 }
-void print_operator(t_ast *ast, int *depth)
+static void print_operator(t_ast *ast, int *depth)
 {	
 	printf("[Operator] ");
     if (ast->operator.type == AST_PIPE)
@@ -62,7 +62,8 @@ void print_operator(t_ast *ast, int *depth)
 }
 void print_ast(t_ast *ast, int depth)
 {
-	t_ast *current = ast;
+	t_ast *current;
+	current = ast;
 	
 	if (current->type == AST_OPERATOR)
 		print_operator(current, &depth);

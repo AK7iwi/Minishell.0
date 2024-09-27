@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_str.c                                       :+:      :+:    :+:   */
+/*   operator_node.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 12:07:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/26 13:54:36 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/09/25 11:29:19 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/27 12:08:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool handle_str(t_data *data, char *input, t_tok_type *token, size_t *index)
+t_ast	*operator_node_creator(t_ast *left, t_ast *right, t_op_type op_type)
 {
-	char 		*str_token;
+	t_ast *new_node;
 
-	str_token = extract_str(&data->error, input, token, index);
-	if (!str_token)
-		return (EXIT_FAILURE);
-	if (!(*token))
-		(*token) = TOKEN_WORD;
-	if (add_token(&data->token, token, str_token))
-		return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
+	new_node = malloc(sizeof(t_ast));
+	if (!new_node)
+		return (NULL);
 	
-	return (EXIT_SUCCESS);
+	new_node->type = AST_OPERATOR;
+	new_node->operator.type = op_type;
+	new_node->operator.left = left;
+	new_node->operator.right = right;
+	
+	return (new_node);
 }

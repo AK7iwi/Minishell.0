@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_free.c                                         :+:      :+:    :+:   */
+/*   ast_freer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:15:11 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 16:00:36 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:16:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void free_subshell(t_subshell *subsh)
 {
-	free_ast(&subsh->root);
+	ast_freer(&subsh->root);
 }
 static void free_cmd(t_cmd *cmd)
 {
@@ -33,12 +33,12 @@ static void free_cmd(t_cmd *cmd)
 static void free_operator(t_operator *op)
 {
     if (op->left)
-        free_ast(&op->left);
+        ast_freer(&op->left);
     if (op->right)
-        free_ast(&op->right);
+        ast_freer(&op->right);
 }
 
-void free_ast(t_ast **ast)
+void ast_freer(t_ast **ast)
 {
 	if ((*ast)->type == AST_OPERATOR)
 		free_operator(&(*ast)->operator);
