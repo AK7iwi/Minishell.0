@@ -155,14 +155,16 @@ void 	print_ast(t_ast *ast, int depth);
 t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type);
 
 /* cmd_node.c */
-t_ast	*create_node_cmd(t_token **current);
+t_ast	*create_node_cmd(t_ast **new_node, t_token **current);
 
 /*subsh_node.c */
-t_ast	*create_subsh_node(t_token **current);
+t_ast	*create_subsh_node(t_ast **new_node, t_token **current);
 
 /* ast.c */
-t_ast	*ast_algo(t_token **current, int min_prec);
-void 	create_ast(t_data *data);
+t_ast	*ast_cmd_and_subsh_handler(t_token **current);
+void	ast_op_handler(t_ast ** result, t_token **current, uint8_t min_prec);
+t_ast	*ast_algo(t_token **current, uint8_t min_prec);
+bool 	create_ast(t_data *data);
 
 //**********************************************//
 //					SYNER   					//
@@ -208,8 +210,8 @@ char*	extract_str(t_error *error, char *input, t_tok_type *token, size_t *index)
 /* handle_str.c */
 bool 	handle_str(t_data *data, char *input, t_tok_type *token, size_t *index);
 
-/* token.c */
-bool	tokeniser(t_data *data, char *input);
+/* tokenizer.c */
+bool	tokenizer(t_data *data, char *input);
 
 //**********************************************//
 //					MAIN    					//

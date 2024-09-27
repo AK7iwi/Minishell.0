@@ -6,25 +6,20 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:24:08 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/26 13:49:33 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:00:38 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*create_subsh_node(t_token **current)
+t_ast	*create_subsh_node(t_ast **new_node, t_token **current)
 {
-	t_ast 		*new_node;
-	
-	new_node = malloc(sizeof(t_ast));
-	if (!new_node)
-		return (NULL);
-	
-	new_node->type = AST_SUBSH;
+	(*new_node)->type = AST_SUBSH;
 	(*current) = (*current)->next;
-    new_node->subshell.root = ast_algo(current, 0);
+    (*new_node)->subshell.root = ast_algo(current, 0);
 	while((*current)->type != TOKEN_CLOSE_PAREN)
 		(*current) = (*current)->next;
 	(*current) = (*current)->next;
-	return (new_node);
+	
+	return ((*new_node));
 }

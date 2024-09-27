@@ -4,14 +4,14 @@ SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
 SRCS			:= main.c \
-					parser/lexer/token.c \
+					parser/lexer/tokenizer.c \
 					parser/lexer/handle_str/handle_str.c parser/lexer/handle_str/extract_str.c parser/lexer/handle_str/str_len.c \
 					parser/lexer/handle_special_char/handle_special_char.c parser/lexer/handle_special_char/extract_special_char.c parser/lexer/handle_special_char/special_char_len.c \
 					parser/lexer/token_utils.c \
-					parser/syn_analyser/syn_analyser.c parser/syn_analyser/syn_checker.c \
+					parser/syn_analyzer/syn_analyzer.c parser/syn_analyzer/syn_checker.c \
 					parser/ast/ast.c parser/ast/ast_print.c parser/ast/ast_free.c \
 					parser/ast/create_ast_node/cmd_node.c parser/ast/create_ast_node/operator_node.c parser/ast/create_ast_node/subsh_node.c \
-					parser/parser_utils.c/parser_checker.c parser/parser_utils.c/parser_checker2.c\
+					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
 					error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c
