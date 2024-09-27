@@ -175,7 +175,7 @@ bool	check_paren(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
 bool 	check_redir(t_token *current);
 bool 	check_operator(t_token *current);
 
-/* analyze_token.c */
+/* syn_analyzer.c */
 bool	syn_analyzer(t_data *data);
 
 //**********************************************//
@@ -240,13 +240,14 @@ void	free_all(t_data *data);
 int		ft_isalnum(int c);
 bool    is_space(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-/* lib_len.c */
-size_t	ft_strlen(const char *s);
 /* lib_memory.c */
 char	*ft_strdup(const char *s);
 /* lib_str_manip.c */
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
+
+/* lib_len.c */
+size_t	ft_strlen(const char *s);
 
 #endif /* MINISHELL_H */

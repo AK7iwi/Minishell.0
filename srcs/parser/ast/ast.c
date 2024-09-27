@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:05:52 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:09:50 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ast_op_handler(t_ast **result, t_token **current, uint8_t min_prec)
 		op_type = get_operator_type((*current)->type);
 		(*current) = (*current)->next;
 		right_side = ast_algo(current, next_min_prec);
-		(*result) = create_operator_node((*result), right_side, op_type);
+		(*result) = create_operator_node((*result), right_side, op_type); // protect
 	}
 }
 t_ast *ast_algo(t_token **current, uint8_t min_prec)
@@ -79,7 +79,7 @@ t_ast *ast_algo(t_token **current, uint8_t min_prec)
     	return (NULL);
 	if ((*current) && (*current)->type == TOKEN_CLOSE_PAREN)
 		return (result);
-	ast_op_handler(&result, current, min_prec);
+	ast_op_handler(&result, current, min_prec); // protect
 
     return (result);
 }
