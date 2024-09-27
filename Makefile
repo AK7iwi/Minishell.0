@@ -14,6 +14,7 @@ SRCS			:= main.c \
 					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
 					error/msg_error.c \
 					exec/exec.c \
+					exec/builtins/echo_test.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_str_manip.c \
 					utils/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)

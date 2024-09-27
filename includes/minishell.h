@@ -126,6 +126,7 @@ typedef struct s_data
 //					EXEC	   					//
 //**********************************************//
 
+void echo(char **args);
 bool ast_exec(t_ast *root);
 bool exec(t_data *data);
 
