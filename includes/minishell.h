@@ -139,7 +139,7 @@ void	unset(char **args, t_env_list **env);
 /* export.c */
 int		ft_export(char **args, t_env_list *env);
 /* pwd.c */
-int		pwd(void);
+bool	pwd(void);
 /* cd.c */
 int 	cd(char **args, t_env_list *env);
 /* echo.c */

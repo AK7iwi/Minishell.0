@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:53:11 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/28 13:40:13 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:42:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static bool	n_flags_checker(char **args, size_t *i)
 
     return (n_flag);
 }
-
 void	echo(char **args)
 {
 	bool	no_newline;
