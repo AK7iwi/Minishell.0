@@ -6,59 +6,55 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:53:11 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/28 12:17:12 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:40:13 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static int is_flag_n(const char *arg)
-// {
-// 	int i;
-
-// 	i = 2;
-	
-// 	if(arg[0] != '=' || arg[1] != 'n')
-// 		return (0);
-	
-// 	while(arg[i])
-// 	{
-// 		if(arg[i] != 'n')
-// 			return (0);
-// 		i++; 
-// 	}
-// 	return(1);
-// }
-
-static int	check_flags(char **args)
+static bool	n_flags_checker(char **args, size_t *i)
 {
-	int	i;
+    bool n_flag;
 	
-	i = 1;
-	
-	while (args[i] && ft_strncmp(args[i], "-n", 2)== 0 
-		&& ft_strlen(args[i]) == 2)
-		i++;
-	
-	return (i);
+	n_flag = false;
+
+    while (args[*i] && args[*i][0] == '-' && args[*i][1] == 'n') 
+    {
+        size_t j;
+		j = 2;
+		
+        while (args[*i][j] && args[*i][j] == 'n')
+            j++;
+
+        if (args[*i][j] == '\0')
+        {
+            n_flag = true;
+            (*i)++;
+        }
+        else
+        	break;
+    }
+
+    return (n_flag);
 }
 
 void	echo(char **args)
 {
-	int newline;
-	int i;
+	bool	no_newline;
+	size_t 	i;
 
-	i = check_flags(args);
-	newline = (i == 1);
+	i = 1;
 
+	no_newline = n_flags_checker(args, &i);
+	
 	while (args[i])
 	{
 		printf("%s", args[i]);
 		i++;
-		if(args[i])
+		if (args[i])
 			printf(" ");
 	}
 	
-	if (newline)
+	if (!no_newline)
 		printf("\n");
 }

@@ -4,6 +4,8 @@ Handle paren token before operator OK
 
 Parse for paren: echo (ls)
 
+Closed and open parens cant togheter 
+
 Open paren:
 
 After:

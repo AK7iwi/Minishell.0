@@ -12,10 +12,10 @@ SRCS			:= main.c \
 					parser/ast/ast.c parser/ast/ast_printer.c parser/ast/ast_freer.c \
 					parser/ast/ast_node_creator/cmd_node.c parser/ast/ast_node_creator/operator_node.c parser/ast/ast_node_creator/subsh_node.c \
 					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
-					error/msg_error.c \
 					exec/exec.c \
-					exec/builtins/echo.c \
-					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c\
+					exec/builtins/builtins.c exec/builtins/echo.c \
+					error/msg_error.c \
+					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c \
 					utils/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -56,3 +56,6 @@ re:	fclean all
 .PHONY: all clean fclean re
 
 # $(FSANITIZE_FLAG
+
+#  exec/builtins/cd.c exec/builtins/pwd.c exec/builtins/export.c \
+# 					exec/builtins/unset.c exec/builtins/env.c exec/builtins/exit.c \

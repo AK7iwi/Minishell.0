@@ -4,13 +4,12 @@ protect ft_strdup
 
 2) Synthesis_analysis:
 
-To improve
+To improve for paren
 protect ft_strdup
 
 3) AST: 
 
 Find the right precedence
-
 
 4) Exec: 
 

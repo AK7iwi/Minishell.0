@@ -126,7 +126,28 @@ typedef struct s_data
 //					EXEC	   					//
 //**********************************************//
 
+//**********************************************//
+//					BUILTINS	   				//
+//**********************************************//
+
+/* exit.c */
+void	ft_exit(t_data *data, char **command);
+/* env.c */
+int		env(t_env_list *env);
+/* unset.c */
+void	unset(char **args, t_env_list **env);
+/* export.c */
+int		ft_export(char **args, t_env_list *env);
+/* pwd.c */
+int		pwd(void);
+/* cd.c */
+int 	cd(char **args, t_env_list *env);
+/* echo.c */
 void	echo(char **args);
+/* builtins.c */
+bool	is_builtins(char **args);
+
+/* exec.c */
 bool	ast_exec(t_ast *root);
 bool	exec(t_data *data);
 
@@ -225,15 +246,6 @@ bool	tokenizer(t_data *data, char *input);
 //**********************************************//
 //					MAIN    					//
 //**********************************************//
-
-// /* env_utils.c */
-// void free_env_list(t_env_list **lst);
-// char *get_env_value(char *var, t_env_list *env);
-// char *extract_var_name(char *str, int *i);
-// char *replace_env_vars(char *line, t_env_list *env);
-// void replace_dollars_in_command(char **line, t_env_list *env);
-// void append_env_list(t_env_list **lst, char *str);
-// t_env_list *create_env_list(char **envp);
 
 //**********************************************//
 //					UTILS   					//
