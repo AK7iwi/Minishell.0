@@ -126,9 +126,9 @@ typedef struct s_data
 //					EXEC	   					//
 //**********************************************//
 
-void echo(char **args);
-bool ast_exec(t_ast *root);
-bool exec(t_data *data);
+void	echo(char **args);
+bool	ast_exec(t_ast *root);
+bool	exec(t_data *data);
 
 //**********************************************//
 //					PARSER   					//
@@ -244,6 +244,8 @@ void	free_loop(t_data *data);
 void	free_all(t_data *data);
 
 /* Libft */
+
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /* lib_checker.c */
 int		ft_isalnum(int c);
