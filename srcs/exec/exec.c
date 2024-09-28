@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 13:11:07 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/28 11:33:12 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,9 @@ static bool exec_subshell(t_subshell *subsh)
 
 static bool exec_cmd(t_cmd *cmd)
 {
-	// size_t i;
 	
-	// i = 0;
-	// while (cmd->args[i])
-	// {
-	// 	//exec cmd
-	// 	printf("%s ", cmd->args[i]);
-	// 	i++;
-	// }
-	if (cmd->args[0] == "echo") // ft_strncmp
-		echo(cmd->args);
+	// if (cmd->args[0] == "echo") // ft_strncmp
+	// 	echo(cmd->args);
 	
 	return (EXIT_SUCCESS);
 	
