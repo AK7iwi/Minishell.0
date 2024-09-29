@@ -6,21 +6,19 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:28:19 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/28 13:44:53 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:40:35 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	pwd(void)
+void	pwd(void)
 {
 	char *cwd;
 	
 	cwd = getcwd(NULL, 0);
 	if(!cwd)
-		printf("pwd error");
+		printf("pwd error"); //msg error
 	else
-		printf("%s\n", cwd);	
-	
-	return (0);
+		printf("%s\n", cwd);
 }
