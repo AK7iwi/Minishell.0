@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 13:03:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/29 21:21:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	init_struct(t_data *data)
 	data->error.error_g = 0;
 	data->token = NULL;
 	data->ast = NULL;
+	data->env = NULL;
+	//init env
 }
 
 static inline bool is_arg(t_error *error, int argc)
@@ -46,7 +48,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
     (void)envp; //tmp
 	
-	init_struct(&data);
+	init_struct(&data, envp);
 	if (is_arg(&data.error, argc))
 		return (msg_error(data.error), EXIT_FAILURE);
 	

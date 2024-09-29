@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 12:16:48 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/29 20:45:31 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/29 21:01:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ bool is_builtins(char **args)
 	// 	return (ft_export(cmd->args), true);
 	// else if (ft_strncmp(cmd->args[0], "unset", 5) == 0)
 	// 	return (unset(cmd->args), true);
-	else if (ft_strncmp(args[0], "env", 3) == 0)
-		return (env(cmd->args), true);
+	// else if (ft_strncmp(args[0], "env", 3) == 0)
+	// 	return (env(), true);
 	// else if (ft_strncmp(cmd->args[0], "exit", 4) == 0)
 	// 	return (exit(cmd->args), true);
 
