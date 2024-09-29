@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <fcntl.h>
 
 //**********************************************//
 //					DEFINES						//
@@ -28,6 +29,7 @@
 #define S_QUOTE						'\''
 #define D_QUOTE						'\"'
 #define ENV_VAR						'$'
+#define BUFFER_SIZE 1024
 
 //**********************************************//
 //					ENUM						//
@@ -129,6 +131,34 @@ typedef struct s_data
 void	echo(char **args);
 bool	ast_exec(t_ast *root);
 bool	exec(t_data *data);
+/*exec_utils*/
+void	free_tab(char **tab);
+int	    open_file(char *av, int read);
+char	**find_path(char **env);
+char	*valid_path(char **all_paths, char *cmd);
+
+/*pipe_utils*/
+void    create_pipe(int *tube);
+void    setup_redirections(int fd_in, int *tube);
+void    handle_fork(pid_t pid, char **env, t_cmd *cmd, int fd_in, int *tube);
+
+/*pipe.c*/
+void    exec_command(char **env, t_cmd *cmd);
+void    exec_pipeline(t_cmd **cmds, char **env);
+
+/*heredoc_utils.c*/
+char    *ft_getline(void);
+void    write_to_file(int output_fd, const char *line);
+int     open_output_file(const char *output_file);
+
+/*heredoc.c*/
+void    read_heredoc(int fd, const char *delimiter);
+void    child_process(int output_fd, const char *delimiter);
+void    create_heredoc(const char *delimiter, const char *output_file);
+
+/*redir.c*/
+void    redirect_output(const char *filename, int append);
+void    redirect_input(const char *filename);
 
 //**********************************************//
 //					PARSER   					//
@@ -251,6 +281,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_isalnum(int c);
 bool    is_space(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int	ft_strcmp(char *s1, char *s2);
+
 /* lib_memory.c */
 char	*ft_strdup(const char *s);
 /* lib_str_manip.c */
