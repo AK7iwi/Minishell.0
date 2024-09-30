@@ -3,8 +3,6 @@ modif proto of ast_printer = like ast_exec
 exec && ast_exec one fct, yes
 Leak when malloc = NULL;
 
-
-
 1) Lexer: 
 
 protect ft_strdup
@@ -27,12 +25,13 @@ b) Working History
 c) Builtins
 
 handle redir
+handle error
 
 echo OK
 cd 
 pwd OK
 export
-env
+env: test empty env, env -i before executable
 unset
 exit
 
@@ -40,7 +39,7 @@ d) Command
 Search and launch the right executable (based on the PATH variable or using a
 relative or an absolute path).
 
-e) Implement redirections
+e) Implement redirections 
 
 f) Implement pipes (| character). The output of each command in the pipeline is
 connected to the input of the next command via a pipe.
@@ -51,7 +50,7 @@ should expand to their values.
 Handle $? Which should expand to the exit status of the most recently executed
 foreground pipeline
 
-h)Signaux 
+h)Signaux
 
 Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
 • In interactive mode:

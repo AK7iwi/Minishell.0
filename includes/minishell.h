@@ -69,14 +69,15 @@ typedef enum e_op_type
 typedef struct s_env_list
 {
     char *str;
+
     struct s_env_list *prev;
     struct s_env_list *next;
 }	t_env_list;
 
 typedef struct s_cmd
 {
+	//t_cmd_type
 	char **args;
-
 }	t_cmd;
 
 typedef struct s_operator
@@ -155,10 +156,10 @@ int 	cd(char **args, t_env_list *env);
 /* echo.c */
 void	echo(char **args);
 /* builtins.c */
-bool	is_builtins(char **args);
+bool	is_builtins(t_data *data);
 
 /* exec.c */
-bool	ast_exec(t_ast *root);
+bool 	ast_exec(t_ast *root);
 bool	exec(t_data *data, char **envp);
 
 //**********************************************//
@@ -254,10 +255,6 @@ bool 	str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 /* tokenizer.c */
 bool	tokenizer(t_data *data, char *input);
-
-//**********************************************//
-//					MAIN    					//
-//**********************************************//
 
 //**********************************************//
 //					UTILS   					//

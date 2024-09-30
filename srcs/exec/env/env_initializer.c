@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:16:12 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/30 11:04:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:05:41 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void print_env(t_env_list *env)
 		printf("%s\n", current->str);
 		current = current->next;
 	}
-	
 }
 void free_env(t_env_list **lst)
 {
@@ -67,11 +66,11 @@ bool add_to_env_list(t_env_list **lst, char *str)
 
 	return (EXIT_SUCCESS);
 }
-bool	init_env(t_data *data, char **envp) 
+bool	init_env(t_data *data, char **envp)
 {
     size_t i;
-	i = 0;
 
+	i = 0;
     while (envp[i]) 
     {
         if (add_to_env_list(&data->env, envp[i]))

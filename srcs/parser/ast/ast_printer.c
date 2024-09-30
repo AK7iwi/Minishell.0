@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 17:57:33 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:44:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:39:56 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void print_operator(t_ast *ast, int *depth)
         printf("    [left] ");
         print_ast(ast->operator.left, (*depth) + 1);
     }
-
     if (ast->operator.right)
 	{
 		for (int i = 0; i < (*depth) + 1; i++)

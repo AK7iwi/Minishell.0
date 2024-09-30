@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:49:49 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/28 12:45:35 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 12:25:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int handle_no_valid_env(int count)
 	return (0);
 }
 
-int	env(t_env_list *env)
+bool	env(t_env_list *env)
 {
 	t_env_list *temp;
 	int count;
@@ -61,6 +61,5 @@ int	env(t_env_list *env)
 			break;
 	}
 
-	return handle_no_valid_env(count);
+	return (handle_no_valid_env(count));
 }
-
