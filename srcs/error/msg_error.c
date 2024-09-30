@@ -1,6 +1,11 @@
 
 #include "minishell.h"
 
+inline void 	free_error(t_error *error)
+{
+	error->error_g = 0;
+}
+
 static void	ft_putstr(char *str, int fd)
 {
 	if (fd < 0)

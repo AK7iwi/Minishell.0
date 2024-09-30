@@ -6,34 +6,11 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:15:19 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:55:50 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	free_token(t_token **tokens)
-{
-	t_token	*tmp;
-	t_token	*current;
-
-	if (!(*tokens))
-		return ;
-	current = *tokens;
-	while (current)
-	{
-		tmp = current;
-		current = current->next;
-		free(tmp->str);
-		free(tmp);
-	}
-	*tokens = NULL;
-}
-
-static inline void 	free_error(t_error *error)
-{
-	error->error_g = 0;
-}
 
 void	free_loop(t_data *data)
 {
@@ -43,6 +20,8 @@ void	free_loop(t_data *data)
 		free_token(&data->token);
 	if (data->ast)
 		ast_freer(&data->ast);
+	if (data->env)
+		free_env(&data->env);
 }
 
 //maybe need later for env_var

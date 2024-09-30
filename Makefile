@@ -13,6 +13,7 @@ SRCS			:= main.c \
 					parser/ast/ast_node_creator/cmd_node.c parser/ast/ast_node_creator/operator_node.c parser/ast/ast_node_creator/subsh_node.c \
 					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
 					exec/exec.c \
+					exec/env/env_initializer.c \
 					exec/builtins/builtins.c exec/builtins/echo.c exec/builtins/pwd.c \
 					error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c \
@@ -56,6 +57,3 @@ re:	fclean all
 .PHONY: all clean fclean re
 
 # $(FSANITIZE_FLAG
-
-#  exec/builtins/cd.c exec/builtins/pwd.c exec/builtins/export.c \
-# 					exec/builtins/unset.c exec/builtins/env.c exec/builtins/exit.c \

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/25 22:18:07 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:56:25 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_error
 //**********************************************//
 
 /* msg_error.c*/
+void 	free_error(t_error *error);
 void	msg_error(t_error error);
 
 #endif /* ERRORS_H */

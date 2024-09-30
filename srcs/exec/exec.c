@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/29 21:21:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:50:07 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,12 @@ bool ast_exec(t_ast *root)
 	
 	return (EXIT_SUCCESS);
 }
-bool exec(t_data *data)
+bool exec(t_data *data, char **envp)
 {
 	t_ast *root;
+	
+	if (init_env(data, envp))
+		return (EXIT_FAILURE);
 	
 	root = data->ast;
 	if (ast_exec(root))

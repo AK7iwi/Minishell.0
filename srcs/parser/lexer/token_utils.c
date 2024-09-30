@@ -6,11 +6,40 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:14:17 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/26 14:04:02 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:55:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void print_token_list(t_token *head)
+{
+    t_token *current = head;
+	
+	printf("PRINT_TEST:\n");
+    while (current)
+    {
+        printf("Token: %s, Type: %d %s", current->str, current->type, "\n");
+        current = current->next;
+    }
+}
+void	free_token(t_token **tokens)
+{
+	t_token	*tmp;
+	t_token	*current;
+
+	if (!(*tokens))
+		return ;
+	current = *tokens;
+	while (current)
+	{
+		tmp = current;
+		current = current->next;
+		free(tmp->str);
+		free(tmp);
+	}
+	*tokens = NULL;
+}
 
 static	bool add_to_token_list(t_token **token, t_tok_type *str_type, char *str) 
 {

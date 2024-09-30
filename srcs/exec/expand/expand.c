@@ -1,17 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 10:51:40 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/09/30 10:52:04 by mfeldman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void free_env_list(t_env_list **lst)
-{
-    t_env_list *tmp;
-
-    while (*lst)
-    {
-        tmp = (*lst)->next;
-        free((*lst)->str);
-        free(*lst);
-        *lst = tmp;
-    }
-}
 char *get_env_value(char *var, t_env_list *env) 
 {
     t_env_list *current = env;
@@ -77,37 +77,4 @@ void replace_dollars_in_command(char **line, t_env_list *env)
     char *new_line = replace_env_vars(*line, env);
     free(*line);
     *line = new_line;
-}
-
-void append_env_list(t_env_list **lst, char *str)
-{
-    t_env_list *new_node = (t_env_list *)malloc(sizeof(t_env_list));
-    t_env_list *last = *lst;
-
-    if (!new_node)
-        return;
-    new_node->str = str;
-    new_node->next = NULL;
-    if (*lst == NULL) 
-    {
-        new_node->prev = NULL;
-        *lst = new_node;
-        return;
-    }
-    while (last->next != NULL)
-        last = last->next;
-    last->next = new_node;
-    new_node->prev = last;
-}
-t_env_list *create_env_list(char **envp) 
-{
-    t_env_list *env = NULL;
-    int i = 0;
-
-    while (envp[i]) 
-    {
-        append_env_list(&env, ft_strdup(envp[i]));
-        i++;
-    }
-    return (env);
 }

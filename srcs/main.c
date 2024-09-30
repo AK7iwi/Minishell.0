@@ -6,23 +6,11 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/29 21:21:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:23:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void print_token_list(t_token *head)
-// {
-//     t_token *current = head;
-	
-// 	printf("PRINT_TEST:\n");
-//     while (current)
-//     {
-//         printf("Token: %s, Type: %d %s", current->str, current->type, "\n");
-//         current = current->next;
-//     }
-// }
 
 static void	init_struct(t_data *data)
 {
@@ -30,7 +18,6 @@ static void	init_struct(t_data *data)
 	data->token = NULL;
 	data->ast = NULL;
 	data->env = NULL;
-	//init env
 }
 
 static inline bool is_arg(t_error *error, int argc)
@@ -48,7 +35,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
     (void)envp; //tmp
 	
-	init_struct(&data, envp);
+	init_struct(&data);
 	if (is_arg(&data.error, argc))
 		return (msg_error(data.error), EXIT_FAILURE);
 	
@@ -60,10 +47,11 @@ int main(int argc, char **argv, char **envp)
         if (tokenizer(&data, input) || syn_analyzer(&data) || ast_creator(&data))
 			msg_error(data.error);
 		else 
-			exec(&data);
+			exec(&data, envp);
 		
-		// print_ast(data.ast, 0);
 		// print_token_list(data.token);
+		// print_ast(data.ast, 0);
+		print_env(data.env);
 		
 		free_loop(&data);
     }

@@ -1,3 +1,10 @@
+FInish to rename(free and print )
+modif proto of ast_printer = like ast_exec
+exec && ast_exec one fct, yes
+Leak when malloc = NULL;
+
+
+
 1) Lexer: 
 
 protect ft_strdup
@@ -19,9 +26,11 @@ b) Working History
 
 c) Builtins
 
+handle redir
+
 echo OK
 cd 
-pwd
+pwd OK
 export
 env
 unset
