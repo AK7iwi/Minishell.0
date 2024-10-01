@@ -13,7 +13,7 @@ SRCS			:= main.c \
 					parser/ast/ast_node_creator/cmd_node.c parser/ast/ast_node_creator/operator_node.c parser/ast/ast_node_creator/subsh_node.c \
 					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
 					error/msg_error.c \
-					exec/exec.c \
+					exec/exec.c exec/redirections/heredoc.c exec/redirections/heredoc_utils.c exec/redirections/redir.c\
 					exec/builtins/echo.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c\
 					utils/free.c

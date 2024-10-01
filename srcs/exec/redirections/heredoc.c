@@ -6,44 +6,19 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 12:53:36 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/29 13:44:56 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/01 15:21:28 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void read_heredoc(int fd, const char *delimiter)
+void child_process(int output_fd, char *delimiter)
 {
     char *line;
 
     while (1)
     {
-        printf("> ");
-        line = ft_getline();
-        if (line == NULL)
-            break;
-        if (ft_strcmp(line, delimiter) == 0)
-        {
-            free(line);
-            break;
-        }
-        if (write(fd, line, ft_strlen(line)) == -1)
-        {
-            perror("write");
-            free(line);
-            break;
-        }
-        free(line);
-    }
-}
-
-void child_process(int output_fd, const char *delimiter)
-{
-    char *line;
-
-    while (1)
-    {
-        line = ft_getline();
+        line = readline(">");
         if (!line)
             break;
 		if (ft_strcmp(line, delimiter) == 0)
@@ -59,33 +34,38 @@ void child_process(int output_fd, const char *delimiter)
 }
 
 
-void create_heredoc(const char *delimiter, const char *output_file)
+void create_heredoc(char *delimiter)
 {
     pid_t pid;
-    int output_fd;
+    int tube[2];
 
-    output_fd = open_output_file(output_file);
-    if (output_fd == -1)
+    if (pipe(tube) == -1)  // Créer un tube pour communiquer entre parent et enfant
     {
-        perror("open");
+        perror("pipe");
         exit(EXIT_FAILURE);
     }
-	pid = fork();
+
+    pid = fork(); // Créer un nouveau processus
     if (pid == -1)
     {
         perror("fork");
-        close(output_fd);
         exit(EXIT_FAILURE);
     }
-	if (pid == 0)
+
+    if (pid == 0) // Processus enfant
     {
-        child_process(output_fd, delimiter);
+        close(tube[0]); // Fermer l'extrémité de lecture du tube
+        child_process(tube[1], delimiter); // Gérer la logique de lecture jusqu'au délimiteur
+        close(tube[1]); // Fermer l'extrémité d'écriture une fois terminé
+        exit(EXIT_SUCCESS);
     }
-    else
+    else // Processus parent
     {
-        close(output_fd);
-        wait(NULL);
+        close(tube[1]); // Fermer l'extrémité d'écriture du tube
+        wait(NULL); // Attendre la fin de l'enfant
+        // À ce stade, le parent peut lire l'entrée du tube via tube[0] si nécessaire
     }
 }
+
 
 

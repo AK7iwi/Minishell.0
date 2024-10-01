@@ -6,7 +6,7 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 12:41:20 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/29 12:13:09 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/01 15:19:33 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,39 @@ void	exec_command(char **env, t_cmd *cmd)
 		free_tab(find_the_path);
 		exit(EXIT_FAILURE);
 	}
+}void create_heredoc(char *delimiter)
+{
+    pid_t pid;
+    int tube[2];
+
+    if (pipe(tube) == -1)  // Créer un tube pour communiquer entre parent et enfant
+    {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    pid = fork(); // Créer un nouveau processus
+    if (pid == -1)
+    {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) // Processus enfant
+    {
+        close(tube[0]); // Fermer l'extrémité de lecture du tube
+        child_process(tube[1], delimiter); // Gérer la logique de lecture jusqu'au délimiteur
+        close(tube[1]); // Fermer l'extrémité d'écriture une fois terminé
+        exit(EXIT_SUCCESS);
+    }
+    else // Processus parent
+    {
+        close(tube[1]); // Fermer l'extrémité d'écriture du tube
+        wait(NULL); // Attendre la fin de l'enfant
+        // À ce stade, le parent peut lire l'entrée du tube via tube[0] si nécessaire
+    }
 }
+
 
 
 void exec_pipeline(t_cmd **cmds, char **env)

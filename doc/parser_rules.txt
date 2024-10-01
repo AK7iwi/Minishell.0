@@ -22,3 +22,6 @@ operator, redir, paren
 Before:
 
 WORD, paren_close
+
+
+

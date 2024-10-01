@@ -53,4 +53,7 @@ Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
 
 i) here-doc
 
+ls > a > b > c 
+creer a b c et supprime ce qui y'a dans a b c,
+et met le resultat dans c
 

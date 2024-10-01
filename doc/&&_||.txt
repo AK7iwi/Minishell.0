@@ -1,0 +1,19 @@
+&&: 
+Exécute la commande suivante seulement si la commande précédente réussit 
+(c'est-à-dire qu'elle retourne un code de sortie 0). 
+Si la première commande échoue (code de sortie différent de 0), 
+la deuxième commande n'est pas exécutée
+
+cmd1 && cmd2
+
+Ici, cmd2 ne sera exécutée que si cmd1 réussit.
+
+
+||: 
+Exécute la commande suivante seulement si la commande précédente échoue
+(c'est-à-dire qu'elle retourne un code de sortie différent de 0). 
+Si la première commande réussit, la deuxième commande est ignorée.
+
+cmd1 || cmd2
+
+Ici, cmd2 sera exécutée uniquement si cmd1 échoue.

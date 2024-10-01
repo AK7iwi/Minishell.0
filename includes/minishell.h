@@ -17,6 +17,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 //**********************************************//
 //					DEFINES						//
@@ -153,8 +154,8 @@ int     open_output_file(const char *output_file);
 
 /*heredoc.c*/
 void    read_heredoc(int fd, const char *delimiter);
-void    child_process(int output_fd, const char *delimiter);
-void    create_heredoc(const char *delimiter, const char *output_file);
+void    child_process(int output_fd, char *delimiter);
+void    create_heredoc(char *delimiter);
 
 /*redir.c*/
 void    redirect_output(const char *filename, int append);
