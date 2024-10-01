@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/30 11:52:53 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:41:26 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ int main(int argc, char **argv, char **envp)
         input = readline("Minishell> "); //protect input
 		if (!input)
 			return (free_loop(&data), EXIT_FAILURE);
-        if (tokenizer(&data, input) || syn_analyzer(&data) || ast_creator(&data))
+        if (tokenizer(&data, input) || syn_analyzer(&data) || ast_creator(&data)) //parse fct
 			msg_error(data.error);
-		else 
-			exec(&data, envp);
+		else if (init_env(&data, envp) || ast_exec(&data, data.ast)) //exec fct
+			msg_error(data.error);
 		
 		// print_token_list(data.token);
 		// print_ast(data.ast, 0);
-		// print_env(data.env);
 		
 		free_loop(&data);
     }

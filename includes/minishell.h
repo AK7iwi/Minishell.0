@@ -128,23 +128,13 @@ typedef struct s_data
 //**********************************************//
 
 //**********************************************//
-//					ENV     	   				//
-//**********************************************//
-
-/* env_initializer.c */
-void 	print_env(t_env_list *env);
-void 	free_env(t_env_list **lst);
-bool 	add_to_env_list(t_env_list **lst, char *str);
-bool	init_env(t_data *data, char **envp);
-
-//**********************************************//
 //					BUILTINS	   				//
 //**********************************************//
 
 /* exit.c */
 void	ft_exit(t_data *data, char **command);
 /* env.c */
-int		env(t_env_list *env);
+void	env(t_env_list *env);
 /* unset.c */
 void	unset(char **args, t_env_list **env);
 /* export.c */
@@ -156,11 +146,18 @@ int 	cd(char **args, t_env_list *env);
 /* echo.c */
 void	echo(char **args);
 /* builtins.c */
-bool	is_builtins(t_data *data);
+bool 	is_builtins(t_data *data, char **args);
 
-/* exec.c */
-bool 	ast_exec(t_ast *root);
-bool	exec(t_data *data, char **envp);
+bool 	ast_exec(t_data *data, t_ast *ast);
+
+//**********************************************//
+//					ENV     	   				//
+//**********************************************//
+
+/* env_initializer.c */
+void 	free_env(t_env_list **lst);
+bool 	add_to_env_list(t_env_list **lst, char *str);
+bool	init_env(t_data *data, char **envp);
 
 //**********************************************//
 //					PARSER   					//

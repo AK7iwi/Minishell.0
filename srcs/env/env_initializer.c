@@ -6,27 +6,12 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:16:12 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/30 12:05:41 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:39:51 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_env(t_env_list *env)
-{
-	t_env_list *current;
-	size_t i;
-	
-	current = env;
-	i = 0;
-
-	printf("ENV:\n");
-	while (current)
-	{
-		printf("%s\n", current->str);
-		current = current->next;
-	}
-}
 void free_env(t_env_list **lst)
 {
     t_env_list *tmp;
@@ -73,8 +58,8 @@ bool	init_env(t_data *data, char **envp)
 	i = 0;
     while (envp[i]) 
     {
-        if (add_to_env_list(&data->env, envp[i]))
-			return (EXIT_FAILURE);
+		if (add_to_env_list(&data->env, envp[i]))
+			return (EXIT_FAILURE); ///error malloc
         i++;
     }
 

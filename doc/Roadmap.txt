@@ -2,6 +2,7 @@ FInish to rename(free and print )
 modif proto of ast_printer = like ast_exec
 exec && ast_exec one fct, yes
 Leak when malloc = NULL;
+int --> int32t
 
 1) Lexer: 
 

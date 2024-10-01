@@ -6,60 +6,49 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/30 12:47:31 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:45:59 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool exec_subshell(t_subshell *subsh)
+static bool exec_subshell(t_data *data, t_subshell *subsh)
 {
-	ast_exec(subsh->root);
+	ast_exec(data, subsh->root);
 	
 	return (EXIT_SUCCESS);
 }
 
-static bool exec_cmd(t_cmd *cmd)
-{
-	if (is_builtins(cmd->args))
+static bool exec_cmd(t_data *data, t_cmd *cmd)
+{	
+	if (is_builtins(data, cmd->args))
 		return (EXIT_SUCCESS);
 	
 	return (EXIT_FAILURE);
 }
-static bool exec_operator(t_operator *op)
+static bool exec_operator(t_data *data, t_operator *op)
 {
 	if (op->left)
-    	ast_exec(op->left);
+    	ast_exec(data, op->left);
     if (op->right)
-        ast_exec(op->right);
+        ast_exec(data, op->right);
 	else
 		return (EXIT_FAILURE);
 	
 	return (EXIT_SUCCESS);
 }
-bool ast_exec(t_ast *root)
-{
-	if (root->type == AST_OPERATOR)
-		exec_operator(&root->operator);
-	else if (root->type == AST_COMMAND)
-		exec_cmd(&root->cmd);
-	else if (root->type == AST_SUBSH)
-		exec_subshell(&root->subshell);
-	
-	return (EXIT_SUCCESS);
-}
-
-//use data
-bool exec(t_data *data, char **envp)
+bool ast_exec(t_data *data, t_ast *ast)
 {
 	t_ast *root;
+	root = ast;
+
+	//to protect
+	if (root->type == AST_OPERATOR)
+		exec_operator(data, &root->operator);
+	else if (root->type == AST_COMMAND)
+		exec_cmd(data, &root->cmd);
+	else if (root->type == AST_SUBSH)
+		exec_subshell(data, &root->subshell);
 	
-	if (init_env(data, envp))
-		return (EXIT_FAILURE);
-	
-	root = data->ast;
-	if (ast_exec(root))
-		return (EXIT_FAILURE);
-	
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
