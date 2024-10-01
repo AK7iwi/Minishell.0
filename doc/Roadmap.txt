@@ -6,13 +6,12 @@ int --> int32t
 protect ft_strdup
 
 1) Lexer: 
-
-protect ft_strdup
+check tokenisation file 
 
 2) Synthesis_analysis:
 
-To improve for paren
-protect ft_strdup
+check parser_rules file
+
 
 3) AST: 
 
@@ -31,7 +30,7 @@ handle error, check error for builtins
 
 echo OK
 cd 
-pwd OK but leak (getcwd)
+pwd OK
 export
 env: OK, recheck empty env
 unset
