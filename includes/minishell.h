@@ -278,6 +278,10 @@ void	free_all(t_data *data);
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
+/*split.c*/
+char		**ft_split(char const *s, char c);
+
+
 /* lib_checker.c */
 int		ft_isalnum(int c);
 bool    is_space(char c);
@@ -290,6 +294,8 @@ char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
 
 /* lib_len.c */
 size_t	ft_strlen(const char *s);

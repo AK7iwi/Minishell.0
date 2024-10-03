@@ -6,7 +6,7 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 12:53:36 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/01 15:21:28 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/03 15:11:51 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,29 @@ void create_heredoc(char *delimiter)
     pid_t pid;
     int tube[2];
 
-    if (pipe(tube) == -1)  // Créer un tube pour communiquer entre parent et enfant
+    if (pipe(tube) == -1)
     {
         perror("pipe");
         exit(EXIT_FAILURE);
     }
-
-    pid = fork(); // Créer un nouveau processus
+    pid = fork();
     if (pid == -1)
     {
         perror("fork");
         exit(EXIT_FAILURE);
     }
 
-    if (pid == 0) // Processus enfant
+    if (pid == 0)
     {
-        close(tube[0]); // Fermer l'extrémité de lecture du tube
-        child_process(tube[1], delimiter); // Gérer la logique de lecture jusqu'au délimiteur
-        close(tube[1]); // Fermer l'extrémité d'écriture une fois terminé
+        close(tube[0]);
+        child_process(tube[1], delimiter);
+        close(tube[1]);
         exit(EXIT_SUCCESS);
     }
-    else // Processus parent
+    else
     {
-        close(tube[1]); // Fermer l'extrémité d'écriture du tube
-        wait(NULL); // Attendre la fin de l'enfant
-        // À ce stade, le parent peut lire l'entrée du tube via tube[0] si nécessaire
+        close(tube[1]); 
+        wait(NULL);
     }
 }
 
