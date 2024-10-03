@@ -3,7 +3,8 @@ NAME			:= minishell
 SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
-SRCS			:= main.c \
+SRCS			:=	main.c \
+					initializer/init.c initializer/env/init_env.c \
 					parser/lexer/tokenizer.c \
 					parser/lexer/str_handler/str_handler.c parser/lexer/str_handler/str_extracter.c parser/lexer/str_handler/str_len.c \
 					parser/lexer/special_char_handler/special_char_handler.c parser/lexer/special_char_handler/special_char_extracter.c parser/lexer/special_char_handler/special_char_len.c \
@@ -14,7 +15,8 @@ SRCS			:= main.c \
 					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
 					env/env_initializer.c \
 					exec/exec.c \
-					exec/builtins/builtins.c exec/builtins/echo.c exec/builtins/pwd.c exec/builtins/env.c\
+					exec/builtins/builtins.c \
+					exec/builtins/builtins_cmds/echo.c exec/builtins/builtins_cmds/pwd.c exec/builtins/builtins_cmds/env.c \
 					error/msg_error.c \
 					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c \
 					utils/free.c

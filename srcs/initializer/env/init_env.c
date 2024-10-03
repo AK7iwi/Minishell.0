@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:16:12 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/01 12:39:51 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/03 19:34:28 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void free_env(t_env_list **lst)
         *lst = tmp;
     }
 }
-bool add_to_env_list(t_env_list **lst, char *str)
+static bool add_to_env_list(t_env_list **lst, char *str)
 {
     t_env_list *new_node;
     t_env_list *last;

@@ -33,6 +33,20 @@
 //					ENUM						//
 //**********************************************//
 
+typedef enum e_op_type
+{
+    AST_PIPE,
+	AST_AND,
+	AST_OR,
+}	t_op_type;
+
+typedef enum e_ast_type
+{
+    AST_COMMAND,
+    AST_OPERATOR,
+	AST_SUBSH,
+}	t_ast_type;
+
 typedef enum e_tok_type
 {
 	TOKEN_WORD,
@@ -47,20 +61,6 @@ typedef enum e_tok_type
 	TOKEN_OPEN_PAREN,
 	TOKEN_CLOSE_PAREN,
 }	t_tok_type;
-
-typedef enum e_ast_type
-{
-    AST_COMMAND,
-    AST_OPERATOR,
-	AST_SUBSH,
-}	t_ast_type;
-
-typedef enum e_op_type
-{
-    AST_PIPE,
-	AST_AND,
-	AST_OR,
-}	t_op_type;
 
 //**********************************************//
 //					STRUCTURES					//
@@ -144,20 +144,11 @@ void	pwd(void);
 /* cd.c */
 int 	cd(char **args, t_env_list *env);
 /* echo.c */
-void	echo(char **args);
+bool	echo(char **args);
 /* builtins.c */
 bool 	is_builtins(t_data *data, char **args);
 
 bool 	ast_exec(t_data *data, t_ast *ast);
-
-//**********************************************//
-//					ENV     	   				//
-//**********************************************//
-
-/* env_initializer.c */
-void 	free_env(t_env_list **lst);
-bool 	add_to_env_list(t_env_list **lst, char *str);
-bool	init_env(t_data *data, char **envp);
 
 //**********************************************//
 //					PARSER   					//
@@ -254,12 +245,26 @@ bool 	str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 bool	tokenizer(t_data *data, char *input);
 
 //**********************************************//
+//												//
+//					INITIALIZER  				//
+//												//
+//**********************************************//
+
+////////// ENV //////////
+
+/* env_initializer.c */
+bool	init_env(t_data *data, char **envp);
+
+
+/* init.c */
+bool	init(t_data *data, char **argv, char **envp);
+
+//**********************************************//
 //					UTILS   					//
 //**********************************************//
 
 /* free.c */
 void	free_loop(t_data *data);
-// void	free_all(t_data *data);
 
 //////////////// Libft ////////////////
 

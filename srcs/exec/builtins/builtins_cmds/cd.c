@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/28 12:51:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:34:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ int ft_update_pwd(char *new_pwd, t_env_list *env)
     return update_env_var(env, "PWD", new_pwd);
 }
 
-int cd(char **args, t_env_list *env)
+bool	cd(char **args, t_env_list *env)
 {
     char cwd[1024];
     char *dir;
+	
 	printf("avannt cd : ");
-	ft_pwd();
+	pwd();
     if (args[1] && args[2])
     {
         printf("cd: too many arguments\n");
@@ -92,7 +93,7 @@ int cd(char **args, t_env_list *env)
     if (getcwd(cwd, sizeof(cwd)) != NULL)
    {     ft_update_pwd(cwd, env);}
 	printf("\napres cd : ");
-	ft_pwd();
+	pwd();
     return (0);
 }
 

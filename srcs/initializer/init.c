@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 14:49:49 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/01 12:43:20 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/10/03 19:18:51 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/10/03 20:13:38 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env(t_env_list *env)
+bool	init(t_data *data, char **argv, char **envp)
 {
-	t_env_list *current;
+	(void)argv;
+	data->error.error_gen = 0;
+	data->error.error_parsing = 0;
+	data->error.error_exec = 0;
+	data->token = NULL;
+	data->ast = NULL;
+	data->env = NULL;
 
-	if (!env)
-		return ;
-
-	current = env;
-	while (current)
-	{
-		printf("%s\n", current->str);
-		current = current->next;
-	}
+	return (init_env(data, envp));
 }

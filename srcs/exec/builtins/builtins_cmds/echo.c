@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:53:11 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/29 20:31:18 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:26:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,23 @@ static bool	n_flags_checker(char **args, size_t *i)
 		
         while (args[*i][j] && args[*i][j] == 'n')
             j++;
-
-        if (args[*i][j] == '\0')
-        {
-            n_flag = true;
-            (*i)++;
-        }
-        else
-        	break;
+		
+		if (args[*i][j] == NULL_CHAR)
+        	n_flag = true;
+		else
+			break;
+        (*i)++;
     }
 
     return (n_flag);
 }
-void	echo(char **args)
+bool	echo(char **args)
 {
 	bool	no_newline;
 	size_t 	i;
 
 	i = 1;
-
+	
 	no_newline = n_flags_checker(args, &i);
 	
 	while (args[i])
@@ -56,4 +54,6 @@ void	echo(char **args)
 	
 	if (!no_newline)
 		printf("\n");
+
+	return (true);
 }

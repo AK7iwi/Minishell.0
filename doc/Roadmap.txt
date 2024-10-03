@@ -1,9 +1,14 @@
-FInish to rename(free and print )
+General: 
+
+Finish to rename(free and print )
 modif proto of ast_printer = like ast_exec
 exec && ast_exec one fct, yes
 Leak when malloc = NULL;
 int --> int32t
 protect ft_strdup
+utils-->tools 
+
+Init envin init struct or exec?
 
 1) Lexer: 
 check tokenisation file 
@@ -11,7 +16,6 @@ check tokenisation file
 2) Synthesis_analysis:
 
 check parser_rules file
-
 
 3) AST: 
 
@@ -32,7 +36,7 @@ echo OK
 cd 
 pwd OK
 export
-env: OK, recheck empty env
+env: OK, recheck empty env, create small env for emv -i 
 unset
 exit
 
