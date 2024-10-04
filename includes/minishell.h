@@ -133,22 +133,26 @@ typedef struct s_data
 //					BUILTINS	   				//
 //**********************************************//
 
+/////// builtins_cmds //////////
 /* exit.c */
-void	ft_exit(t_data *data, char **command);
+bool	ft_exit(t_data *data, char **command);
 /* env.c */
 bool	env(t_env_list *env);
 /* unset.c */
-void	unset(char **args, t_env_list **env);
+bool	unset(char **args, t_env_list **env);
 /* export.c */
-int		ft_export(char **args, t_env_list *env);
+bool	ft_export(char **args, t_env_list *env);
 /* pwd.c */
-// void	pwd(void);
+bool	pwd(t_error *error);
 /* cd.c */
-int 	cd(char **args, t_env_list *env);
+bool	cd(t_env_list *env, char **args);
 /* echo.c */
 bool	echo(char **args);
+
+///////////////// 
 /* builtins.c */
 bool 	is_builtins(t_data *data, char **args);
+
 
 bool 	ast_exec(t_data *data, t_ast *ast);
 
@@ -184,12 +188,11 @@ void 	print_ast(t_ast *ast, int depth);
 /* ast_free.c */
 void	ast_freer(t_ast **ast);
 
+/////// ast_node ////////////
 /* operator_node.c */
 t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type);
-
 /* cmd_node.c */
 t_ast	*create_cmd_node(t_ast **new_node, t_token **current);
-
 /*subsh_node.c */
 t_ast	*create_subsh_node(t_ast **new_node, t_token **current);
 
@@ -225,10 +228,8 @@ t_tok_type	wich_token(char *str);
 
 /* special_char_len.c */
 uint8_t get_special_char_len(char *input, size_t *i);
-
 /* special_char_extracter.c*/
 char*	special_char_extracter(t_error *error, char *input, size_t *i);
-
 /* special_char_handler.c */
 bool	is_special_char(char *input, size_t *i);
 bool 	special_char_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
@@ -238,10 +239,8 @@ bool 	special_char_handler(t_data *data, char *input, t_tok_type *token, size_t 
 /* str_len.c */
 bool	get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i);
 ssize_t	get_str_len(char *input, t_tok_type *token, size_t *i);
-
 /* str_extracter.c */
 char*	str_extracter(t_error *error, char *input, t_tok_type *token, size_t *index);
-
 /* str_handler.c */
 bool 	str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
@@ -261,7 +260,6 @@ bool	tokenizer(t_data *data, char *input);
 /* env_tools.c */
 void	free_env(t_env_list **lst);
 bool	add_env_var(t_env_list **lst, char *str);
-
 /* init_env.c */
 bool	init_env(t_data *data, char **envp);
 

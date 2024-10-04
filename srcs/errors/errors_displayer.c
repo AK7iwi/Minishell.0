@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:49:38 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 10:57:36 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:18:20 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ static void	ft_putstr(char *str, int fd)
 	while (*str)
 		write(fd, str++, 1);
 }
-
-// static void	display_exec_errors(uint16_t exec_errors)
-// {
-
-// }
-
+static void	display_exec_errors(uint16_t exec_errors)
+{
+	if (exec_errors & ERROR_PWD)
+		perror(E_PWD);
+}
 static void	display_parsing_errors(uint8_t parsing_errors)
 {
 	if (parsing_errors & ERROR_QUOTE)
@@ -49,6 +48,6 @@ void	errors_displayer(t_error error)
 		display_gen_errors(error.gen_errors);
 	else if (error.parsing_errors)
 		display_parsing_errors(error.parsing_errors);
-	// else if (error.exec_errors)
-	// 	display_exec_errors(error.exec_errors);
+	else if (error.exec_errors)
+		display_exec_errors(error.exec_errors);
 }

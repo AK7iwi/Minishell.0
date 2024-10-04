@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/03 17:34:10 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:45:43 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // cd - -> a verifie
 // proteger les chdir 
 
-t_env_list *find_env_var(t_env_list *env, const char *name)
+static t_env_list *find_env_var(t_env_list *env, const char *name)
 {
     size_t name_len = strlen(name);
     while (env)
@@ -33,7 +33,7 @@ t_env_list *find_env_var(t_env_list *env, const char *name)
     return (NULL);
 }
 
-int update_env_var(t_env_list *env, const char *name, const char *new_value)
+static int update_env_var(t_env_list *env, const char *name, const char *new_value)
 {
     t_env_list *var;
     
@@ -57,7 +57,7 @@ int update_env_var(t_env_list *env, const char *name, const char *new_value)
 }
 
 
-int ft_update_pwd(char *new_pwd, t_env_list *env)
+static int ft_update_pwd(char *new_pwd, t_env_list *env)
 {
     char old_pwd[1024];
     if (getcwd(old_pwd, sizeof(old_pwd)) == NULL)
@@ -67,7 +67,7 @@ int ft_update_pwd(char *new_pwd, t_env_list *env)
     return update_env_var(env, "PWD", new_pwd);
 }
 
-bool	cd(char **args, t_env_list *env)
+bool	cd(t_env_list *env, char **args)
 {
     char cwd[1024];
     char *dir;
@@ -91,7 +91,7 @@ bool	cd(char **args, t_env_list *env)
         return (1);
     }
     if (getcwd(cwd, sizeof(cwd)) != NULL)
-   {     ft_update_pwd(cwd, env);}
+   	{     ft_update_pwd(cwd, env);}
 	printf("\napres cd : ");
 	pwd();
     return (0);

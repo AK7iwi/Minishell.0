@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/03 18:20:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:40:02 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,21 @@ bool ast_exec(t_data *data, t_ast *ast)
 	t_ast *root;
 	root = ast;
 
-	//to protect
 	if (root->type == AST_OPERATOR)
-		exec_operator(data, &root->operator);
+	{
+		if (exec_operator(data, &root->operator))
+			return (EXIT_FAILURE);
+	}
 	else if (root->type == AST_COMMAND)
-		exec_cmd(data, &root->cmd);
+	{
+		if (exec_cmd(data, &root->cmd))
+			return (EXIT_FAILURE);
+	}
 	else if (root->type == AST_SUBSH)
-		exec_subshell(data, &root->subshell);
+	{
+		if (exec_subshell(data, &root->subshell))
+			return (EXIT_FAILURE);
+	}
 	
 	return (EXIT_SUCCESS);
 }

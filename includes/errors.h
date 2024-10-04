@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 10:56:22 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:35:09 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@
 # define E_PARAN 	"Error\nClose the paranthese bro.\n"
 
 /* Exec errors */
+# define ERROR_PWD				0x1
+
+# define E_PWD 		"Error\npwd error"
 
 //**********************************************//
 //					STRUCTURES					//

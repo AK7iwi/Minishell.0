@@ -1,15 +1,13 @@
 General: 
 
-Finish to rename(free and print )
-modif proto of ast_printer = like ast_exec
-exec && ast_exec one fct, yes
+Finish to rename(free and print ) ~~
+modif proto of ast_printer = like ast_exec 
 Leak when malloc = NULL;
 int --> int32t
 protect ft_strdup
+protect readline
 utils-->tools
-prtect readline
-
-Init envin init struct or exec?
+error in stderr
 
 1) Lexer: 
 check tokenisation file 
@@ -21,8 +19,11 @@ check parser_rules file
 3) AST: 
 
 Find the right precedence
+Handle error 
 
 4) Exec: 
+
+handle error in ast_exec
 
 a) Prompt: OK
 
