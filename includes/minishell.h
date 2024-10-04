@@ -128,10 +128,14 @@ typedef struct s_data
 //**********************************************//
 //					EXEC	   					//
 //**********************************************//
+bool ast_exec(t_data *data, t_ast *ast);
 
+/*builtins*/
+bool is_builtins(t_data *data, char **args);
 void	echo(char **args);
-bool	ast_exec(t_ast *root);
-bool	exec(t_data *data);
+void	env(t_env_list *env);
+void	pwd(void);
+
 /*exec_utils*/
 void	free_tab(char **tab);
 int	    open_file(char *av, int read);
@@ -145,7 +149,7 @@ void    handle_fork(pid_t pid, char **env, t_cmd *cmd, int fd_in, int *tube);
 
 /*pipe.c*/
 void    exec_command(char **env, t_cmd *cmd);
-void    exec_pipeline(t_cmd **cmds, char **env);
+void    exec_pipeline(t_ast *ast, char **env);
 
 /*heredoc_utils.c*/
 char    *ft_getline(void);
@@ -160,6 +164,14 @@ void    create_heredoc(char *delimiter);
 /*redir.c*/
 void    redirect_output(const char *filename, int append);
 void    redirect_input(const char *filename);
+
+//**********************************************//
+//					  ENV  					    //
+//**********************************************//
+/*env_initializer.c*/
+void free_env(t_env_list **lst);
+bool add_to_env_list(t_env_list **lst, char *str);
+bool	init_env(t_data *data, char **envp);
 
 //**********************************************//
 //					PARSER   					//

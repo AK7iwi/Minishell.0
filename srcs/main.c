@@ -6,7 +6,7 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/01 15:18:50 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/04 14:03:25 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,16 @@ int main(int argc, char **argv, char **envp)
     while (1)
     {
 		input = readline("Minishell> "); //protect input
-        create_heredoc("e");
+		add_history(input);
+        //create_heredoc("e");
 		if (!input)
 			return (free_loop(&data), EXIT_FAILURE);
         if (tokenizer(&data, input) || syn_analyzer(&data) || ast_creator(&data))
 			msg_error(data.error);
-		//else 
-			//exec(&data);
-		
-		// print_ast(data.ast, 0);
-		// print_token_list(data.token);
-		
+		else if (ast_exec(&data, data.ast))
+			msg_error(data.error);
+		// print_ast(data.ast, 5);
+		exec_pipeline(data.ast, envp);
 		free_loop(&data);
     }
 	

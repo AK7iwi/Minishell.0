@@ -5,19 +5,43 @@ OBJ_DIR			:= obj
 
 SRCS			:= main.c \
 					parser/lexer/tokenizer.c \
-					parser/lexer/str_handler/str_handler.c parser/lexer/str_handler/str_extracter.c parser/lexer/str_handler/str_len.c \
-					parser/lexer/special_char_handler/special_char_handler.c parser/lexer/special_char_handler/special_char_extracter.c parser/lexer/special_char_handler/special_char_len.c \
+					parser/lexer/str_handler/str_handler.c \
+					parser/lexer/str_handler/str_extracter.c \
+					parser/lexer/str_handler/str_len.c \
+					parser/lexer/special_char_handler/special_char_handler.c \
+					parser/lexer/special_char_handler/special_char_extracter.c \
+					parser/lexer/special_char_handler/special_char_len.c \
 					parser/lexer/token_utils.c \
-					parser/syn_analyzer/syn_analyzer.c parser/syn_analyzer/syn_checker.c \
-					parser/ast/ast.c parser/ast/ast_printer.c parser/ast/ast_freer.c \
-					parser/ast/ast_node_creator/cmd_node.c parser/ast/ast_node_creator/operator_node.c parser/ast/ast_node_creator/subsh_node.c \
-					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
+					parser/syn_analyzer/syn_analyzer.c \
+					parser/syn_analyzer/syn_checker.c \
+					parser/ast/ast.c \
+					parser/ast/ast_printer.c \
+					parser/ast/ast_freer.c \
+					parser/ast/ast_node_creator/cmd_node.c \
+					parser/ast/ast_node_creator/operator_node.c \
+					parser/ast/ast_node_creator/subsh_node.c \
+					parser/parser_utils/parser_checker.c \
+					parser/parser_utils/parser_checker2.c \
 					error/msg_error.c \
-					exec/exec.c exec/redirections/heredoc.c exec/redirections/heredoc_utils.c exec/redirections/redir.c\
-					exec/builtins/echo.c exec/builtins/builtins.c \
-					exec/pipe/exec_utils.c exec/pipe/pipe.c exec/pipe/pipe_utils.c \
-					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c\
-					utils/free.c
+					exec/exec.c \
+					exec/redirections/heredoc.c \
+					exec/redirections/heredoc_utils.c \
+					exec/redirections/redir.c \
+					exec/builtins/builtins.c \
+					exec/pipe/exec_utils.c \
+					exec/pipe/pipe.c \
+					exec/pipe/pipe_utils.c \
+					exec/builtins/echo.c \
+					exec/builtins/env.c \
+					exec/builtins/pwd.c \
+					utils/lib/lib_checker.c \
+					utils/lib/lib_len.c \
+					utils/lib/lib_memory.c \
+					utils/lib/lib_cmp.c \
+					utils/lib/split.c \
+					utils/free.c \
+					env/env_initializer.c
+
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -56,4 +80,4 @@ re:	fclean all
 
 .PHONY: all clean fclean re
 
-# $(FSANITIZE_FLAG
+# $(FSANITIZE_FLAG)
