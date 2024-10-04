@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:02:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/03 18:50:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:50:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void	free_loop(t_data *data)
 {
-	if (data->error.error_g)
-		free_error(&data->error);
+	if (data->error.gen_errors || data->error.parsing_errors || data->error.exec_errors)
+		free_errors(&data->error);
 	if (data->token)
 		free_token(&data->token);
 	if (data->ast)
 		ast_freer(&data->ast);
-	// if (data->env)
-	// 	free_env(&data->env);
 }

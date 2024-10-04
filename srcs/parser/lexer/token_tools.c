@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   token_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:14:17 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/30 10:55:10 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:11:26 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static	bool add_to_token_list(t_token **token, t_tok_type *str_type, char *str)
         return (EXIT_FAILURE);
 
     new_node->type = (*str_type);
-    new_node->str = ft_strdup(str); //protect 
+    new_node->str = ft_strdup(str);
+	if (!(new_node->str))
+		return (EXIT_FAILURE);
     new_node->next = NULL;
 
     if (*token == NULL) 
@@ -63,7 +65,6 @@ static	bool add_to_token_list(t_token **token, t_tok_type *str_type, char *str)
     last = *token;
     while (last->next)
         last = last->next;
-
     last->next = new_node;
     new_node->prev = last;
 

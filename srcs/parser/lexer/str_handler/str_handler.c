@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:07:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:49:43 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:07:14 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool str_handler(t_data *data, char *input, t_tok_type *token, size_t *index)
 	if (!(*token))
 		(*token) = TOKEN_WORD;
 	if (add_token(&data->token, token, str_token))
-		return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
+		return (data->error.gen_errors |= ERROR_MALLOC, EXIT_FAILURE);
 	
 	return (EXIT_SUCCESS);
 }

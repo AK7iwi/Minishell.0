@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:07:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:59:20 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:12:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	special_char_handler(t_data *data, char *input, t_tok_type *token, size_t *
 	
 	(*token) = wich_token(str_token);
 	if (add_token(&data->token, token, str_token))
-		return (data->error.error_g |= ERROR_MALLOC, EXIT_FAILURE);
+		return (data->error.gen_errors |= ERROR_MALLOC, EXIT_FAILURE);
 		
 	return (EXIT_SUCCESS);
 }

@@ -124,7 +124,9 @@ typedef struct s_data
 
 
 //**********************************************//
-//					EXEC	   					//
+//												//
+//					  EXEC			  			//
+//												//
 //**********************************************//
 
 //**********************************************//
@@ -134,13 +136,13 @@ typedef struct s_data
 /* exit.c */
 void	ft_exit(t_data *data, char **command);
 /* env.c */
-void	env(t_env_list *env);
+bool	env(t_env_list *env);
 /* unset.c */
 void	unset(char **args, t_env_list **env);
 /* export.c */
 int		ft_export(char **args, t_env_list *env);
 /* pwd.c */
-void	pwd(void);
+// void	pwd(void);
 /* cd.c */
 int 	cd(char **args, t_env_list *env);
 /* echo.c */
@@ -151,11 +153,13 @@ bool 	is_builtins(t_data *data, char **args);
 bool 	ast_exec(t_data *data, t_ast *ast);
 
 //**********************************************//
-//					PARSER   					//
+//												//
+//					  PARSER		  			//
+//												//
 //**********************************************//
 
 //**********************************************//
-//					PARSER_UTILS   				//
+//					PARSER_TOOLS   				//
 //**********************************************//
 
 /* parse_checker2.c */
@@ -181,43 +185,43 @@ void 	print_ast(t_ast *ast, int depth);
 void	ast_freer(t_ast **ast);
 
 /* operator_node.c */
-t_ast	*operator_node_creator(t_ast *left, t_ast *right, t_op_type op_type);
+t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type);
 
 /* cmd_node.c */
-t_ast	*node_cmd_creator(t_ast **new_node, t_token **current);
+t_ast	*create_cmd_node(t_ast **new_node, t_token **current);
 
 /*subsh_node.c */
-t_ast	*subsh_node_creator(t_ast **new_node, t_token **current);
+t_ast	*create_subsh_node(t_ast **new_node, t_token **current);
 
 /* ast.c */
-t_ast	*ast_cmd_and_subsh_handler(t_token **current);
-void	ast_op_handler(t_ast ** result, t_token **current, uint8_t min_prec);
+t_ast	*handle_cmd_and_subsh(t_token **current);
+void	handle_operator(t_ast **result, t_token **current, uint8_t min_prec);
 t_ast	*ast_algo(t_token **current, uint8_t min_prec);
 bool	ast_creator(t_data *data);
 
 //**********************************************//
-//					SYNER   					//
+//					SYN_ANALYZER   				//
 //**********************************************//
 
 /* syn_checker.c */
-bool	paren_checker(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
-bool 	redir_checker(t_token *current);
-bool 	operator_checker(t_token *current);
+bool 	check_paren(t_token *current, uint32_t *o_counter, uint32_t *c_counter);
+bool 	check_redir(t_token *current);
+bool 	check_operator(t_token *current);
 
 /* syn_analyzer.c */
 bool	syn_analyzer(t_data *data);
 
 //**********************************************//
-//					LEXER    					//
+//					LEXER   					//
 //**********************************************//
 
-/* token_utils.c */
+/* token_tools.c */
 void 		print_token_list(t_token *head);
 void		free_token(t_token **tokens);
 bool		add_token(t_token **token_struct, t_tok_type *token, char *str_token);
 t_tok_type	wich_token(char *str);
 
-//////////// Handle special character ///////////////////
+//////////// special_char_handler ///////////////////
 
 /* special_char_len.c */
 uint8_t get_special_char_len(char *input, size_t *i);
@@ -229,7 +233,7 @@ char*	special_char_extracter(t_error *error, char *input, size_t *i);
 bool	is_special_char(char *input, size_t *i);
 bool 	special_char_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
-//////////// Handle str ///////////////////
+//////////// str_handler ///////////////////
 
 /* str_len.c */
 bool	get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i);
@@ -241,6 +245,8 @@ char*	str_extracter(t_error *error, char *input, t_tok_type *token, size_t *inde
 /* str_handler.c */
 bool 	str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
+//////////////////
+
 /* tokenizer.c */
 bool	tokenizer(t_data *data, char *input);
 
@@ -248,19 +254,24 @@ bool	tokenizer(t_data *data, char *input);
 //												//
 //					INITIALIZER  				//
 //												//
-//**********************************************//
+//**********************************************// 
 
-////////// ENV //////////
+////////// env //////////
 
-/* env_initializer.c */
+/* env_tools.c */
+void	free_env(t_env_list **lst);
+bool	add_env_var(t_env_list **lst, char *str);
+
+/* init_env.c */
 bool	init_env(t_data *data, char **envp);
 
+///////////////////////////
 
 /* init.c */
 bool	init(t_data *data, char **argv, char **envp);
 
 //**********************************************//
-//					UTILS   					//
+//					TOOLS   					//
 //**********************************************//
 
 /* free.c */

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:29:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:08:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:35:24 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static size_t get_cmd_len(t_token *current)
 
 	return (cmd_len);
 }
-t_ast	*node_cmd_creator(t_ast **new_node, t_token **current)
+t_ast	*create_cmd_node(t_ast **new_node, t_token **current)
 {
 	size_t cmd_len;
 

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 16:25:53 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:33:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:37:31 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_op_type get_operator_type(t_tok_type type)
 	return (operator_type);
 }
 
-t_ast *ast_cmd_and_subsh_handler(t_token **current)
+t_ast *handle_cmd_and_subsh(t_token **current)
 {
 	t_ast *new_node;
 	
@@ -48,14 +48,14 @@ t_ast *ast_cmd_and_subsh_handler(t_token **current)
 		return (NULL);
 	
 	if ((*current) && (*current)->type == TOKEN_OPEN_PAREN)
-		new_node = subsh_node_creator(&new_node, current);
+		new_node = create_subsh_node(&new_node, current);
 	else
-		new_node = node_cmd_creator(&new_node, current);
+		new_node = create_cmd_node(&new_node, current);
 
 	return (new_node);
 }
 
-void	ast_op_handler(t_ast **result, t_token **current, uint8_t min_prec)
+void	handle_operator(t_ast **result, t_token **current, uint8_t min_prec)
 {
 	uint8_t 	next_min_prec;
 	t_op_type	op_type;
@@ -63,23 +63,24 @@ void	ast_op_handler(t_ast **result, t_token **current, uint8_t min_prec)
 	
 	while ((*current) && is_operator((*current)->type) && get_prec((*current)->type) >= min_prec)
 	{
-		next_min_prec = get_prec((*current)->type); //verif if assoc
+		//verif if assoc
+		next_min_prec = get_prec((*current)->type);
 		op_type = get_operator_type((*current)->type);
 		(*current) = (*current)->next;
 		right_side = ast_algo(current, next_min_prec);
-		(*result) = operator_node_creator((*result), right_side, op_type); // protect
+		(*result) = create_operator_node((*result), right_side, op_type); // protect
 	}
 }
 t_ast *ast_algo(t_token **current, uint8_t min_prec)
 {
 	t_ast 		*result;
 	
-	result = ast_cmd_and_subsh_handler(current);
+	result = handle_cmd_and_subsh(current);
 	if (!result)
     	return (NULL);
 	if ((*current) && (*current)->type == TOKEN_CLOSE_PAREN)
 		return (result);
-	ast_op_handler(&result, current, min_prec); // protect
+	handle_operator(&result, current, min_prec); // protect
 
     return (result);
 }

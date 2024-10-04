@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:03:10 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 11:50:29 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:13:13 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char *special_char_extracter(t_error *error, char *input, size_t *index)
 	len = get_special_char_len(input, index);
 	str = copy_special_char(input, start, index, len);
 	if (!str)
-		return (error->error_g |= ERROR_MALLOC, NULL);
+		return (error->gen_errors |= ERROR_MALLOC, NULL);
 	
 	return (str);
 }

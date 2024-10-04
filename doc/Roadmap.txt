@@ -6,7 +6,8 @@ exec && ast_exec one fct, yes
 Leak when malloc = NULL;
 int --> int32t
 protect ft_strdup
-utils-->tools 
+utils-->tools
+prtect readline
 
 Init envin init struct or exec?
 

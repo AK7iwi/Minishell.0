@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 15:21:27 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:03:47 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:09:02 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	bool	quotes_handler(char *input, char *str, size_t *start, size_t *i)
+static	bool	handle_quotes(char *input, char *str, size_t *start, size_t *i)
 {
 	char	quote_char;
 
@@ -41,7 +41,7 @@ static char* copy_str(char *input, size_t start, size_t *end, size_t len)
 	i = 0;
 	while (start < (*end))
 	{
-		if (quotes_handler(input, str, &start, &i))
+		if (handle_quotes(input, str, &start, &i))
 			start++;
 		else 
 			str[i++] = input[start++];	
@@ -69,11 +69,11 @@ char*	str_extracter(t_error *error, char *input, t_tok_type *token, size_t *inde
 	str_start = skip_space(input, index);
 	str_len = get_str_len(input, token, index);
 	if (str_len < 0)
-		return (error->error_g |= ERROR_QUOTE, NULL);
+		return (error->parsing_errors |= ERROR_QUOTE, NULL);
 	
 	str = copy_str(input, str_start, index, str_len);
 	if (!str)
-		return (error->error_g |= ERROR_MALLOC, NULL);
+		return (error->gen_errors |= ERROR_MALLOC, NULL);
 
 	return (str);
 }

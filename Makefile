@@ -4,22 +4,21 @@ SRC_DIR			:= srcs
 OBJ_DIR			:= obj
 
 SRCS			:=	main.c \
-					initializer/init.c initializer/env/init_env.c \
+					errors/errors_displayer.c errors/errors_tools.c \
+					initializer/init.c initializer/env/init_env.c initializer/env/env_tools.c \
 					parser/lexer/tokenizer.c \
 					parser/lexer/str_handler/str_handler.c parser/lexer/str_handler/str_extracter.c parser/lexer/str_handler/str_len.c \
 					parser/lexer/special_char_handler/special_char_handler.c parser/lexer/special_char_handler/special_char_extracter.c parser/lexer/special_char_handler/special_char_len.c \
-					parser/lexer/token_utils.c \
+					parser/lexer/token_tools.c \
 					parser/syn_analyzer/syn_analyzer.c parser/syn_analyzer/syn_checker.c \
 					parser/ast/ast.c parser/ast/ast_printer.c parser/ast/ast_freer.c \
 					parser/ast/ast_node_creator/cmd_node.c parser/ast/ast_node_creator/operator_node.c parser/ast/ast_node_creator/subsh_node.c \
-					parser/parser_utils/parser_checker.c parser/parser_utils/parser_checker2.c \
-					env/env_initializer.c \
+					parser/parser_tools/parser_checker.c parser/parser_tools/parser_checker2.c \
 					exec/exec.c \
 					exec/builtins/builtins.c \
 					exec/builtins/builtins_cmds/echo.c exec/builtins/builtins_cmds/pwd.c exec/builtins/builtins_cmds/env.c \
-					error/msg_error.c \
-					utils/lib/lib_checker.c utils/lib/lib_len.c utils/lib/lib_memory.c utils/lib/lib_cmp.c \
-					utils/free.c
+					tools/lib/lib_checker.c tools/lib/lib_len.c tools/lib/lib_memory.c tools/lib/lib_cmp.c \
+					tools/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

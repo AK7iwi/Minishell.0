@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:29:19 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:08:10 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:33:34 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast	*operator_node_creator(t_ast *left, t_ast *right, t_op_type op_type)
+t_ast	*create_operator_node(t_ast *left, t_ast *right, t_op_type op_type)
 {
 	t_ast *new_node;
 

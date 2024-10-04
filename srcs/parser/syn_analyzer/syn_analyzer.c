@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 15:02:32 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/27 12:01:45 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:37:01 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ bool syn_analyzer(t_data *data)
 	
     while (current)
     {
-		if (operator_checker(current))
-			return (data->error.error_g |= ERROR_OPERATOR, EXIT_FAILURE);
-		else if (redir_checker(current))
-			return (data->error.error_g |= ERROR_REDIR, EXIT_FAILURE);	
-		else if (paren_checker(current, &o_counter, &c_counter))
-			return (data->error.error_g |= ERROR_PARAN, EXIT_FAILURE);
+		if (check_operator(current))
+			return (data->error.parsing_errors |= ERROR_OPERATOR, EXIT_FAILURE);
+		else if (check_redir(current))
+			return (data->error.parsing_errors |= ERROR_REDIR, EXIT_FAILURE);	
+		else if (check_paren(current, &o_counter, &c_counter))
+			return (data->error.parsing_errors |= ERROR_PARAN, EXIT_FAILURE);
 		current = current->next;
     }
 	
 	if (o_counter != c_counter)
-		return (data->error.error_g |= ERROR_PARAN, EXIT_FAILURE);
+		return (data->error.parsing_errors |= ERROR_PARAN, EXIT_FAILURE);
 	
     return (EXIT_SUCCESS);
 }
