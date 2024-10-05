@@ -6,15 +6,15 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 09:48:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/05 12:59:00 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_env(t_env_list **lst)
+void free_env(t_env **lst)
 {
-    t_env_list *tmp;
+    t_env *tmp;
 
     while (*lst)
     {
@@ -24,12 +24,12 @@ void free_env(t_env_list **lst)
         *lst = tmp;
     }
 }
-bool add_env_var(t_env_list **lst, char *str)
+bool add_env_var(t_env **lst, char *str)
 {
-    t_env_list *new_node;
-    t_env_list *last;
+    t_env *new_node;
+    t_env *last;
 	
-	new_node = malloc(sizeof(t_env_list));
+	new_node = malloc(sizeof(t_env));
     if (!new_node)
         return (EXIT_FAILURE);
 	

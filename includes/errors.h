@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 12:35:09 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/05 10:39:33 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,13 @@
 
 /* Exec errors */
 # define ERROR_PWD				0x1
+# define ERROR_CD1 				0x2
+# define ERROR_CD2 				0x4
 
-# define E_PWD 		"Error\npwd error"
+# define E_PWD 		"Error\npwd"
+# define E_CD1		"Error\ncd: too many arguments\n"
+# define E_CD2		"Error\ncd"
+
 
 //**********************************************//
 //					STRUCTURES					//

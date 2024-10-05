@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 10:51:40 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/09/30 10:52:04 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/05 11:36:03 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_env_value(char *var, t_env_list *env) 
+char *get_env_value(char *var, t_env_list *env) // getenv already exist
 {
     t_env_list *current = env;
 

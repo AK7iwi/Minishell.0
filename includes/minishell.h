@@ -66,13 +66,13 @@ typedef enum e_tok_type
 //					STRUCTURES					//
 //**********************************************//
 
-typedef struct s_env_list
+typedef struct s_env
 {
     char *str;
 
     struct s_env_list *prev;
     struct s_env_list *next;
-}	t_env_list;
+}	t_env;
 
 typedef struct s_cmd
 {
@@ -119,7 +119,7 @@ typedef struct s_data
 	t_error 	error;
     t_token		*token;
 	t_ast 		*ast;
-    t_env_list	*env;
+    t_env		*env;
 } 	t_data;
 
 
@@ -137,15 +137,15 @@ typedef struct s_data
 /* exit.c */
 bool	ft_exit(t_data *data, char **command);
 /* env.c */
-bool	env(t_env_list *env);
+bool	env(t_env *env);
 /* unset.c */
-bool	unset(char **args, t_env_list **env);
+bool	unset(char **args, t_env **env);
 /* export.c */
-bool	ft_export(char **args, t_env_list *env);
+bool	ft_export(char **args, t_env *env);
 /* pwd.c */
 bool	pwd(t_error *error);
 /* cd.c */
-bool	cd(t_env_list *env, char **args);
+bool	cd(t_data *data, char **args);
 /* echo.c */
 bool	echo(char **args);
 
@@ -258,8 +258,8 @@ bool	tokenizer(t_data *data, char *input);
 ////////// env //////////
 
 /* env_tools.c */
-void	free_env(t_env_list **lst);
-bool	add_env_var(t_env_list **lst, char *str);
+void	free_env(t_env **lst);
+bool	add_env_var(t_env **lst, char *str);
 /* init_env.c */
 bool	init_env(t_data *data, char **envp);
 

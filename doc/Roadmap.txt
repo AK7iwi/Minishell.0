@@ -8,6 +8,8 @@ protect ft_strdup
 protect readline
 utils-->tools
 error in stderr
+Use strcmp instead of strncmp
+EXIT_SUCCESS/EXIT_FAILURE logique
 
 1) Lexer: 
 check tokenisation file 
@@ -33,6 +35,7 @@ c) Builtins
 
 handle redir
 handle error, check error for builtins
+test with no env
 
 echo OK
 cd 

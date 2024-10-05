@@ -6,15 +6,15 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:49:49 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/04 10:43:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/05 12:56:15 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	env(t_env_list *env)
+bool	env(t_env *env)
 {
-	t_env_list *current;
+	t_env *current;
 
 	//if (!env)
 		//create small env

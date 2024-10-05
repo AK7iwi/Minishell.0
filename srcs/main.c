@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 10:56:09 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/05 10:42:47 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int main(int argc, char **argv, char **envp)
 		free_loop(&data);
     }
 	//need to handle sig to enter
+	//free_all
 	// if (data.env)
 	// 	free_env(&data.env);
 	
