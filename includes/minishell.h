@@ -70,8 +70,8 @@ typedef struct s_env
 {
     char *str;
 
-    struct s_env_list *prev;
-    struct s_env_list *next;
+    struct s_env *prev;
+    struct s_env *next;
 }	t_env;
 
 typedef struct s_cmd

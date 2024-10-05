@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/05 12:59:00 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/05 13:01:07 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void free_env(t_env **lst)
 {
-    t_env *tmp;
+    t_env	*tmp;
 
     while (*lst)
     {
