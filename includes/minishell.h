@@ -53,14 +53,14 @@ typedef enum e_tok_type
 
 typedef enum e_ast_type
 {
-    AST_COMMAND,
-    AST_OPERATOR,
+	AST_COMMAND,
+	AST_OPERATOR,
 	AST_SUBSH,
 }	t_ast_type;
 
 typedef enum e_op_type
 {
-    AST_PIPE,
+	AST_PIPE,
 	AST_AND,
 	AST_OR,
 }	t_op_type;
@@ -71,14 +71,17 @@ typedef enum e_op_type
 
 typedef struct s_env_list
 {
-    char *str;
-    struct s_env_list *prev;
-    struct s_env_list *next;
+	char *str;
+	struct s_env_list *prev;
+	struct s_env_list *next;
 }	t_env_list;
 
 typedef struct s_cmd
 {
 	char **args;
+	// char *input_file;
+	// char *output_file;
+	// int	 append;
 
 }	t_cmd;
 
@@ -86,42 +89,42 @@ typedef struct s_operator
 {
 	t_op_type	type;
 
-    struct s_ast *left;
-    struct s_ast *right;  
+	struct s_ast *left;
+	struct s_ast *right;  
 } 	t_operator;
 
 typedef struct s_subshell
 {
-    struct s_ast *root;
+	struct s_ast *root;
 } 	t_subshell;
 
 typedef struct s_ast
 {
-    t_ast_type  type;
+	t_ast_type  type;
 
-    union
-    {
-        t_cmd      cmd;
-        t_operator operator;
-        t_subshell subshell;
-    };
+	union
+	{
+		t_cmd      cmd;
+		t_operator operator;
+		t_subshell subshell;
+	};
 } 	t_ast;
 
 typedef struct s_token
 {
-    t_tok_type type;
-    char	*str;
-    
-    struct s_token *prev;
-    struct s_token *next;
+	t_tok_type type;
+	char	*str;
+	
+	struct s_token *prev;
+	struct s_token *next;
 }   t_token;
 
 typedef struct s_data
 {
 	t_error 	error;
-    t_token		*token;
+	t_token		*token;
 	t_ast 		*ast;
-    t_env_list	*env;
+	t_env_list	*env;
 } 	t_data;
 
 
@@ -136,11 +139,21 @@ void	echo(char **args);
 void	env(t_env_list *env);
 void	pwd(void);
 
+/*error_handling.c*/
+void handle_pipe_error();
+void handle_fork_error();
+void handle_exec_error();
+
 /*exec_utils*/
 void	free_tab(char **tab);
 int	    open_file(char *av, int read);
 char	**find_path(char **env);
 char	*valid_path(char **all_paths, char *cmd);
+
+/*pipe_handling.c*/
+void redirect_output(int tube[2]);
+void redirect_input(int fd_in);
+void handle_pipe_creation(int tube[2]);
 
 /*pipe_utils*/
 void    create_pipe(int *tube);
@@ -150,6 +163,12 @@ void    handle_fork(pid_t pid, char **env, t_cmd *cmd, int fd_in, int *tube);
 /*pipe.c*/
 void    exec_command(char **env, t_cmd *cmd);
 void    exec_pipeline(t_ast *ast, char **env);
+
+/*process_handling.c*/
+void exec_ast_pipeline(t_ast *ast, char **env);
+void fork_and_exec_left(t_ast *ast, char **env, int tube[2]);
+void fork_and_exec_right(t_ast *ast, char **env, int fd_in);
+void handle_pipe_parent(int tube[2], t_ast *ast, char **env);
 
 /*heredoc_utils.c*/
 char    *ft_getline(void);
@@ -162,8 +181,8 @@ void    child_process(int output_fd, char *delimiter);
 void    create_heredoc(char *delimiter);
 
 /*redir.c*/
-void    redirect_output(const char *filename, int append);
-void    redirect_input(const char *filename);
+void    redir_output(const char *filename, int append);
+void    redir_input(const char *filename);
 
 //**********************************************//
 //					  ENV  					    //

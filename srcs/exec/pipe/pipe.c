@@ -6,7 +6,7 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 12:41:20 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/04 14:24:06 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/05 15:36:35 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	exec_command(char **env, t_cmd *cmd)
 char *find_command_in_path(char *cmd)
 {
     char *path_env = getenv("PATH");
-    char **paths = ft_split(path_env, ':');  // Split la variable PATH avec ':'
+    char **paths = ft_split(path_env, ':');  
     char *full_path;
     int i = 0;
     while (paths[i])
@@ -69,13 +69,12 @@ char *find_command_in_path(char *cmd)
         full_path = ft_strjoin(paths[i], "/");
         full_path = ft_strjoin(full_path, cmd);
 
-        // Vérifier si le fichier existe et est exécutable
         if (access(full_path, X_OK) == 0)
             return full_path;
 
         i++;
     }
-    return NULL;  // Si le fichier n'est pas trouvé dans les répertoires du PATH
+    return NULL;  
 }
 
 
@@ -94,139 +93,30 @@ void exec_cmd(char **args, char **env)
     }
 }
 
-
 void exec_ast_pipeline(t_ast *ast, char **env)
 {
-    int tube[2];      
-    pid_t pid; 
-    int fd_in = 0;  
-    int status; 
+    int tube[2]; 
 
     if (ast == NULL)
         return;
 
     if (ast->type == AST_OPERATOR && ast->operator.type == AST_PIPE)
     {
-        if (pipe(tube) == -1)
-        {
-            perror("pipe");
-            exit(EXIT_FAILURE);
-        }
-
-        pid = fork();
-        if (pid == -1)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0) 
-        {
-            dup2(tube[1], STDOUT_FILENO);
-            close(tube[0]); 
-            close(tube[1]);
-            exec_ast_pipeline(ast->operator.left, env);
-        }
-        else 
-        {
-            waitpid(pid, &status, 0);
-
-            fd_in = tube[0];
-            close(tube[1]); 
-
-            pid = fork();
-            if (pid == -1)
-            {
-                perror("fork");
-                exit(EXIT_FAILURE);
-            }
-
-            if (pid == 0) 
-            {
-                dup2(fd_in, STDIN_FILENO);
-                close(fd_in);
-
-                exec_ast_pipeline(ast->operator.right, env);
-                exit(EXIT_SUCCESS);  
-            }
-            else
-            {
-                waitpid(pid, &status, 0);
-                close(fd_in);
-            }
-        }
+        handle_pipe_creation(tube);
+        fork_and_exec_left(ast, env, tube);
+        handle_pipe_parent(tube, ast, env);
     }
     else if (ast->type == AST_COMMAND)
     {
-        pid = fork();
-        if (pid == -1)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
+        pid_t pid = fork();
         if (pid == 0)
+        {
             exec_cmd(ast->cmd.args, env); 
-        else 
-            waitpid(pid, &status, 0);
-    }
-}
-
-void exec_pipeline(t_ast *ast, char **env)
-{
-    int tube[2];
-    pid_t pid;
-    int fd_in = 0;
-
-    if (ast == NULL)
-        return;
-
-    if (ast->type == AST_OPERATOR && ast->operator.type == AST_PIPE)
-    {
-        create_pipe(tube);
-
-        pid = fork();
-        if (pid == 0) 
-        {
-            dup2(tube[1], STDOUT_FILENO);
-            close(tube[0]); 
-            close(tube[1]);
-
-            exec_ast_pipeline(ast->operator.left, env);
-            exit(EXIT_SUCCESS); 
-        }
-        else if (pid > 0) 
-        {
-            wait(NULL);
-
-            fd_in = tube[0];
-            close(tube[1]);
-
-            pid = fork();
-            if (pid == 0) 
-            {
-                dup2(fd_in, STDIN_FILENO);
-                close(fd_in); 
-                exec_ast_pipeline(ast->operator.right, env);
-                exit(EXIT_SUCCESS);
-            }
-            else
-            {
-                wait(NULL);
-                close(fd_in);
-            }
-        }
-    }
-    else if (ast->type == AST_COMMAND)
-    {
-        pid = fork();
-        if (pid == 0) 
-        {
-            exec_cmd(ast->cmd.args, env);
-            perror("exec_cmd");
             exit(EXIT_FAILURE);
         }
-        else if (pid > 0) 
-            wait(NULL); 
+        wait(NULL);
     }
 }
+
+
+

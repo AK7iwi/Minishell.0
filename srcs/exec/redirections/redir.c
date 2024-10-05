@@ -6,13 +6,13 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 12:40:50 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/01 15:52:34 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/05 15:37:29 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void redirect_output(const char *filename, int append)
+void redir_output(const char *filename, int append)
 {
     int fd;
 
@@ -34,7 +34,7 @@ void redirect_output(const char *filename, int append)
     }
     close(fd);
 }
-void redirect_input(const char *filename)
+void redir_input(const char *filename)
 {
     int fd;
     

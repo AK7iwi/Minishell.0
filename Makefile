@@ -28,6 +28,9 @@ SRCS			:= main.c \
 					exec/redirections/heredoc_utils.c \
 					exec/redirections/redir.c \
 					exec/builtins/builtins.c \
+					exec/pipe/error_handling.c \
+					exec/pipe/pipe_handling.c \
+					exec/pipe/process_handling.c \
 					exec/pipe/exec_utils.c \
 					exec/pipe/pipe.c \
 					exec/pipe/pipe_utils.c \
