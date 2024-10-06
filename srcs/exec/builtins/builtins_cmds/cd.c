@@ -6,18 +6,18 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/06 16:57:50 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 16:58:47 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool update_env(t_env **env, char *old_cwd)
+static bool update_env(t_env *env, char *old_cwd)
 {
 	t_env *current;
 	char *cwd;
 	
-	current = (*env);
+	current = env;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (EXIT_FAILURE);
@@ -62,7 +62,7 @@ bool	cd(t_data *data, char **args)
 	
     if (!dir || chdir(dir) != 0)
 		return (data->error.exec_errors |= ERROR_CD2, false);
-	if (update_env(&data->env, old_cwd))
+	if (update_env(data->env, old_cwd))
 		return (data->error.exec_errors |= ERROR_CD2, false);
 	
 	free(old_cwd);
