@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/06 16:58:47 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 17:53:10 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool update_env(t_env *env, char *old_cwd)
+static bool update_dir(t_env *env, char *old_cwd)
 {
 	t_env *current;
 	char *cwd;
@@ -26,43 +26,44 @@ static bool update_env(t_env *env, char *old_cwd)
 	{
 		if (ft_strncmp(current->str, "PWD=", 4) == 0)
 		{
-			free(current->str);
-			current->str = ft_strjoin("PWD=", cwd);
+			if (!update_env_var(current, "PWD=", cwd))
+				return (EXIT_FAILURE);
 		}
 		else if (ft_strncmp(current->str, "OLDPWD=", 7) == 0)
 		{
-			free(current->str);
-			current->str = ft_strjoin("OLDPWD=", old_cwd);
-		}	
+			if (!update_env_var(current, "OLDPWD=", old_cwd))
+				return (EXIT_FAILURE);
+		}
 		current = current->next;
 	}
 	
 	free(cwd);
 	return (EXIT_SUCCESS);
 }
+static bool	set_up_dir(char **dir, char *arg)
+{
+	if (!arg || ft_strncmp(arg, "~", 1) == 0)
+        (*dir) = getenv("HOME");
+    else if (ft_strncmp(arg, "-", 1) == 0)
+        (*dir) = getenv("OLDPWD");
+	else
+        (*dir) = arg;
+
+	return ((*dir));
+}
 bool	cd(t_data *data, char **args)
 {
     char *old_cwd;
     char *dir;
 	
+	//protect if (!env)
 	if (args[1] && args[2])
 		return (data->error.exec_errors |= ERROR_CD1, false);
-	//protect if (!env)
-	//fct dir 
-    if (!args[1] || ft_strncmp(args[1], "~", 1) == 0)
-        dir = getenv("HOME");
-    else if (strcmp(args[1], "-") == 0)
-        dir = getenv("OLDPWD");
-	else
-        dir = args[1];
-
-	old_cwd = getcwd(NULL, 0);
-	if (!old_cwd)
-		return (data->error.exec_errors |= ERROR_CD2, false);
 	
-    if (!dir || chdir(dir) != 0)
+	old_cwd = getcwd(NULL, 0);
+	if (!old_cwd || !set_up_dir(&dir, args[1]) || chdir(dir))
 		return (data->error.exec_errors |= ERROR_CD2, false);
-	if (update_env(data->env, old_cwd))
+	if (update_dir(data->env, old_cwd))
 		return (data->error.exec_errors |= ERROR_CD2, false);
 	
 	free(old_cwd);

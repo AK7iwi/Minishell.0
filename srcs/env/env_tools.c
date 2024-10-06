@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/06 12:54:29 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 17:36:40 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ void free_env(t_env **env_var)
         free(*env_var);
         *env_var = tmp;
     }
+}
+bool update_env_var(t_env *current, char* env_var, char *new_value)
+{
+	free(current->str);
+	current->str = ft_strjoin(env_var, new_value);
+	return (current->str);
 }
 bool add_env_var(t_env **env_var, char *str)
 {
