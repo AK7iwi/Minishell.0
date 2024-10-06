@@ -141,7 +141,7 @@ bool	env(t_env *env);
 /* unset.c */
 bool	unset(char **args, t_env **env);
 /* export.c */
-bool	ft_export(char **args, t_env *env);
+bool	ft_export(t_data *data, char **args);
 /* pwd.c */
 bool	pwd(t_error *error);
 /* cd.c */
@@ -257,7 +257,7 @@ bool	tokenizer(t_data *data, char *input);
 
 /* env_tools.c */
 void	free_env(t_env **env_var);
-bool 	update_env_var(t_env *current, char* env_var, char *new_value);
+bool 	set_env_var(t_env *current, char* env_var, char *new_value);
 bool	add_env_var(t_env **env_var, char *str);
 /* init_env.c */
 bool	init_env(t_data *data, char **envp);

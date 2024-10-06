@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/09/28 12:45:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 18:07:41 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void set_env_var(char *var, t_env_list *env)
     append_env_list(&env, var, "");
 }
 
-int	ft_export(char **args, t_env_list *env)
+bool	ft_export(t_data *data, char **args)
 {
-	int i;
+	size_t i;
 	
 	i = 1;
 
@@ -105,5 +105,6 @@ int	ft_export(char **args, t_env_list *env)
 		}
 		i++;
 	}
-	return (0);
+	
+	return (EXIT_SUCCESS);
 }

@@ -40,7 +40,7 @@ handle error, check error for builtins
 test with no env
 
 echo OK
-cd 
+cd OK, but need netter error handling 
 pwd OK
 export
 env: OK, recheck empty env, create small env for emv -i 
