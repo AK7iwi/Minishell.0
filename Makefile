@@ -5,7 +5,7 @@ OBJ_DIR			:= obj
 
 SRCS			:=	main.c \
 					errors/errors_displayer.c errors/errors_tools.c \
-					initializer/init.c initializer/env/init_env.c initializer/env/env_tools.c \
+					initializer/init.c env/init_env.c env/env_tools.c \
 					parser/lexer/tokenizer.c \
 					parser/lexer/str_handler/str_handler.c parser/lexer/str_handler/str_extracter.c parser/lexer/str_handler/str_len.c \
 					parser/lexer/special_char_handler/special_char_handler.c parser/lexer/special_char_handler/special_char_extracter.c parser/lexer/special_char_handler/special_char_len.c \
@@ -18,7 +18,7 @@ SRCS			:=	main.c \
 					exec/builtins/builtins.c \
 					exec/builtins/builtins_cmds/echo.c exec/builtins/builtins_cmds/pwd.c exec/builtins/builtins_cmds/env.c \
 					exec/builtins/builtins_cmds/cd.c \
-					tools/lib/lib_checker.c tools/lib/lib_len.c tools/lib/lib_memory.c \
+					tools/lib/lib_checker.c tools/lib/lib_len.c tools/lib/lib_memory.c tools/lib/lib_str_manip.c \
 					tools/free.c
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/05 10:30:44 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 14:15:40 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool exec_operator(t_data *data, t_operator *op)
 }
 bool ast_exec(t_data *data, t_ast *ast)
 {
-	t_ast *root;
+	t_ast *root; //need copy??
 	root = ast;
 
 	if (root->type == AST_OPERATOR)

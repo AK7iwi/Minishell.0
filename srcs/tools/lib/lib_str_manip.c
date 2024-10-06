@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_handler.c                                      :+:      :+:    :+:   */
+/*   lib_str_manip.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 12:07:39 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/06 14:08:03 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/10/06 16:42:06 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/10/06 16:42:21 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool str_handler(t_data *data, char *input, t_tok_type *token, size_t *index)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char 		*str_token;
+	char	*dest;
+	size_t	i;
+	size_t	j;
 
-	str_token = str_extracter(&data->error, input, token, index);
-	if (!str_token)
-		return (EXIT_FAILURE);
-	if (!(*token))
-		(*token) = TOKEN_WORD;
-	if (add_token(&data->token, token, str_token))
-		return (data->error.gen_errors |= ERROR_MALLOC, EXIT_FAILURE);
-	
-	return (EXIT_SUCCESS);
+	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	i = 0;
+	j = 0;
+	if (!dest)
+		return (NULL);
+	while (s1[i])
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		dest[i++] = s2[j++];
+	dest[i] = 0;
+	return (dest);
 }

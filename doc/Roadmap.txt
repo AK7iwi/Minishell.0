@@ -12,11 +12,13 @@ Use strcmp instead of strncmp
 EXIT_SUCCESS/EXIT_FAILURE logique
 
 1) Lexer: 
-check tokenisation file 
+
+Review the main of tokenizer(no need to declare token in but in str_handler and special_char_handler yes)
+check tokenisation file(doc)
 
 2) Synthesis_analysis:
 
-check parser_rules file
+check parser_rules file(doc)
 
 3) AST: 
 
@@ -67,6 +69,8 @@ Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
 ◦ ctrl-C displays a new prompt on a new line.
 ◦ ctrl-D exits the shell.
 ◦ ctrl-\ does nothing.
+
+Need to free env
 
 i) here-doc
 

@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:53:11 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/05 10:29:42 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 12:48:37 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	n_flags_checker(char **args, size_t *i)
+static bool	check_n_flag(char **args, size_t *i)
 {
     bool n_flag;
 	
@@ -41,7 +41,7 @@ bool	echo(char **args)
 	bool	no_newline;
 
 	i = 1;
-	no_newline = n_flags_checker(args, &i);
+	no_newline = check_n_flag(args, &i);
 	
 	while (args[i])
 	{

@@ -6,12 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:07:29 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 10:12:16 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 14:08:07 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//parser tools
 bool	is_special_char(char *input, size_t *i)
 {
 	return (input[*i] == '|' 

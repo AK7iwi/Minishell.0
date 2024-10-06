@@ -258,8 +258,8 @@ bool	tokenizer(t_data *data, char *input);
 ////////// env //////////
 
 /* env_tools.c */
-void	free_env(t_env **lst);
-bool	add_env_var(t_env **lst, char *str);
+void	free_env(t_env **env_var);
+bool	add_env_var(t_env **env_var, char *str);
 /* init_env.c */
 bool	init_env(t_data *data, char **envp);
 
@@ -284,5 +284,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s);
 /* lib_len.c */
 size_t	ft_strlen(const char *s);
+/* lib_str_manip.c */
+char	*ft_strjoin(const char *s1, const char *s2);
 
 #endif /* MINISHELL_H */

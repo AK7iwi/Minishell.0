@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:49:49 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/05 12:56:15 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 16:15:16 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ bool	env(t_env *env)
 
 	//if (!env)
 		//create small env
-
 	current = env;
 	while (current)
 	{

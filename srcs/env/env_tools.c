@@ -6,25 +6,25 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/05 13:01:07 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/06 12:54:29 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_env(t_env **lst)
+void free_env(t_env **env_var)
 {
     t_env	*tmp;
 
-    while (*lst)
+    while (*env_var)
     {
-        tmp = (*lst)->next;
-        free((*lst)->str);
-        free(*lst);
-        *lst = tmp;
+        tmp = (*env_var)->next;
+        free((*env_var)->str);
+        free(*env_var);
+        *env_var = tmp;
     }
 }
-bool add_env_var(t_env **lst, char *str)
+bool add_env_var(t_env **env_var, char *str)
 {
     t_env *new_node;
     t_env *last;
@@ -38,13 +38,13 @@ bool add_env_var(t_env **lst, char *str)
 		return (EXIT_FAILURE);
     new_node->next = NULL;
 	
-    if (*lst == NULL) 
+    if (*env_var == NULL) 
     {
         new_node->prev = NULL;
-        *lst = new_node;
+        *env_var = new_node;
         return (EXIT_SUCCESS);
     }
-	last = *lst;
+	last = *env_var;
     while (last->next)
         last = last->next;
     last->next = new_node;
