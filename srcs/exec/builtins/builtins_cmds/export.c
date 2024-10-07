@@ -6,60 +6,19 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/06 18:07:41 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 10:51:44 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_isalpha(int c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-	{
-		return (1);
-	}
-	return (0);
-}
 
-//sans arguments -> afficher les variables triees
+//sans arguments -> afficher les variables triees dans l'ordre alphabetique, d'abord les majuscules ensuite les minuscules
 //si variable sans = -> export avec valeur vide si elle n'exite pas
 //si variable avec = -> cree/mettre a jour la variable
 //variable invalide -> erreur sans modif l'environnement
 
-int	is_valid_var(char *str)
-{
-	int i; 
-	
-	i = 0;
-	
-	if (!ft_isalpha(str[0]) && str[0] != '_')
-		return (0);
-	i++;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	print_export(t_env_list *env)
-{
-	t_env_list *tmp; 
-	
-	tmp = env;
-	
-	while (tmp)
-	{
-		if (ft_strchr(tmp->str, '='))
-			printf("export %s\n", tmp->str);
-		else
-			printf("export %s\n", tmp->str);
-		tmp = tmp->next;
-	}
-}
-void set_env_var(char *var, t_env_list *env)
+static void set_env_var(char *var, t_env_list *env)
 {
     t_env_list *current; 
     int len; 
@@ -73,11 +32,46 @@ void set_env_var(char *var, t_env_list *env)
         {
             free(current->str);
             current->str = ft_strdup(var);
-            return;
+            return ;
         }
         current = current->next;
     }
     append_env_list(&env, var, "");
+}
+
+
+static bool	is_valid_var(char *str)
+{
+	size_t i; 
+	
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (false);
+	
+	i = 1;
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+		i++;
+	}
+	
+	return (true);
+}
+
+static void	print_sorted_env(t_env *env)
+{
+	t_env *tmp; 
+	
+	tmp = env;
+	
+	while (tmp)
+	{
+		if (ft_strchr(tmp->str, '='))
+			printf("export %s\n", tmp->str);
+		else
+			printf("export %s\n", tmp->str);
+		tmp = tmp->next;
+	}
 }
 
 bool	ft_export(t_data *data, char **args)
@@ -85,11 +79,11 @@ bool	ft_export(t_data *data, char **args)
 	size_t i;
 	
 	i = 1;
-
+	
 	if (!args[1])
 	{
-		print_export(env);
-		return (0);
+		print_sorted_env(data->env); 
+		return (EXIT_SUCCESS);
 	}
 
 	while (args[i])

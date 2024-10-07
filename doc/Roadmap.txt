@@ -43,9 +43,9 @@ handle paramaters (if args[1]) return ;
 echo OK
 cd OK, but need netter error handling 
 pwd OK
-export
+export: see to export in child process
 env: OK, recheck empty env, create small env for emv -i 
-unset
+unset OK, nned to be tested 
 exit
 
 d) Command

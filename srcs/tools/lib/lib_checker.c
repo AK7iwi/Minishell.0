@@ -1,11 +1,13 @@
 #include "minishell.h"
 
-int	ft_isalnum(int c)
-{   //one return 
-	if (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		|| (c >= '0' && c <= '9'))
-		return (1);
-	return (0);
+inline bool	ft_isalnum(int c)
+{   
+	return (ft_isalpha(c) || (c >= '0' && c <= '9'));
+}
+
+inline bool	ft_isalpha(int c)
+{
+	return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
 }
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

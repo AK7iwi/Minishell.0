@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/07 09:17:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 10:39:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void	unset_env_var(t_env **env, char *var)
     while (current)
     {
         if (ft_strncmp(current->str, var, strlen(var)) == 0 && current->str[strlen(var)] == '=')
-        {
-            remove_env_node(env, current);
-            return ;
-        }
+            return (remove_env_node(env, current));
         current = current->next;
     }
 }

@@ -153,7 +153,6 @@ bool	echo(char **args);
 /* builtins.c */
 bool 	is_builtins(t_data *data, char **args);
 
-
 bool 	ast_exec(t_data *data, t_ast *ast);
 
 //**********************************************//
@@ -284,6 +283,7 @@ void	free_loop(t_data *data);
 
 /* lib_checker.c */
 int		ft_isalnum(int c);
+bool	ft_isalpha(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 /* lib_memory.c */
 char	*ft_strdup(const char *s);

@@ -6,13 +6,13 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/07 08:52:17 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 10:49:33 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool update_dir(t_env *env, char *old_cwd)
+static bool update_dir(t_env *env, char *old_cwd) //handle diffrent errors 
 {
 	t_env *current;
 	char *cwd;
@@ -36,7 +36,6 @@ static bool update_dir(t_env *env, char *old_cwd)
 		}
 		current = current->next;
 	}
-	
 	free(cwd);
 	return (EXIT_SUCCESS);
 }
