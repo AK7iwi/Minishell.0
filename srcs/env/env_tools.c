@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/06 18:00:03 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 09:17:37 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,35 @@ void free_env(t_env **env_var)
         free((*env_var)->str);
         free(*env_var);
         *env_var = tmp;
+    }
+}
+
+void remove_env_node(t_env **env, t_env *to_remove)
+{
+    if (to_remove->prev)
+        to_remove->prev->next = to_remove->next;
+    if (to_remove->next)
+        to_remove->next->prev = to_remove->prev;
+
+    if (to_remove == *env)
+        *env = to_remove->next;
+
+    free(to_remove->str);
+    free(to_remove);
+}
+void	unset_env_var(t_env **env, char *var)
+{
+    t_env *current;
+	current = *env;
+
+    while (current)
+    {
+        if (ft_strncmp(current->str, var, strlen(var)) == 0 && current->str[strlen(var)] == '=')
+        {
+            remove_env_node(env, current);
+            return ;
+        }
+        current = current->next;
     }
 }
 bool set_env_var(t_env *current, char* env_var, char *new_value)

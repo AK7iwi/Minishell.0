@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:53:11 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/06 12:48:37 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 08:51:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ bool	echo(char **args)
 	if (!no_newline)
 		printf("\n");
 
-	return (true);
+	return (EXIT_SUCCESS);
 }

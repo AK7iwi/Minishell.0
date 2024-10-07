@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/06 14:15:40 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 08:54:07 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static bool exec_subshell(t_data *data, t_subshell *subsh)
 static bool exec_cmd(t_data *data, t_cmd *cmd)
 {	
 	if (is_builtins(data, cmd->args))
+	{
+		printf("OUII\n");
 		return (EXIT_SUCCESS);
+	}
 	
 	return (EXIT_FAILURE);
 }

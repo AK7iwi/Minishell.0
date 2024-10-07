@@ -38,6 +38,7 @@ c) Builtins
 handle redir
 handle error, check error for builtins
 test with no env
+handle paramaters (if args[1]) return ;
 
 echo OK
 cd OK, but need netter error handling 

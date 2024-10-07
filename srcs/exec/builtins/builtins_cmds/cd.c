@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/06 18:02:40 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/07 08:52:17 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ bool	cd(t_data *data, char **args)
 	
 	//protect if (!env)
 	if (args[1] && args[2])
-		return (data->error.exec_errors |= ERROR_CD1, false);
+		return (data->error.exec_errors |= ERROR_CD1, EXIT_FAILURE);
 	
 	old_cwd = getcwd(NULL, 0);
 	if (!old_cwd || !set_dir(&dir, args[1]) || chdir(dir))
-		return (data->error.exec_errors |= ERROR_CD2, false);
+		return (data->error.exec_errors |= ERROR_CD2, EXIT_FAILURE);
 	if (update_dir(data->env, old_cwd))
-		return (data->error.exec_errors |= ERROR_CD2, false);
+		return (data->error.exec_errors |= ERROR_CD2, EXIT_FAILURE);
 	
 	free(old_cwd);
-    return (true);
+    return (EXIT_SUCCESS);
 }
 
