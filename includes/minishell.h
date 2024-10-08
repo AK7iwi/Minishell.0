@@ -254,6 +254,10 @@ bool	tokenizer(t_data *data, char *input);
 //												//
 //**********************************************// 
 
+/* sort_env.c */
+void	sort_env(char **env_array);
+char**	copy_env(t_env *env);
+
 /* env_tools.c */
 void	free_env(t_env **env_var);
 void 	remove_env_node(t_env **env, t_env *to_remove);
@@ -282,7 +286,7 @@ void	free_loop(t_data *data);
 //////////////// Libft ////////////////
 
 /* lib_checker.c */
-int		ft_isalnum(int c);
+bool	ft_isalnum(int c);
 bool	ft_isalpha(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 /* lib_memory.c */
@@ -290,6 +294,7 @@ char	*ft_strdup(const char *s);
 /* lib_len.c */
 size_t	ft_strlen(const char *s);
 /* lib_str_manip.c */
+void	ft_swap(char **a, char **b);
 char	*ft_strjoin(const char *s1, const char *s2);
 
 #endif /* MINISHELL_H */
