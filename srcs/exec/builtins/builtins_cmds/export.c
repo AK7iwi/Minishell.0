@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/09 11:49:30 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:58:55 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,27 @@
 static char *copy_var_name(char *args)
 {
 	char *var_name;
-	size_t i;
+	size_t len;
+	
+	len = 0;
+	
+	if (!find_equal(args))
+		len = ft_strlen(args);
+	else
+		while (args[len] != '=')
+			len++;
+	
+	var_name = malloc(len + 1);
+	if (!var_name)
+		return (NULL);
 
-	i = 0;
-	while (args[i] != '=')
-		i++;
-
-	var_name = malloc(i + 1);
-
-	while (args[i] != '=')
+	len = 0;
+	while (args[len])
 	{
-		var_name[i] = args[i];
-		i++;
+		var_name[len] = args[len];
+		len++;
 	}
-	var_name[i] = '\0';
-
+	var_name[len] = '\0';
 	return (var_name);
 }
 
@@ -41,9 +47,9 @@ static bool	is_valid_var(char *var)
 		return (false);
 	
 	i = 1;
-	while (var[i] && var[i] != '=')
+	while (var[i])
 	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
+		if (!ft_isalnum(var[i]) && var[i] != '_') //bug here 
 			return (false);
 		i++;
 	}
@@ -57,7 +63,6 @@ static void	sort_env(t_env **env)
 	char *temp;
 	
 	swapped = true;
-	
     while (swapped)
     {
         swapped = false;
@@ -103,18 +108,15 @@ bool	ft_export(t_data *data, char **args)
 	i = 1;
 	while (args[i])
 	{
-		if (!is_valid_var(args[i]))
+		var_name = copy_var_name(args[i]); //protect 
+		if (!is_valid_var(var_name))
 			printf("export: `%s': not a valid identifier\n", args[i]);
-		else if (!getenv(args[i]))
-			add_env_var(&data->env, args[i]);
+		else if (!getenv(var_name))
+			add_env_var(&data->env, args[i]); //protect and free
 		else if (find_equal(args[i]))
-		{
-			var_name = copy_var_name(args[i]);
-			set_env_var(&data->env, var_name, args[i]);
-			free(var_name);
-		}
+			set_env_var(&data->env, var_name, args[i]); //protect and free 
+		free(var_name);
 		i++;
 	}
-	
 	return (EXIT_SUCCESS);
 }

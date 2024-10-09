@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:45:10 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/08 10:27:27 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 12:39:01 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ bool unset(t_data *data, char **args)
         return (data->error.exec_errors |= ERROR_UNSET, EXIT_FAILURE);
 	
 	i = 1;
-	
 	while (args[i])
     {
 		//no error msg in bash posix if env_var doesnt exist
