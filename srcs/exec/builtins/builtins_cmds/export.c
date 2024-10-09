@@ -6,50 +6,55 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/09 09:28:26 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:49:30 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char *copy_var_name(char *args)
+{
+	char *var_name;
+	size_t i;
 
-//sans arguments -> afficher les variables triees dans l'ordre alphabetique, d'abord les majuscules ensuite les minuscules
-//si variable sans = -> export avec valeur vide si elle n'exite pas
-//si variable avec = -> cree/mettre a jour la variable
-//variable invalide -> erreur sans modif l'environnement
+	i = 0;
+	while (args[i] != '=')
+		i++;
 
-static bool	is_valid_var(char *str)
+	var_name = malloc(i + 1);
+
+	while (args[i] != '=')
+	{
+		var_name[i] = args[i];
+		i++;
+	}
+	var_name[i] = '\0';
+
+	return (var_name);
+}
+
+static bool	is_valid_var(char *var)
 {
 	size_t i; 
 	
-	if (!ft_isalpha(str[0]) && str[0] != '_')
+	if (!ft_isalpha(var[0]) && var[0] != '_')
 		return (false);
 	
 	i = 1;
-	while (str[i] && str[i] != '=')
+	while (var[i] && var[i] != '=')
 	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
+		if (!ft_isalnum(var[i]) && var[i] != '_')
 			return (false);
 		i++;
 	}
 	
 	return (true);
 }
-static void swap_env_var(t_env *current, t_env *current_n)
-{
-	char *temp;
-
-	temp = current->str;
-    current->str = current_n->str;
-    current_n->str = temp;
-}
 static void	sort_env(t_env **env)
 {
 	bool swapped;
     t_env *current;
-	
-	if (*env == NULL || (*env)->next == NULL)
-		return ;
+	char *temp;
 	
 	swapped = true;
 	
@@ -62,7 +67,9 @@ static void	sort_env(t_env **env)
         {
             if (strcmp(current->str, current->next->str) > 0) //ft_strcmp
             {
-                swap_env_var(current, current->next);
+				temp = current->str;
+    			current->str = current->next->str;
+    			current->next->str = temp;
                 swapped = true;
             }
             current = current->next;
@@ -87,24 +94,25 @@ static bool	print_sorted_env(t_env *env)
 bool	ft_export(t_data *data, char **args)
 {
 	size_t i;
-	
+	char *var_name;
+
 	if (!args[1])
 		if (print_sorted_env(data->env))
 			return (EXIT_FAILURE);
 		
 	i = 1;
-
 	while (args[i])
 	{
 		if (!is_valid_var(args[i]))
 			printf("export: `%s': not a valid identifier\n", args[i]);
-		// else if (ft_strchr(args[i], '='))
-		// 	set_env_var(args[i], env); 
-		// else
-		// {
-		// 	if (!get_env_value(args[i], env))
-		// 		append_env_list(&env, args[i], "");
-		// }
+		else if (!getenv(args[i]))
+			add_env_var(&data->env, args[i]);
+		else if (find_equal(args[i]))
+		{
+			var_name = copy_var_name(args[i]);
+			set_env_var(&data->env, var_name, args[i]);
+			free(var_name);
+		}
 		i++;
 	}
 	

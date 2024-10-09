@@ -262,7 +262,7 @@ char**	copy_env(t_env *env);
 void	free_env(t_env **env_var);
 void 	remove_env_node(t_env **env, t_env *to_remove);
 void	unset_env_var(t_env **env, char *var);
-bool 	set_env_var(t_env *current, char* env_var, char *new_value);
+bool 	set_env_var(t_env **env, char *var_name, char *new_env_var);
 bool	add_env_var(t_env **env_var, char *str);
 /* init_env.c */
 bool	init_env(t_data *data, char **envp);
@@ -286,6 +286,7 @@ void	free_loop(t_data *data);
 //////////////// Libft ////////////////
 
 /* lib_checker.c */
+bool 	find_equal(char *var);
 bool	ft_isalnum(int c);
 bool	ft_isalpha(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

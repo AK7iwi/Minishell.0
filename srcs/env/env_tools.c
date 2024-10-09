@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 08:40:13 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/07 10:39:45 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:29:59 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void free_env(t_env **env_var)
         *env_var = tmp;
     }
 }
-
 void remove_env_node(t_env **env, t_env *to_remove)
 {
     if (to_remove->prev)
@@ -45,16 +44,31 @@ void	unset_env_var(t_env **env, char *var)
 
     while (current)
     {
-        if (ft_strncmp(current->str, var, strlen(var)) == 0 && current->str[strlen(var)] == '=')
+        if (ft_strncmp(current->str, var, ft_strlen(var)) == 0 
+			&& current->str[ft_strlen(var)] == '=') 
             return (remove_env_node(env, current));
         current = current->next;
     }
 }
-bool set_env_var(t_env *current, char* env_var, char *new_value)
+bool set_env_var(t_env **env, char *var_name, char *new_env_var)
 {
-	free(current->str);
-	current->str = ft_strjoin(env_var, new_value);
-	return (current->str);
+	t_env *current;
+
+	current = *env;
+	while (current)
+	{
+		if (ft_strncmp(current->str, var_name, ft_strlen(var_name)) == 0
+			&& current->str[ft_strlen(var_name)] == '=')
+		{
+			free(current->str);
+			current->str = ft_strdup(new_env_var);
+			if (!current->str)
+				return (EXIT_FAILURE);
+		}
+		current = current->next;
+	}
+	
+	return (EXIT_SUCCESS);
 }
 bool add_env_var(t_env **env_var, char *str)
 {

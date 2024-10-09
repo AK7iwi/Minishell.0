@@ -6,36 +6,29 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/07 10:49:33 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 11:46:33 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool update_dir(t_env *env, char *old_cwd) //handle diffrent errors 
+static bool update_dir(t_env *env, char *old_cwd) //handle different errors 
 {
-	t_env *current;
 	char *cwd;
+	char *new_pwd;
+	char *n_old_pwd;
 	
-	current = env;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (EXIT_FAILURE);
 	
-	while (current)
-	{
-		if (ft_strncmp(current->str, "PWD=", 4) == 0)
-		{
-			if (!set_env_var(current, "PWD=", cwd))
-				return (EXIT_FAILURE);
-		}
-		else if (ft_strncmp(current->str, "OLDPWD=", 7) == 0)
-		{
-			if (!set_env_var(current, "OLDPWD=", old_cwd))
-				return (EXIT_FAILURE);
-		}
-		current = current->next;
-	}
+	new_pwd = ft_strjoin("PWD=", cwd);
+	n_old_pwd = ft_strjoin("OLDPWD=", old_cwd);
+	if (set_env_var(&env, "PWD", new_pwd))
+		return (EXIT_FAILURE);
+	if (set_env_var(&env, "OLD_PWD", n_old_pwd))
+		return (EXIT_FAILURE);
+		
 	free(cwd);
 	return (EXIT_SUCCESS);
 }
@@ -54,15 +47,15 @@ bool	cd(t_data *data, char **args)
 {
     char *old_cwd;
     char *dir;
-	
-	//protect if (!env)
+
 	if (args[1] && args[2])
 		return (data->error.exec_errors |= ERROR_CD1, EXIT_FAILURE);
 	
 	old_cwd = getcwd(NULL, 0);
-	if (!old_cwd || !set_dir(&dir, args[1]) || chdir(dir))
-		return (data->error.exec_errors |= ERROR_CD2, EXIT_FAILURE);
-	if (update_dir(data->env, old_cwd))
+	if (!old_cwd 
+		|| !set_dir(&dir, args[1]) 
+		|| chdir(dir) 
+		|| update_dir(data->env, old_cwd))
 		return (data->error.exec_errors |= ERROR_CD2, EXIT_FAILURE);
 	
 	free(old_cwd);

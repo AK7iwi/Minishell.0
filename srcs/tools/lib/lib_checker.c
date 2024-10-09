@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+bool find_equal(char *var)
+{
+	size_t i;
+
+	i = 0;
+
+	while (var[i])
+	{
+		if (var[i] == '=')
+			return (true);
+		i++;
+	}
+	
+	return (false);
+}
 inline bool	ft_isalnum(int c)
 {   
 	return (ft_isalpha(c) || (c >= '0' && c <= '9'));
