@@ -6,15 +6,17 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:14:17 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/04 10:11:26 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:56:02 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_token_list(t_token *head)
+void print_token(t_token *token)
 {
-    t_token *current = head;
+    t_token *current;
+	
+	current = token;
 	
 	printf("PRINT_TEST:\n");
     while (current)

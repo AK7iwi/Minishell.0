@@ -218,7 +218,7 @@ bool	syn_analyzer(t_data *data);
 //**********************************************//
 
 /* token_tools.c */
-void 		print_token_list(t_token *head);
+void 		print_token(t_token *token);
 void		free_token(t_token **tokens);
 bool		add_token(t_token **token_struct, t_tok_type *token, char *str_token);
 t_tok_type	wich_token(char *str);
@@ -255,7 +255,7 @@ bool	tokenizer(t_data *data, char *input);
 //**********************************************// 
 
 /* sort_env.c */
-void	sort_env(char **env_array);
+// void	sort_env(char **env_array);
 char**	copy_env(t_env *env);
 
 /* env_tools.c */

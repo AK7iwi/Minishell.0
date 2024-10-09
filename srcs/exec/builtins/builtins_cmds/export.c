@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/08 11:57:20 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/09 09:28:26 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,6 @@
 //si variable sans = -> export avec valeur vide si elle n'exite pas
 //si variable avec = -> cree/mettre a jour la variable
 //variable invalide -> erreur sans modif l'environnement
-
-// static void set_env_var(char *var, t_env_list *env)
-// {
-//     t_env_list *current; 
-//     int len; 
-	
-// 	current = env;
-// 	len = ft_strlen(var);
-
-//     while (current) 
-//     {
-//         if (ft_strncmp(current->str, var, len) == 0 && current->str[len] == '=')
-//         {
-//             free(current->str);
-//             current->str = ft_strdup(var);
-//             return ;
-//         }
-//         current = current->next;
-//     }
-//     append_env_list(&env, var, "");
-// }
-
 
 static bool	is_valid_var(char *str)
 {
@@ -57,26 +35,53 @@ static bool	is_valid_var(char *str)
 	
 	return (true);
 }
+static void swap_env_var(t_env *current, t_env *current_n)
+{
+	char *temp;
 
+	temp = current->str;
+    current->str = current_n->str;
+    current_n->str = temp;
+}
+static void	sort_env(t_env **env)
+{
+	bool swapped;
+    t_env *current;
+	
+	if (*env == NULL || (*env)->next == NULL)
+		return ;
+	
+	swapped = true;
+	
+    while (swapped)
+    {
+        swapped = false;
+        current = *env;
+
+        while (current->next)
+        {
+            if (strcmp(current->str, current->next->str) > 0) //ft_strcmp
+            {
+                swap_env_var(current, current->next);
+                swapped = true;
+            }
+            current = current->next;
+        }
+    }
+}
 static bool	print_sorted_env(t_env *env)
 {
-	char	**cpy_env;
-	size_t 	i;
+	t_env *current;
+	current = env;
 	
-	cpy_env = copy_env(env);
-	if (!cpy_env)
-		return (EXIT_FAILURE);
+	sort_env(&current);
 	
-	sort_env(cpy_env);
-	
-	i = 0;
-	while (cpy_env[i])
+	while (current)
 	{
-		printf("export %s\n", cpy_env[i]);
-		i++;
+		printf("export %s\n", current->str);
+		current = current->next;
 	}
 	
-	free(cpy_env);
 	return (EXIT_SUCCESS);
 }
 bool	ft_export(t_data *data, char **args)
