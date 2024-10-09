@@ -79,9 +79,9 @@ typedef struct s_env_list
 typedef struct s_cmd
 {
 	char **args;
-	// char *input_file;
-	// char *output_file;
-	// int	 append;
+	char *input_file;    // Fichier d'entrée pour les redirections
+    char *output_file;   // Fichier de sortie pour les redirections
+    int append;
 
 }	t_cmd;
 
@@ -165,7 +165,7 @@ void    exec_command(char **env, t_cmd *cmd);
 void    exec_pipeline(t_ast *ast, char **env);
 
 /*process_handling.c*/
-void exec_ast_pipeline(t_ast *ast, char **env);
+void exec_ast_pipeline(t_ast *ast, char **env, t_data *data);
 void fork_and_exec_left(t_ast *ast, char **env, int tube[2]);
 void fork_and_exec_right(t_ast *ast, char **env, int fd_in);
 void handle_pipe_parent(int tube[2], t_ast *ast, char **env);

@@ -6,7 +6,7 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 12:53:36 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/05 15:50:25 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/09 15:34:40 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void child_process(int output_fd, char *delimiter)
 {
     char *line;
-
+    (void)output_fd;
+    int file = open(delimiter, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
     while (1)
     {
         line = readline(">");
@@ -26,10 +27,10 @@ void child_process(int output_fd, char *delimiter)
             free(line);
             break;
         }
-		write_to_file(output_fd, line);
+		write_to_file(file, line);
         free(line);
     }
-    close(output_fd);
+    close(file);
     exit(EXIT_SUCCESS);
 }
 

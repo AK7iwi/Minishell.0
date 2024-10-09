@@ -6,7 +6,7 @@
 /*   By: diguler <diguler@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 14:03:03 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/05 15:27:08 by diguler          ###   ########.fr       */
+/*   Updated: 2024/10/09 17:02:19 by diguler          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ int main(int argc, char **argv, char **envp)
 		else if (ast_exec(&data, data.ast))
 			msg_error(data.error);
 		// print_ast(data.ast, 5);
-		exec_ast_pipeline(data.ast, envp);
-		free_loop(&data);
+		// print_token_list(data.token);
+		exec_ast_pipeline(data.ast, envp, &data);
+		//free_loop(&data);
     }
 	
     return (EXIT_SUCCESS);
