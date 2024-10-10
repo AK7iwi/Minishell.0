@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/10 16:25:56 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:11:22 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	cd(t_data *data, char **args)
     char *old_cwd;
     char *dir;
 
-	if (args[2]) //to test
+	if (args[2])
 		return (data->error.exec_errors |= ERROR_CD1, EXIT_FAILURE);
 	
 	old_cwd = getcwd(NULL, 0);

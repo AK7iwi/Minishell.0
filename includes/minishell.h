@@ -135,7 +135,7 @@ typedef struct s_data
 
 /////// builtins_cmds //////////
 /* exit.c */
-bool	ft_exit(char **args);
+bool	ft_exit(t_data *data, char **args);
 /* env.c */
 bool	env(t_env *env);
 /* unset.c */

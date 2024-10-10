@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/10 17:03:01 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:25:32 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@
 # define ERROR_CD2 				0x4
 # define ERROR_EXPORT			0x8
 # define ERROR_UNSET			0x10
+# define ERROR_EXIT				0x20
 
 # define E_PWD 		"Error\npwd"
 # define E_CD1		"Error\ncd: too many arguments\n"
 # define E_CD2		"Error\ncd"
 # define E_EXPORT	"Error\nunset: not enough arguments\n"
 # define E_UNSET	"Error\nunset: not enough arguments\n"
-
-
+# define E_EXIT 	"bash: exit: too many arguments\n"
 
 //**********************************************//
 //					STRUCTURES					//
