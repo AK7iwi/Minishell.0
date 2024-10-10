@@ -46,7 +46,7 @@ pwd OK
 export: ~, need to handle when no equal 
 env: OK, 
 unset OK,
-exit
+exit OK
 
 d) Command
 Search and launch the right executable (based on the PATH variable or using a
