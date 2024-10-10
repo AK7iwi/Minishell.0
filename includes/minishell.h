@@ -135,7 +135,7 @@ typedef struct s_data
 
 /////// builtins_cmds //////////
 /* exit.c */
-bool	ft_exit(t_data *data, char **command);
+bool	ft_exit(char **args);
 /* env.c */
 bool	env(t_env *env);
 /* unset.c */
@@ -286,6 +286,8 @@ void	free_loop(t_data *data);
 
 /* lib_checker.c */
 bool 	find_equal(char *var);
+bool 	is_number(char *c);
+bool	ft_isdigit(int c);
 bool	ft_isalnum(int c);
 bool	ft_isalpha(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -294,6 +296,7 @@ char	*ft_strdup(const char *s);
 /* lib_len.c */
 size_t	ft_strlen(const char *s);
 /* lib_str_manip.c */
+int		ft_atoi(const char *nptr);
 void	ft_swap(char **a, char **b);
 char	*ft_strjoin(const char *s1, const char *s2);
 

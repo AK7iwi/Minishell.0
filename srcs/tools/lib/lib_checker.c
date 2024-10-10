@@ -15,9 +15,28 @@ bool find_equal(char *var)
 	
 	return (false);
 }
+
+bool is_number(char *c)
+{
+	size_t i;
+
+	i = 0;
+	while (c[i])
+	{
+		if (!ft_isdigit(c[i]))
+			return (false);
+		i++;
+	}
+
+	return (true);
+}
 inline bool	ft_isalnum(int c)
 {   
-	return (ft_isalpha(c) || (c >= '0' && c <= '9'));
+	return (ft_isalpha(c) || ft_isdigit(c));
+}
+inline	bool	ft_isdigit(int c)
+{
+	return ((c >= '0' && c <= '9'));
 }
 
 inline bool	ft_isalpha(int c)

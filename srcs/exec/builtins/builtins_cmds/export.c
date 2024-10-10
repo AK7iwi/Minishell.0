@@ -6,13 +6,11 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/10 15:21:28 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:41:42 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//copy_var_value(chars_args)
 
 static char *extract_var_value(char *args)
 {
@@ -144,6 +142,7 @@ bool	ft_export(t_data *data, char **args)
 			printf("export: `%s': not a valid identifier\n", args[i]);
 		else if (find_equal(args[i]))
 		{
+			//fct 
 			var_name = extract_var_name(args[i]); //protect 
 			if (!get_my_env(data->env, var_name))
 				add_env_var(&data->env, args[i]); //protect 

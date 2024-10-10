@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:08:47 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/09 11:46:33 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:25:56 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static bool update_dir(t_env *env, char *old_cwd) //handle different errors
 	free(cwd);
 	return (EXIT_SUCCESS);
 }
+
 static bool	set_dir(char **dir, char *arg)
 {
 	if (!arg || ft_strncmp(arg, "~", 1) == 0)
@@ -48,7 +49,7 @@ bool	cd(t_data *data, char **args)
     char *old_cwd;
     char *dir;
 
-	if (args[1] && args[2])
+	if (args[2]) //to test
 		return (data->error.exec_errors |= ERROR_CD1, EXIT_FAILURE);
 	
 	old_cwd = getcwd(NULL, 0);

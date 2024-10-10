@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 17:19:06 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/07 10:27:56 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:03:01 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 # define E_CD2		"Error\ncd"
 # define E_EXPORT	"Error\nunset: not enough arguments\n"
 # define E_UNSET	"Error\nunset: not enough arguments\n"
+
 
 
 //**********************************************//
