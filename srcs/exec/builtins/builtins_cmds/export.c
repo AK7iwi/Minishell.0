@@ -6,39 +6,65 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:05:00 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/09 12:58:55 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:21:28 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *copy_var_name(char *args)
+//copy_var_value(chars_args)
+
+static char *extract_var_value(char *args)
+{
+	char *var_value;
+	size_t len;
+	size_t i;
+	size_t j;
+
+	i = 0;
+	while (args[i] != '=')
+		i++;
+	i++;
+	len = 0;
+	while (args[i + len])
+		len++;
+
+	var_value = malloc(len + 1);
+	if (!var_value)
+		return (NULL);
+
+	j = 0;
+	while (j < len)
+	{
+		var_value[j] = args[i + j];
+		j++;
+	}
+	var_value[j] = '\0';
+	return (var_value);
+}
+static char *extract_var_name(char *args)
 {
 	char *var_name;
 	size_t len;
+	size_t i;
 	
 	len = 0;
-	
-	if (!find_equal(args))
-		len = ft_strlen(args);
-	else
-		while (args[len] != '=')
-			len++;
+	while (args[len] != '=')
+		len++;
 	
 	var_name = malloc(len + 1);
 	if (!var_name)
 		return (NULL);
 
-	len = 0;
-	while (args[len])
+	i = 0;
+	while (i < len)
 	{
-		var_name[len] = args[len];
-		len++;
+		var_name[i] = args[i];
+		i++;
 	}
-	var_name[len] = '\0';
+	var_name[i] = '\0';
 	return (var_name);
 }
-
 static bool	is_valid_var(char *var)
 {
 	size_t i; 
@@ -47,9 +73,9 @@ static bool	is_valid_var(char *var)
 		return (false);
 	
 	i = 1;
-	while (var[i])
+	while (var[i] && var[i] != '=')
 	{
-		if (!ft_isalnum(var[i]) && var[i] != '_') //bug here 
+		if (!ft_isalnum(var[i]) && var[i] != '_')
 			return (false);
 		i++;
 	}
@@ -85,12 +111,18 @@ static bool	print_sorted_env(t_env *env)
 {
 	t_env *current;
 	current = env;
+	char *var_name;
+	char *var_value;
 	
 	sort_env(&current);
 	
 	while (current)
 	{
-		printf("export %s\n", current->str);
+		var_name = extract_var_name(current->str);
+		var_value = extract_var_value(current->str);
+		printf("export %s=\"%s\"\n", var_name, var_value);
+		free(var_name);
+		free(var_value);
 		current = current->next;
 	}
 	
@@ -108,14 +140,19 @@ bool	ft_export(t_data *data, char **args)
 	i = 1;
 	while (args[i])
 	{
-		var_name = copy_var_name(args[i]); //protect 
-		if (!is_valid_var(var_name))
+		if (!is_valid_var(args[i]))
 			printf("export: `%s': not a valid identifier\n", args[i]);
-		else if (!getenv(var_name))
-			add_env_var(&data->env, args[i]); //protect and free
 		else if (find_equal(args[i]))
-			set_env_var(&data->env, var_name, args[i]); //protect and free 
-		free(var_name);
+		{
+			var_name = extract_var_name(args[i]); //protect 
+			if (!get_my_env(data->env, var_name))
+				add_env_var(&data->env, args[i]); //protect 
+			else
+				set_env_var(&data->env, var_name, args[i]); //protect and free
+			free(var_name);
+		}
+		//else
+			//mark for subshell
 		i++;
 	}
 	return (EXIT_SUCCESS);

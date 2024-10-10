@@ -226,27 +226,27 @@ t_tok_type	wich_token(char *str);
 //////////// special_char_handler ///////////////////
 
 /* special_char_len.c */
-uint8_t get_special_char_len(char *input, size_t *i);
+uint8_t		get_special_char_len(char *input, size_t *i);
 /* special_char_extracter.c*/
-char*	special_char_extracter(t_error *error, char *input, size_t *i);
+char*		special_char_extracter(t_error *error, char *input, size_t *i);
 /* special_char_handler.c */
-bool	is_special_char(char *input, size_t *i);
-bool 	special_char_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
+bool		is_special_char(char *input, size_t *i);
+bool 		special_char_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 //////////// str_handler ///////////////////
 
 /* str_len.c */
-bool	get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i);
-ssize_t	get_str_len(char *input, t_tok_type *token, size_t *i);
+bool		get_quotes_len(char *input, ssize_t *str_len, t_tok_type *t, size_t *i);
+ssize_t		get_str_len(char *input, t_tok_type *token, size_t *i);
 /* str_extracter.c */
-char*	str_extracter(t_error *error, char *input, t_tok_type *token, size_t *index);
+char*		str_extracter(t_error *error, char *input, t_tok_type *token, size_t *index);
 /* str_handler.c */
-bool 	str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
+bool 		str_handler(t_data *data, char *input, t_tok_type *token, size_t *index);
 
 //////////////////
 
 /* tokenizer.c */
-bool	tokenizer(t_data *data, char *input);
+bool		tokenizer(t_data *data, char *input);
 
 //**********************************************//
 //												//
@@ -254,13 +254,12 @@ bool	tokenizer(t_data *data, char *input);
 //												//
 //**********************************************// 
 
-/* sort_env.c */
-// void	sort_env(char **env_array);
-char**	copy_env(t_env *env);
+/* env_tools2.c */
+void 	remove_env_node(t_env **env, t_env *to_remove);
 
 /* env_tools.c */
 void	free_env(t_env **env_var);
-void 	remove_env_node(t_env **env, t_env *to_remove);
+bool 	get_my_env(t_env *env, char *var_name);
 void	unset_env_var(t_env **env, char *var);
 bool 	set_env_var(t_env **env, char *var_name, char *new_env_var);
 bool	add_env_var(t_env **env_var, char *str);

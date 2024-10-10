@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   env_tools2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 14:45:10 by diguler           #+#    #+#             */
-/*   Updated: 2024/10/10 12:55:46 by mfeldman         ###   ########.fr       */
+/*   Created: 2024/10/10 10:39:28 by mfeldman          #+#    #+#             */
+/*   Updated: 2024/10/10 10:39:45 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool unset(t_data *data, char **args)
+void remove_env_node(t_env **env, t_env *to_remove)
 {
-    size_t i;
-	
-	if (!args[1])
-        return (data->error.exec_errors |= ERROR_UNSET, EXIT_FAILURE);
-	
-	i = 1;
-	while (args[i])
-    {
-        unset_env_var(&data->env, args[i]);
-        i++;
-    }
+    if (to_remove->prev)
+        to_remove->prev->next = to_remove->next;
+    if (to_remove->next)
+        to_remove->next->prev = to_remove->prev;
 
-	return (EXIT_SUCCESS);
+    if (to_remove == *env)
+        *env = to_remove->next;
+
+    free(to_remove->str);
+    free(to_remove);
 }
-

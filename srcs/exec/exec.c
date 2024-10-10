@@ -6,7 +6,7 @@
 /*   By: mfeldman <mfeldman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:38:35 by mfeldman          #+#    #+#             */
-/*   Updated: 2024/10/09 09:28:53 by mfeldman         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:52:38 by mfeldman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static bool exec_subshell(t_data *data, t_subshell *subsh)
 {
 	ast_exec(data, subsh->root);
+	//change the subshell level
 	
 	return (EXIT_SUCCESS);
 }
