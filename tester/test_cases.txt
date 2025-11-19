@@ -65,7 +65,24 @@ ls ||
 
 echo a | >> output.txt << EOF
 
-
-
-
-
+echo a
+ls
+echo a && ls
+ls && echo a
+echo Hello Word
+pwd && ls && echo a
+>> output.txt 
+(echo a)
+(ls)
+(>> output.txt)
+(pwd && ls && echo a)
+(>>output.txt && echo a && pwd)
+(pwd && ls && >>output.txt)
+(echo a && ls)
+(ls && echo a )
+(echo a && >> output.txt)
+(>> output.txt && echo a)
+>> output.txt && echo a
+echo a && >> output.txt
+>> output.txt && (echo a)
+echo a && (>>output.txt)
